@@ -20,4 +20,10 @@
 1. 在PyCharm底下對著 ui檔案 右鍵選 External Tools > 剛剛建立的Tools
 2. 即可成功轉檔
 
+## git 帳號密碼自動存檔
+```sh
+git config --global credential.helper store
+```
+
+
 
