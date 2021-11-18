@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1132</width>
-    <height>606</height>
+    <height>595</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,6 +43,46 @@
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_datetime">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>日期</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="output_txtfile"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="input_datetime"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_name">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>操作人員</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="2">
        <widget class="QLabel" name="label_txt">
         <property name="font">
@@ -62,46 +102,6 @@
       </item>
       <item row="0" column="1">
        <widget class="QLineEdit" name="input_name"/>
-      </item>
-      <item row="0" column="3">
-       <widget class="QLineEdit" name="output_txtfile"/>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_name">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>操作人員</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_datetime">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>日期</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="input_datetime"/>
       </item>
      </layout>
     </widget>
@@ -350,7 +350,7 @@ background-color: rgb(255, 255, 255);</string>
        <x>20</x>
        <y>30</y>
        <width>352</width>
-       <height>314</height>
+       <height>295</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_7">
@@ -530,11 +530,7 @@ background-color: rgb(255, 255, 255);</string>
        <widget class="QLineEdit" name="ch6_T_On"/>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="ch2_T_On">
-        <property name="text">
-         <string>20</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="ch2_T_On"/>
       </item>
       <item row="8" column="3">
        <widget class="QLabel" name="ch7_PF">
@@ -613,22 +609,5 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>btn_opentxt</sender>
-   <signal>clicked()</signal>
-   <receiver>btn_opentxt</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>643</x>
-     <y>155</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>643</x>
-     <y>158</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
