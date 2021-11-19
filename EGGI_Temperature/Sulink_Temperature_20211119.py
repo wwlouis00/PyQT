@@ -14,38 +14,87 @@ import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
+from openpyxl.worksheet.dimensions import ColumnDimension, RowDimension
+import openpyxl
+from openpyxl import load_workbook
+
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))+"output.xlsx"
 
+CH1_data = []
+CH2_data = []
+CH3_data = []
+CH4_data = []
+CH5_data = []
+CH6_data = []
+CH7_data = []
+CH8_data = []
+# CH_total = [i for i in range(1,sh.max_row + 1,1)]
 
 
 
 
 class Ui_MainWindow(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        super(Ui_MainWindow, self).__init__(parent)
 
-    # def opentxt_file(open_txt):
-    #     df = pd.read_csv(open_txt,delimiter='\t')
-    #     print(df)
+        # self.face_recong = face.Recognition()
+        self.timer_camera = QtCore.QTimer()
+        self.CAM_NUM = 0
+        self.x = 0
+        self.count = 0
+
+
     # browsefile開啟檔案功能
     def browsefile(self):
-        fname = QFileDialog.getOpenFileName(self, 'open file', 'C:\python\Learn_Python\Temperature', 'txt files (*.txt)')
+        self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
-        self.input_file.setText(fname[0])
-        print(fname[0])
-        self.df = pd.read_csv(fname[0],delimiter='\t')
+        self.input_file.setText(self.fname[0])
+        print(self.fname[0])
+        # usecols = ['type', 'title', 'director', 'date_added', 'rating']
+        self.df = pd.read_csv(self.fname[0],delimiter='\t')
         print(self.df)
 
-
+        self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
+        self.ch1_T_On.setText('1')
 
     def save_log(self):
-
-        self.df.to_excel('./'+now_output_time,encoding="utf_8_sig")
+        self.save_excel = pd.DataFrame({'操作人員':[1],'日期':['LL'],'txt檔案':['LL']})
+        self.save_excel.to_excel('./'+now_output_time+"output.xlsx",encoding="utf_8_sig")
+    def clean_log(self):
+        #T_On全關
+        self.ch1_T_On.setText("")
+        self.ch2_T_On.setText("")
+        self.ch3_T_On.setText("")
+        self.ch4_T_On.setText("")
+        self.ch5_T_On.setText("")
+        self.ch6_T_On.setText("")
+        self.ch7_T_On.setText("")
+        self.ch8_T_On.setText("")
+        # T_Off全關
+        self.ch1_T_Off.setText("")
+        self.ch2_T_Off.setText("")
+        self.ch3_T_Off.setText("")
+        self.ch4_T_Off.setText("")
+        self.ch5_T_Off.setText("")
+        self.ch6_T_Off.setText("")
+        self.ch7_T_Off.setText("")
+        self.ch8_T_Off.setText("")
+        # PF全關
+        self.ch1_PF.setText("")
+        self.ch2_PF.setText("")
+        self.ch3_PF.setText("")
+        self.ch4_PF.setText("")
+        self.ch5_PF.setText("")
+        self.ch6_PF.setText("")
+        self.ch7_PF.setText("")
+        self.ch8_PF.setText("")
 
 
     # 顯示現在時間
     def showtime(self):
         time = QDateTime.currentDateTime()
         timedisplay = time.toString("yyyy-MM-dd hh:mm:ss dddd")  # 格式化一下時間
-        self.output_datetime.setText(timedisplay )
+        self.output_datetime.setText(timedisplay)
 
 
     def setupUi(self, MainWindow):
@@ -76,7 +125,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         font.setBold(True)
         font.setWeight(75)
         self.btn_save.setFont(font)
-        self.btn_save.setObjectName("btn_save")
+
         self.btn_clean = QtWidgets.QPushButton(self.Input_box)
         self.btn_clean.setGeometry(QtCore.QRect(650, 120, 91, 43))
         font = QtGui.QFont()
@@ -84,6 +133,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         font.setBold(True)
         font.setWeight(75)
         self.btn_clean.setFont(font)
+        self.btn_save.setObjectName("btn_save")
         self.btn_clean.setObjectName("btn_clean")
         self.widget = QtWidgets.QWidget(self.Input_box)
         self.widget.setGeometry(QtCore.QRect(20, 36, 621, 127))
@@ -487,6 +537,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
 
         self.retranslateUi(MainWindow)
+        self.btn_clean.clicked.connect(self.clean_log)
         self.btn_opentxt.clicked.connect(self.browsefile)
         self.btn_save.clicked.connect(self.save_log)
 
@@ -495,7 +546,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
     # 文字檔設置
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "溫度監控程式"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         # -------------------------Input區-----------------------------------
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
         self.btn_opentxt.setText(_translate("MainWindow", "打開"))
