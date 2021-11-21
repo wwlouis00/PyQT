@@ -50,16 +50,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
         print(self.fname[0])
-        # usecols = ['type', 'title', 'director', 'date_added', 'rating']
         self.df = pd.read_csv(self.fname[0],delimiter='\t')
         print(self.df)
-
+        self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
         self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
         self.ch1_T_On.setText('1')
 
     def save_log(self):
-        self.save_excel = pd.DataFrame({'操作人員':[1],'日期':['LL'],'txt檔案':['LL']})
-        self.save_excel.to_excel('./'+now_output_time+"output.xlsx",encoding="utf_8_sig")
+        self.save_excel = pd.DataFrame({'操作人員':[1],'日期':['LL'],'txt檔案':[str(self.input_file.setText(self.fname[0]))]})
+        self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
     def clean_log(self):
         #T_On全關
         self.ch1_T_On.setText("")
@@ -88,6 +87,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_PF.setText("")
         self.ch7_PF.setText("")
         self.ch8_PF.setText("")
+        #TXT欄位
+        self.input_file.setText("")
 
 
     # 顯示現在時間
