@@ -48,6 +48,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CAM_NUM = 0
         self.x = 0
         self.count = 0
+        self.timer = QTimer()
+
 
 
     # browsefile開啟檔案功能
@@ -112,26 +114,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 CH2_T_On.append(self.CH2_data[CH_slope])
             elif CH2_quo > 0 and self.CH2_data[CH_slope] <= 74:
                 CH2_T_Off.append(self.CH2_data[CH_slope])
-            else:
-                None
-            # CH3
-            CH3_GAP = float(self.CH1_data[CH_slope + 1]) - float(self.CH3_data[CH_slope])
-            CH3_quo = CH3_GAP / CH
-            if CH3_quo < 0 and self.CH3_data[CH_slope] >= 109:
-                CH3_T_On.append(self.CH3_data[CH_slope])
-            elif CH3_quo > 0 and self.CH3_data[CH_slope] <= 74:
-                CH3_T_Off.append(self.CH3_data[CH_slope])
-            # CH4
-            CH4_GAP = float(self.CH4_data[CH_slope + 1]) - float(self.CH4_data[CH_slope])
-            CH4_quo = CH4_GAP / CH
-            if CH4_quo < 0 and self.CH4_data[CH_slope] >= 109:
-                CH4_T_On.append(self.CH4_data[CH_slope])
-            elif CH4_quo > 0 and self.CH4_data[CH_slope] <= 74:
-                CH4_T_Off.append(self.CH4_data[CH_slope])
-
+            # elif self.CH2[CH_slope] < 0:
+            #     CH2_T_On.append(0)
+            #     CH2_T_Off.append(0)
+        print(CH1_T_On)
+        print(CH2_T_On)
         self.ch1_T_On.setText(str(CH1_T_On[0]))
         self.ch1_T_Off.setText(str(CH1_T_Off[0]))
-        # self.ch2_T_On.setText(str(CH2_T_On[0]))
+        # self.ch2_T_On.setText =str(CH2_T_On[0])
         # self.ch2_T_Off.setText(str(CH2_T_Off[0]))
         # self.ch3_T_On.setText(str(CH3_T_On[0]))
         # self.ch3_T_Off.setText(str(CH3_T_Off[0]))
@@ -187,16 +177,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     # 顯示現在時間
     def showtime(self):
-        time = QDateTime.currentDateTime()
+        self.time = QDateTime.currentDateTime()
         timedisplay = time.toString("yyyy-MM-dd hh:mm:ss dddd")  # 格式化一下時間
-        self.output_datetime.setText(timedisplay)
-    # def input_username(self):
-    #     self.input_name.text()
-
-
-
+        self.time.setText(timedisplay)
 
     def setupUi(self, MainWindow):
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1372, 824)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -216,7 +202,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         font.setBold(True)
         font.setWeight(75)
         self.btn_opentxt.setFont(font)
-        self.btn_opentxt.se tObjectName("btn_opentxt")
+        self.btn_opentxt.setObjectName("btn_opentxt")
         self.btn_save = QtWidgets.QPushButton(self.Input_box)
         self.btn_save.setGeometry(QtCore.QRect(650, 78, 91, 43))
         font = QtGui.QFont()
@@ -639,13 +625,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.btn_clean.clicked.connect(self.clean_log)
         self.btn_opentxt.clicked.connect(self.browsefile)
         self.btn_save.clicked.connect(self.save_log)
+        # self.output_datetime.setText(self.showtime)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     # 文字檔設置
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "溫度監控程式"))
         # -------------------------Input區-----------------------------------
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
         self.btn_opentxt.setText(_translate("MainWindow", "打開"))
