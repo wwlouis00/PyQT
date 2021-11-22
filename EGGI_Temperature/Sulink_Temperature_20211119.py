@@ -14,20 +14,26 @@ import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
-from openpyxl.worksheet.dimensions import ColumnDimension, RowDimension
-import openpyxl
+from pandas.core.indexes.base import Index
+from pandas.core.series import Series
+from io import SEEK_CUR
+import csv
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+import os
+import time
+import datetime
+from datetime import datetime, timedelta
+import statistics
+import numpy as np
 from openpyxl import load_workbook
+from heapq import nsmallest
+from pandas.core.indexes.base import Index
+from pandas.core.series import Series
 
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))+"output.xlsx"
 
-CH1_data = []
-CH2_data = []
-CH3_data = []
-CH4_data = []
-CH5_data = []
-CH6_data = []
-CH7_data = []
-CH8_data = []
+
 # CH_total = [i for i in range(1,sh.max_row + 1,1)]
 
 
@@ -46,15 +52,48 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     # browsefile開啟檔案功能
     def browsefile(self):
+        self.CH1_data = []
+        self.CH2_data = []
+        self.CH3_data = []
+        self.CH4_data = []
+        self.CH5_data = []
+        self.CH6_data = []
+        self.CH7_data = []
+        self.CH8_data = []
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
         print(self.fname[0])
         self.df = pd.read_csv(self.fname[0],delimiter='\t')
-        print(self.df)
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
+        print(self.df)
+        #存取每個Channel的值到陣列
+        for CH_data in range(0,len(self.df.index),1):
+            self.CH1_data.append(self.df.loc[CH_data,'CH1'])
+            self.CH2_data.append(self.df.loc[CH_data,'CH2'])
+            self.CH3_data.append(self.df.loc[CH_data,'CH3'])
+            self.CH4_data.append(self.df.loc[CH_data,'CH4'])
+            self.CH5_data.append(self.df.loc[CH_data,'CH5'])
+            self.CH6_data.append(self.df.loc[CH_data,'CH6'])
+            self.CH7_data.append(self.df.loc[CH_data,'CH7'])
+            self.CH8_data.append(self.df.loc[CH_data,'CH8'])
+        print(len(self.CH1_data))
+        test_large = []
+        test_small = []
+        for CH_slope in range(0,len(self.df.index)-1,1):
+            a = float(self.CH1_data[CH_slope+1]) - float(self.CH1_data[CH_slope])
+            b = (CH_slope+1) - CH_slope
+            c = a/b
+            if c < 0 and self.CH1_data[CH_slope] >= 109:
+                test_large.append(self.CH1_data[CH_slope])
+            elif c > 0 and self.CH1_data[CH_slope] <=74:
+                test_small.append(self.CH1_data[CH_slope])
+        print(test_small[0])
+        print(test_large[0])
+        self.ch1_T_On.setText(str(test_large[0]))
+        self.ch1_T_Off.setText(str(test_small[0]))
         self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
-        self.ch1_T_On.setText('1')
+
 
     def save_log(self):
         self.save_excel = pd.DataFrame({'操作人員':[1],'日期':['LL'],'txt檔案':[str(self.input_file.setText(self.fname[0]))]})
