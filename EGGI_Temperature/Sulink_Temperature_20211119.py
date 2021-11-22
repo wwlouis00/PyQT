@@ -60,6 +60,23 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH6_data = []
         self.CH7_data = []
         self.CH8_data = []
+        CH1_T_On = []
+        CH1_T_Off  = []
+        CH2_T_On = []
+        CH2_T_Off = []
+        CH3_T_On = []
+        CH3_T_Off  = []
+        CH4_T_On = []
+        CH4_T_Off = []
+        CH5_T_On = []
+        CH5_T_Off  = []
+        CH6_T_On = []
+        CH6_T_Off = []
+        CH7_T_On = []
+        CH7_T_Off  = []
+        CH8_T_On = []
+        CH8_T_Off = []
+
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
@@ -78,25 +95,62 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.CH7_data.append(self.df.loc[CH_data,'CH7'])
             self.CH8_data.append(self.df.loc[CH_data,'CH8'])
         print(len(self.CH1_data))
-        test_large = []
-        test_small = []
+
         for CH_slope in range(0,len(self.df.index)-1,1):
-            a = float(self.CH1_data[CH_slope+1]) - float(self.CH1_data[CH_slope])
-            b = (CH_slope+1) - CH_slope
-            c = a/b
-            if c < 0 and self.CH1_data[CH_slope] >= 109:
-                test_large.append(self.CH1_data[CH_slope])
-            elif c > 0 and self.CH1_data[CH_slope] <=74:
-                test_small.append(self.CH1_data[CH_slope])
-        print(test_small[0])
-        print(test_large[0])
-        self.ch1_T_On.setText(str(test_large[0]))
-        self.ch1_T_Off.setText(str(test_small[0]))
+            #CH1
+            CH1_GAP = float(self.CH1_data[CH_slope+1]) - float(self.CH1_data[CH_slope])
+            CH = (CH_slope+1) - CH_slope
+            CH1_quo = CH1_GAP/CH
+            if CH1_quo < 0 and self.CH1_data[CH_slope] >= 109:
+                CH1_T_On.append(self.CH1_data[CH_slope])
+            elif CH1_quo > 0 and self.CH1_data[CH_slope] <=74:
+                CH1_T_Off.append(self.CH1_data[CH_slope])
+            #CH2
+            CH2_GAP = float(self.CH2_data[CH_slope + 1]) - float(self.CH2_data[CH_slope])
+            CH2_quo = CH2_GAP / CH
+            if CH2_quo < 0 and self.CH2_data[CH_slope] >= 109:
+                CH2_T_On.append(self.CH2_data[CH_slope])
+            elif CH2_quo > 0 and self.CH2_data[CH_slope] <= 74:
+                CH2_T_Off.append(self.CH2_data[CH_slope])
+            else:
+                None
+            # CH3
+            CH3_GAP = float(self.CH1_data[CH_slope + 1]) - float(self.CH3_data[CH_slope])
+            CH3_quo = CH3_GAP / CH
+            if CH3_quo < 0 and self.CH3_data[CH_slope] >= 109:
+                CH3_T_On.append(self.CH3_data[CH_slope])
+            elif CH3_quo > 0 and self.CH3_data[CH_slope] <= 74:
+                CH3_T_Off.append(self.CH3_data[CH_slope])
+            # CH4
+            CH4_GAP = float(self.CH4_data[CH_slope + 1]) - float(self.CH4_data[CH_slope])
+            CH4_quo = CH4_GAP / CH
+            if CH4_quo < 0 and self.CH4_data[CH_slope] >= 109:
+                CH4_T_On.append(self.CH4_data[CH_slope])
+            elif CH4_quo > 0 and self.CH4_data[CH_slope] <= 74:
+                CH4_T_Off.append(self.CH4_data[CH_slope])
+
+        self.ch1_T_On.setText(str(CH1_T_On[0]))
+        self.ch1_T_Off.setText(str(CH1_T_Off[0]))
+        # self.ch2_T_On.setText(str(CH2_T_On[0]))
+        # self.ch2_T_Off.setText(str(CH2_T_Off[0]))
+        # self.ch3_T_On.setText(str(CH3_T_On[0]))
+        # self.ch3_T_Off.setText(str(CH3_T_Off[0]))
+        # self.ch4_T_On.setText(str(CH4_T_On[0]))
+        # self.ch4_T_Off.setText(str(CH4_T_Off[0]))
+        # self.ch5_T_On.setText(str(test_large[0]))
+        # self.ch5_T_Off.setText(str(test_small[0]))
+        # self.ch6_T_On.setText(str(test_large[0]))
+        # self.ch6_T_Off.setText(str(test_small[0]))
+        # self.ch7_T_On.setText(str(test_large[0]))
+        # self.ch7_T_Off.setText(str(test_small[0]))
+        # self.ch8_T_On.setText(str(test_large[0]))
+        # self.ch8_T_Off.setText(str(test_small[0]))
+
         self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
 
 
     def save_log(self):
-        self.save_excel = pd.DataFrame({'操作人員':[1],'日期':['LL'],'txt檔案':[str(self.input_file.setText(self.fname[0]))]})
+        self.save_excel = pd.DataFrame({'操作人員':[str(self.input_name.setText)],'日期':[str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))],'txt檔案':[str(self.fname[0])]})
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
     def clean_log(self):
         #T_On全關
@@ -126,8 +180,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_PF.setText("")
         self.ch7_PF.setText("")
         self.ch8_PF.setText("")
-        #TXT欄位
+        #欄位
         self.input_file.setText("")
+        self.input_name.setText("")
 
 
     # 顯示現在時間
@@ -135,6 +190,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
         time = QDateTime.currentDateTime()
         timedisplay = time.toString("yyyy-MM-dd hh:mm:ss dddd")  # 格式化一下時間
         self.output_datetime.setText(timedisplay)
+    # def input_username(self):
+    #     self.input_name.text()
+
+
 
 
     def setupUi(self, MainWindow):
@@ -157,7 +216,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         font.setBold(True)
         font.setWeight(75)
         self.btn_opentxt.setFont(font)
-        self.btn_opentxt.setObjectName("btn_opentxt")
+        self.btn_opentxt.se tObjectName("btn_opentxt")
         self.btn_save = QtWidgets.QPushButton(self.Input_box)
         self.btn_save.setGeometry(QtCore.QRect(650, 78, 91, 43))
         font = QtGui.QFont()
@@ -597,9 +656,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))
         self.EGGI_Title.setText(_translate("MainWindow", "EGGI 產測"))
         self.Chart_box.setTitle(_translate("MainWindow", "Chart"))
-
-
-
 
         #-------------------------Result區-----------------------------------
         self.Result_box.setTitle(_translate("MainWindow", "Result"))
