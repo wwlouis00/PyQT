@@ -83,38 +83,59 @@ class Ui_MainWindow(QtWidgets.QWidget):
             else:
                 self.CH_data.append([self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))])
             print("Channel now is:" + str(ch))
-        print(self.CH_data)
+        print(self.CH_data[0][0])
         #存取每個Channel的值到陣列
 
         self.ch1_T_On.setText(str(self.CH_data[0][1]))
         self.ch1_T_Off.setText(str(self.CH_data[0][1]))
         self.ch2_T_On.setText(str(self.CH_data[1][1]))
         self.ch2_T_Off.setText(str(self.CH_data[1][1]))
-        self.ch3_T_On.setText(str(self.CH_data[0][1]))
-        self.ch3_T_Off.setText(str(self.CH_data[0][1]))
-        self.ch4_T_On.setText(str(self.CH_data[1][1]))
-        self.ch4_T_Off.setText(str(self.CH_data[1][1]))
-        self.ch5_T_On.setText(str(self.CH_data[0][1]))
-        self.ch5_T_Off.setText(str(self.CH_data[0][1]))
-        self.ch6_T_On.setText(str(self.CH_data[1][1]))
-        self.ch6_T_Off.setText(str(self.CH_data[1][1]))
-        self.ch7_T_On.setText(str(self.CH_data[0][1]))
-        self.ch7_T_Off.setText(str(self.CH_data[0][1]))
-        self.ch8_T_On.setText(str(self.CH_data[1][1]))
-        self.ch8_T_Off.setText(str(self.CH_data[1][1]))
-        self.warning()
-
-
+        self.ch3_T_On.setText(str(self.CH_data[2][1]))
+        self.ch3_T_Off.setText(str(self.CH_data[2][1]))
+        self.ch4_T_On.setText(str(self.CH_data[3][1]))
+        self.ch4_T_Off.setText(str(self.CH_data[4][1]))
+        self.ch5_T_On.setText(str(self.CH_data[4][1]))
+        self.ch5_T_Off.setText(str(self.CH_data[4][1]))
+        self.ch6_T_On.setText(str(self.CH_data[5][1]))
+        self.ch6_T_Off.setText(str(self.CH_data[5][1]))
+        self.ch7_T_On.setText(str(self.CH_data[5][1]))
+        self.ch7_T_Off.setText(str(self.CH_data[6][1]))
+        self.ch8_T_On.setText(str(self.CH_data[7][1]))
+        self.ch8_T_Off.setText(str(self.CH_data[7][1]))
+        # if self.ch2_T_On.setText("-204.8") == true:
+        self.ch2_PF.setText(str('-204.8'))
 
 
         self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
 
 
     def save_log(self):
-        self.save_excel = pd.DataFrame({'操作人員':[str(self.input_name.setText)],'日期':[str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))],'txt檔案':[str(self.fname[0])]})
+        QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
+                                      defaultButton=QtWidgets.QMessageBox.Ok)
+        self.save_excel = pd.DataFrame({'操作人員':[str(self.input_name.setText)],'日期':[str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))],'txt檔案':[str(self.fname[0])],
+                                        'ch1_T_On':[str(self.CH_data[0][0])],
+                                        'ch1_T_Off':[str(self.CH_data[0][0])],
+                                        'ch2_T_On': [str(self.CH_data[0][0])],
+                                        'ch2_T_Off': [str(self.CH_data[0][0])],
+                                        'ch3_T_On': [str(self.CH_data[0][0])],
+                                        'ch3_T_Off': [str(self.CH_data[0][0])],
+                                        'ch4_T_On': [str(self.CH_data[0][0])],
+                                        'ch4_T_Off': [str(self.CH_data[0][0])],
+                                        'ch5_T_On': [str(self.CH_data[0][0])],
+                                        'ch5_T_Off': [str(self.CH_data[0][0])],
+                                        'ch6_T_On': [str(self.CH_data[0][0])],
+                                        'ch6_T_Off': [str(self.CH_data[0][0])],
+                                        'ch7_T_On': [str(self.CH_data[0][0])],
+                                        'ch7_T_Off': [str(self.CH_data[0][0])],
+                                        'ch8_T_On': [str(self.CH_data[0][0])],
+                                        'ch8_T_Off': [str(self.CH_data[0][0])],
+                                        })
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
-    def warning(self):
-        QtWidgets.QMessageBox.warning(self, u"Warning", u"請檢測相機與電腦是否連線正確", buttons=QtWidgets.QMessageBox.Ok,
+
+    def save_msg(self):
+        # QtWidgets.QMessageBox.warning(self, u"Warning", u"請檢測相機與電腦是否連線正確", buttons=QtWidgets.QMessageBox.Ok,
+        #                               defaultButton=QtWidgets.QMessageBox.Ok)
+        QtWidgets.QMessageBox.warning(self, u"a", u"請檢測相機與電腦是否連線正確", buttons=QtWidgets.QMessageBox.Ok,
                                       defaultButton=QtWidgets.QMessageBox.Ok)
 
 
