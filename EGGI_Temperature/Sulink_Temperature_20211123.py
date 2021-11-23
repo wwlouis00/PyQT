@@ -64,9 +64,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH7_data = []
         self.CH8_data = []
 
-        CH1_T_Off  = []
-        CH2_T_On = []
-        CH2_T_Off = []
 
 
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
@@ -88,42 +85,25 @@ class Ui_MainWindow(QtWidgets.QWidget):
             print("Channel now is:" + str(ch))
         print(self.CH_data)
         #存取每個Channel的值到陣列
-        # for CH_data in range(0,len(self.df.index),1):
-        #     self.CH1_data.append(self.df.loc[CH_data,'CH1'])
-        #     self.CH2_data.append(self.df.loc[CH_data,'CH2'])
-        #     self.CH3_data.append(self.df.loc[CH_data,'CH3'])
-        #     self.CH4_data.append(self.df.loc[CH_data,'CH4'])
-        #     self.CH5_data.append(self.df.loc[CH_data,'CH5'])
-        #     self.CH6_data.append(self.df.loc[CH_data,'CH6'])
-        #     self.CH7_data.append(self.df.loc[CH_data,'CH7'])
-        #     self.CH8_data.append(self.df.loc[CH_data,'CH8'])
-        # print(len(self.CH1_data))
 
-        # for CH_slope in range(0,len(self.df.index)-1,1):
-        #     #CH1
-        #     CH1_GAP = float(self.CH1_data[CH_slope+1]) - float(self.CH1_data[CH_slope])
-        #     CH = (CH_slope+1) - CH_slope
-        #     CH1_quo = CH1_GAP/CH
-        #     if CH1_quo < 0 and self.CH1_data[CH_slope] >= 109:
-        #         CH1_T_On.append(self.CH1_data[CH_slope])
-        #     elif CH1_quo > 0 and self.CH1_data[CH_slope] <=74:
-        #         CH1_T_Off.append(self.CH1_data[CH_slope])
-        #     #CH2
-        #     CH2_GAP = float(self.CH2_data[CH_slope + 1]) - float(self.CH2_data[CH_slope])
-        #     CH2_quo = CH2_GAP / CH
-        #     if CH2_quo < 0 and self.CH2_data[CH_slope] >= 109:
-        #         CH2_T_On.append(self.CH2_data[CH_slope])
-        #     elif CH2_quo > 0 and self.CH2_data[CH_slope] <= 74:
-        #         CH2_T_Off.append(self.CH2_data[CH_slope])
-        #     # elif self.CH2[CH_slope] < 0:
-        #     #     CH2_T_On.append(0)
-        #     #     CH2_T_Off.append(0)
-        # print(CH1_T_On)
-        # print(CH2_T_On)
         self.ch1_T_On.setText(str(self.CH_data[0][1]))
         self.ch1_T_Off.setText(str(self.CH_data[0][1]))
-        self.ch2_T_On.setText(str(self.CH_data[0][1]))
-        self.ch2_T_Off.setText(str(self.CH_data[0][1]))
+        self.ch2_T_On.setText(str(self.CH_data[1][1]))
+        self.ch2_T_Off.setText(str(self.CH_data[1][1]))
+        self.ch3_T_On.setText(str(self.CH_data[0][1]))
+        self.ch3_T_Off.setText(str(self.CH_data[0][1]))
+        self.ch4_T_On.setText(str(self.CH_data[1][1]))
+        self.ch4_T_Off.setText(str(self.CH_data[1][1]))
+        self.ch5_T_On.setText(str(self.CH_data[0][1]))
+        self.ch5_T_Off.setText(str(self.CH_data[0][1]))
+        self.ch6_T_On.setText(str(self.CH_data[1][1]))
+        self.ch6_T_Off.setText(str(self.CH_data[1][1]))
+        self.ch7_T_On.setText(str(self.CH_data[0][1]))
+        self.ch7_T_Off.setText(str(self.CH_data[0][1]))
+        self.ch8_T_On.setText(str(self.CH_data[1][1]))
+        self.ch8_T_Off.setText(str(self.CH_data[1][1]))
+        self.warning()
+
 
 
 
@@ -131,12 +111,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
 
     def save_log(self):
-        if self.input_file.setText(self.fname[0]) == False:
-            QtWidgets.QMessageBox.warning(self, u"Warning", u"請檢測相機與電腦是否連線正確", buttons=QtWidgets.QMessageBox.Ok,
-                                          defaultButton=QtWidgets.QMessageBox.Ok)
-        else:
-            self.save_excel = pd.DataFrame({'操作人員':[str(self.input_name.setText)],'日期':[str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))],'txt檔案':[str(self.fname[0])]})
-            self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
+        self.save_excel = pd.DataFrame({'操作人員':[str(self.input_name.setText)],'日期':[str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))],'txt檔案':[str(self.fname[0])]})
+        self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
     def warning(self):
         QtWidgets.QMessageBox.warning(self, u"Warning", u"請檢測相機與電腦是否連線正確", buttons=QtWidgets.QMessageBox.Ok,
                                       defaultButton=QtWidgets.QMessageBox.Ok)
