@@ -63,22 +63,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH6_data = []
         self.CH7_data = []
         self.CH8_data = []
-        CH1_T_On = []
+
         CH1_T_Off  = []
         CH2_T_On = []
         CH2_T_Off = []
-        CH3_T_On = []
-        CH3_T_Off  = []
-        CH4_T_On = []
-        CH4_T_Off = []
-        CH5_T_On = []
-        CH5_T_Off  = []
-        CH6_T_On = []
-        CH6_T_Off = []
-        CH7_T_On = []
-        CH7_T_Off  = []
-        CH8_T_On = []
-        CH8_T_Off = []
+
 
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         QFileDialog.getOpenFileName
@@ -88,55 +77,55 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.df = pd.read_csv(self.fname[0],delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
         print(self.df)
+        print(len(self.df.index))
+        column, row = 3, 5
+        # print(df)
+        for ch in range(1, 9, 1):
+            if ch == 1:
+                self.CH_data = [[self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))]]
+            else:
+                self.CH_data.append([self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))])
+            print("Channel now is:" + str(ch))
+        print(self.CH_data)
         #存取每個Channel的值到陣列
-        for CH_data in range(0,len(self.df.index),1):
-            self.CH1_data.append(self.df.loc[CH_data,'CH1'])
-            self.CH2_data.append(self.df.loc[CH_data,'CH2'])
-            self.CH3_data.append(self.df.loc[CH_data,'CH3'])
-            self.CH4_data.append(self.df.loc[CH_data,'CH4'])
-            self.CH5_data.append(self.df.loc[CH_data,'CH5'])
-            self.CH6_data.append(self.df.loc[CH_data,'CH6'])
-            self.CH7_data.append(self.df.loc[CH_data,'CH7'])
-            self.CH8_data.append(self.df.loc[CH_data,'CH8'])
-        print(len(self.CH1_data))
+        # for CH_data in range(0,len(self.df.index),1):
+        #     self.CH1_data.append(self.df.loc[CH_data,'CH1'])
+        #     self.CH2_data.append(self.df.loc[CH_data,'CH2'])
+        #     self.CH3_data.append(self.df.loc[CH_data,'CH3'])
+        #     self.CH4_data.append(self.df.loc[CH_data,'CH4'])
+        #     self.CH5_data.append(self.df.loc[CH_data,'CH5'])
+        #     self.CH6_data.append(self.df.loc[CH_data,'CH6'])
+        #     self.CH7_data.append(self.df.loc[CH_data,'CH7'])
+        #     self.CH8_data.append(self.df.loc[CH_data,'CH8'])
+        # print(len(self.CH1_data))
 
-        for CH_slope in range(0,len(self.df.index)-1,1):
-            #CH1
-            CH1_GAP = float(self.CH1_data[CH_slope+1]) - float(self.CH1_data[CH_slope])
-            CH = (CH_slope+1) - CH_slope
-            CH1_quo = CH1_GAP/CH
-            if CH1_quo < 0 and self.CH1_data[CH_slope] >= 109:
-                CH1_T_On.append(self.CH1_data[CH_slope])
-            elif CH1_quo > 0 and self.CH1_data[CH_slope] <=74:
-                CH1_T_Off.append(self.CH1_data[CH_slope])
-            #CH2
-            CH2_GAP = float(self.CH2_data[CH_slope + 1]) - float(self.CH2_data[CH_slope])
-            CH2_quo = CH2_GAP / CH
-            if CH2_quo < 0 and self.CH2_data[CH_slope] >= 109:
-                CH2_T_On.append(self.CH2_data[CH_slope])
-            elif CH2_quo > 0 and self.CH2_data[CH_slope] <= 74:
-                CH2_T_Off.append(self.CH2_data[CH_slope])
-            # elif self.CH2[CH_slope] < 0:
-            #     CH2_T_On.append(0)
-            #     CH2_T_Off.append(0)
-        print(CH1_T_On)
-        print(CH2_T_On)
-        self.ch1_T_On.setText(str(CH1_T_On[0]))
-        self.ch1_T_Off.setText(str(CH1_T_Off[0]))
-        # self.ch2_T_On.setText =str(CH2_T_On[0])
-        # self.ch2_T_Off.setText(str(CH2_T_Off[0]))
-        # self.ch3_T_On.setText(str(CH3_T_On[0]))
-        # self.ch3_T_Off.setText(str(CH3_T_Off[0]))
-        # self.ch4_T_On.setText(str(CH4_T_On[0]))
-        # self.ch4_T_Off.setText(str(CH4_T_Off[0]))
-        # self.ch5_T_On.setText(str(test_large[0]))
-        # self.ch5_T_Off.setText(str(test_small[0]))
-        # self.ch6_T_On.setText(str(test_large[0]))
-        # self.ch6_T_Off.setText(str(test_small[0]))
-        # self.ch7_T_On.setText(str(test_large[0]))
-        # self.ch7_T_Off.setText(str(test_small[0]))
-        # self.ch8_T_On.setText(str(test_large[0]))
-        # self.ch8_T_Off.setText(str(test_small[0]))
+        # for CH_slope in range(0,len(self.df.index)-1,1):
+        #     #CH1
+        #     CH1_GAP = float(self.CH1_data[CH_slope+1]) - float(self.CH1_data[CH_slope])
+        #     CH = (CH_slope+1) - CH_slope
+        #     CH1_quo = CH1_GAP/CH
+        #     if CH1_quo < 0 and self.CH1_data[CH_slope] >= 109:
+        #         CH1_T_On.append(self.CH1_data[CH_slope])
+        #     elif CH1_quo > 0 and self.CH1_data[CH_slope] <=74:
+        #         CH1_T_Off.append(self.CH1_data[CH_slope])
+        #     #CH2
+        #     CH2_GAP = float(self.CH2_data[CH_slope + 1]) - float(self.CH2_data[CH_slope])
+        #     CH2_quo = CH2_GAP / CH
+        #     if CH2_quo < 0 and self.CH2_data[CH_slope] >= 109:
+        #         CH2_T_On.append(self.CH2_data[CH_slope])
+        #     elif CH2_quo > 0 and self.CH2_data[CH_slope] <= 74:
+        #         CH2_T_Off.append(self.CH2_data[CH_slope])
+        #     # elif self.CH2[CH_slope] < 0:
+        #     #     CH2_T_On.append(0)
+        #     #     CH2_T_Off.append(0)
+        # print(CH1_T_On)
+        # print(CH2_T_On)
+        self.ch1_T_On.setText(str(self.CH_data[0][1]))
+        self.ch1_T_Off.setText(str(self.CH_data[0][1]))
+        self.ch2_T_On.setText(str(self.CH_data[0][1]))
+        self.ch2_T_Off.setText(str(self.CH_data[0][1]))
+
+
 
         self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
 
