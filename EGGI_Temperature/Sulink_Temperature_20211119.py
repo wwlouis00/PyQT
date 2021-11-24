@@ -31,6 +31,10 @@ from heapq import nsmallest
 from pandas.core.indexes.base import Index
 from pandas.core.series import Series
 
+import cv2
+from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtWidgets import QMainWindow, QApplication, QGraphicsScene, QGraphicsPixmapItem
+
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))+"output.xlsx"
 
 
@@ -79,12 +83,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
         CH8_T_On = []
         CH8_T_Off = []
 
+
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
         print(self.fname[0])
         self.df = pd.read_csv(self.fname[0],delimiter='\t')
-        self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
+        self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']#在開啟檔案上面新增一行
         print(self.df)
         #存取每個Channel的值到陣列
         for CH_data in range(0,len(self.df.index),1):
@@ -138,6 +143,20 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
         self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
 
+        #以下為顯示qrcode圖片
+        img=cv2.imread("lena.jpg")                              #讀取影象
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)              #轉換影象通道
+        x = img.shape[1]                                        #獲取影象大小
+        y = img.shape[0]
+        self.zoomscale=1                                        #圖片放縮尺度
+        frame = QImage(img, x, y,x*3, QImage.Format_RGB888)
+        pix = QPixmap.fromImage(frame)
+        self.item=QGraphicsPixmapItem(pix)                      #建立畫素圖元
+        #self.item.setScale(self.zoomscale)
+        self.scene=QGraphicsScene()                             #建立場景
+        self.scene.addItem(self.item)
+        self.ch1_qrcode.setScene(self.scene)                        #將場景新增至檢視
+        
 
     def save_log(self):
         self.save_excel = pd.DataFrame({'操作人員':[str(self.input_name.setText)],'日期':[str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))],'txt檔案':[str(self.fname[0])]})
