@@ -86,6 +86,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
         print(self.CH_data[0][0])
         #存取每個Channel的值到陣列
 
+
+
+
+
+
+
+
         self.ch1_T_On.setText(str(self.CH_data[0][1]))
         self.ch1_T_Off.setText(str(self.CH_data[0][1]))
         self.ch2_T_On.setText(str(self.CH_data[1][1]))
@@ -102,8 +109,51 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_T_Off.setText(str(self.CH_data[6][1]))
         self.ch8_T_On.setText(str(self.CH_data[7][1]))
         self.ch8_T_Off.setText(str(self.CH_data[7][1]))
-        # if self.ch2_T_On.setText("-204.8") == true:
-        self.ch2_PF.setText(str('-204.8'))
+        # for pf in range(0,8,1):
+        #     if (self.CH_data[pf][0]) == -204.8:
+        #CH1PF
+        if self.CH_data[0][0] == -204.8:
+            self.ch1_PF.setText(u'fail')
+        else:
+            self.ch1_PF.setText(u'pass')
+        #CH2PF
+        if self.CH_data[1][0] == -204.8:
+            self.ch2_PF.setText(u'fail')
+        else:
+            self.ch2_PF.setText(u'pass')
+        #CH3PF
+        if self.CH_data[2][0] == -204.8:
+            self.ch3_PF.setText(u'fail')
+        else:
+            self.ch3_PF.setText(u'pass')
+        #CH4PF
+        if self.CH_data[3][0] == -204.8:
+            self.ch4_PF.setText(u'fail')
+        else:
+            self.ch4_PF.setText(u'pass')
+        #CH5PF
+        if self.CH_data[4][0] == -204.8:
+            self.ch5_PF.setText(u'fail')
+        else:
+            self.ch5_PF.setText(u'pass')
+        #CH6PF
+        if self.CH_data[5][0] == -204.8:
+            self.ch6_PF.setText(u'fail')
+        else:
+            self.ch6_PF.setText(u'pass')
+        #CH7PF
+        if self.CH_data[6][0] == -204.8:
+            self.ch7_PF.setText(u'fail')
+        else:
+            self.ch7_PF.setText(u'pass')
+        #CH8PF
+        if self.CH_data[7][0] == -204.8:
+            self.ch8_PF.setText(u'fail')
+        else:
+            self.ch8_PF.setText(u'pass')
+
+
+
 
 
         self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
