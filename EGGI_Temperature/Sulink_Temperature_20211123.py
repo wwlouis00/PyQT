@@ -17,6 +17,7 @@ import pandas as pd
 from pandas.core.indexes.base import Index
 from pandas.core.series import Series
 from io import SEEK_CUR
+import numpy
 import os
 import csv
 import matplotlib.pyplot as plt
@@ -67,7 +68,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
 
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
-        QFileDialog.getOpenFileName
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
         print(self.fname[0])
@@ -75,7 +75,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
         print(self.df)
         print(len(self.df.index))
-        column, row = 3, 5
         # print(df)
         for ch in range(1, 9, 1):
             if ch == 1:
@@ -111,8 +110,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch8_T_Off.setText(str(self.CH_data[7][1]))
         # for pf in range(0,8,1):
         #     if (self.CH_data[pf][0]) == -204.8:
+
         #CH1PF
-        if self.CH_data[0][0] == -204.8:
+        if self.CH_data[0][0] == -204.8
             self.ch1_PF.setText(u'fail')
         else:
             self.ch1_PF.setText(u'pass')
@@ -135,10 +135,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if self.CH_data[4][0] == -204.8:
             self.ch5_PF.setText(u'fail')
         else:
-            self.ch5_PF.setText(u'pass')
+            self.ch5_PF.setText(u'Pass')
         #CH6PF
         if self.CH_data[5][0] == -204.8:
-            self.ch6_PF.setText(u'fail')
+            self.ch6_PF.setText(u'Fail')
         else:
             self.ch6_PF.setText(u'pass')
         #CH7PF
@@ -160,26 +160,34 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
 
     def save_log(self):
+
+
         QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
                                       defaultButton=QtWidgets.QMessageBox.Ok)
-        self.save_excel = pd.DataFrame({'操作人員':[str(self.input_name.setText)],'日期':[str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))],'txt檔案':[str(self.fname[0])],
-                                        'ch1_T_On':[str(self.CH_data[0][0])],
-                                        'ch1_T_Off':[str(self.CH_data[0][0])],
-                                        'ch2_T_On': [str(self.CH_data[0][0])],
-                                        'ch2_T_Off': [str(self.CH_data[0][0])],
-                                        'ch3_T_On': [str(self.CH_data[0][0])],
-                                        'ch3_T_Off': [str(self.CH_data[0][0])],
-                                        'ch4_T_On': [str(self.CH_data[0][0])],
-                                        'ch4_T_Off': [str(self.CH_data[0][0])],
-                                        'ch5_T_On': [str(self.CH_data[0][0])],
-                                        'ch5_T_Off': [str(self.CH_data[0][0])],
-                                        'ch6_T_On': [str(self.CH_data[0][0])],
-                                        'ch6_T_Off': [str(self.CH_data[0][0])],
-                                        'ch7_T_On': [str(self.CH_data[0][0])],
-                                        'ch7_T_Off': [str(self.CH_data[0][0])],
-                                        'ch8_T_On': [str(self.CH_data[0][0])],
-                                        'ch8_T_Off': [str(self.CH_data[0][0])],
-                                        })
+        # self.save_excel = pd.DataFrame({'操作人員':[str(self.input_name.setText)],'日期':[str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))],'txt檔案':[str(self.fname[0])],
+        #                                 'ch1_T_On':[str(self.CH_data[0][0])],
+        #                                 'ch1_T_Off':[str(self.CH_data[0][0])],
+        #                                 'ch2_T_On': [str(self.CH_data[0][0])],
+        #                                 'ch2_T_Off': [str(self.CH_data[0][0])],
+        #                                 'ch3_T_On': [str(self.CH_data[0][0])],
+        #                                 'ch3_T_Off': [str(self.CH_data[0][0])],
+        #                                 'ch4_T_On': [str(self.CH_data[0][0])],
+        #                                 'ch4_T_Off': [str(self.CH_data[0][0])],
+        #                                 'ch5_T_On': [str(self.CH_data[0][0])],
+        #                                 'ch5_T_Off': [str(self.CH_data[0][0])],
+        #                                 'ch6_T_On': [str(self.CH_data[0][0])],
+        #                                 'ch6_T_Off': [str(self.CH_data[0][0])],
+        #                                 'ch7_T_On': [str(self.CH_data[0][0])],
+        #                                 'ch7_T_Off': [str(self.CH_data[0][0])],
+        #                                 'ch8_T_On': [str(self.CH_data[0][0])],
+        #                                 'ch8_T_Off': [str(self.CH_data[0][0])],
+        #                                 })
+        self.save_excel = pd.DataFrame({"qrcode":["1","1","1","1","1","1","1","1"],
+                                        "T_On":[self.CH_data[0][0], "1", "1", "1", "1", "1", "1", "1"],
+                                        "T_Off": ["1", "1", "1", "1", "1", "1", "1", "1"],
+                                        "檢測結果": [self.ch1_PF, "1", "1", "1", "1", "1", "1", "1"]
+                                       },index=['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8'])
+        self.save_excel["操作人員"]=[self.CH_data[0][0]]
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
 
     def save_msg(self):
