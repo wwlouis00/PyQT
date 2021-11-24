@@ -187,7 +187,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                         "T_Off": ["1", "1", "1", "1", "1", "1", "1", "1"],
                                         "檢測結果": [self.ch1_PF, "1", "1", "1", "1", "1", "1", "1"]
                                        },index=['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8'])
-        self.save_excel["操作人員"]=[self.CH_data[0][0]]
+        # self.save_excel["操作人員"]=[self.CH_data[0][0]]
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
 
     def save_msg(self):
