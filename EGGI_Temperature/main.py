@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication,QMainWindow
 from Sulink_Temperature import *
-from Sulink_Temperature_20211123 import *   #執行
+from Sulink_Temperature_20211125 import *   #執行
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
