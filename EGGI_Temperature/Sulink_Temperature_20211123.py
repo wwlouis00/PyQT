@@ -111,46 +111,64 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # for pf in range(0,8,1):
         #     if (self.CH_data[pf][0]) == -204.8:
 
+        T = "PASS"
+        F = "FAIL"
+        self.TF_array = []
         #CH1PF
-        if self.CH_data[0][0] == -204.8
-            self.ch1_PF.setText(u'fail')
+        if self.CH_data[0][0] == -204.8:
+            self.ch1_PF.setText(F)
+            self.TF_array.append(F)
         else:
-            self.ch1_PF.setText(u'pass')
+            self.ch1_PF.setText(T)
+            self.TF_array.append(T)
         #CH2PF
         if self.CH_data[1][0] == -204.8:
-            self.ch2_PF.setText(u'fail')
+            self.ch2_PF.setText(F)
+            self.TF_array.append(F)
         else:
-            self.ch2_PF.setText(u'pass')
+            self.ch2_PF.setText(T)
         #CH3PF
         if self.CH_data[2][0] == -204.8:
-            self.ch3_PF.setText(u'fail')
+            self.ch3_PF.setText(F)
+            self.TF_array.append(F)
         else:
-            self.ch3_PF.setText(u'pass')
+            self.ch3_PF.setText(T)
         #CH4PF
         if self.CH_data[3][0] == -204.8:
-            self.ch4_PF.setText(u'fail')
+            self.ch4_PF.setText(F)
+            self.TF_array.append(F)
         else:
-            self.ch4_PF.setText(u'pass')
+            self.ch4_PF.setText(T)
+            self.TF_array.append(T)
         #CH5PF
         if self.CH_data[4][0] == -204.8:
-            self.ch5_PF.setText(u'fail')
+            self.ch5_PF.setText(F)
+            self.TF_array.append(F)
         else:
-            self.ch5_PF.setText(u'Pass')
+            self.ch5_PF.setText(T)
+            self.TF_array.append(T)
         #CH6PF
         if self.CH_data[5][0] == -204.8:
-            self.ch6_PF.setText(u'Fail')
+            self.ch6_PF.setText(F)
+            self.TF_array.append(F)
         else:
-            self.ch6_PF.setText(u'pass')
+            self.ch6_PF.setText(T)
+            self.TF_array.append(T)
         #CH7PF
         if self.CH_data[6][0] == -204.8:
-            self.ch7_PF.setText(u'fail')
+            self.ch7_PF.setText(F)
+            self.TF_array.append(F)
         else:
-            self.ch7_PF.setText(u'pass')
+            self.ch7_PF.setText(T)
+            self.TF_array.append(T)
         #CH8PF
         if self.CH_data[7][0] == -204.8:
-            self.ch8_PF.setText(u'fail')
+            self.ch8_PF.setText(F)
+            self.TF_array.append(F)
         else:
-            self.ch8_PF.setText(u'pass')
+            self.ch8_PF.setText(T)
+            self.TF_array.append(T)
+        print(self.TF_array)
 
 
 
@@ -185,7 +203,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.save_excel = pd.DataFrame({"qrcode":["1","1","1","1","1","1","1","1"],
                                         "T_On":[self.CH_data[0][0], "1", "1", "1", "1", "1", "1", "1"],
                                         "T_Off": ["1", "1", "1", "1", "1", "1", "1", "1"],
-                                        "檢測結果": [self.ch1_PF, "1", "1", "1", "1", "1", "1", "1"]
+                                        "檢測結果": [self.TF_array[0], self.TF_array[1], self.TF_array[2],self.TF_array[3],self.TF_array[4], self.TF_array[5], self.TF_array[6], self.TF_array[7]]
                                        },index=['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8'])
         # self.save_excel["操作人員"]=[self.CH_data[0][0]]
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
