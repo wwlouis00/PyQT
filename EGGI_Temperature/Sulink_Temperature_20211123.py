@@ -175,97 +175,97 @@ class Ui_MainWindow(QtWidgets.QWidget):
         print(self.TF_array)
 
 
-        self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
-        #以下為顯示qrcode圖片
-        #讀取影象
-        img=cv2.imread("image\ch01.jpg")
-        img2=cv2.imread("image\ch02.jpg")
-        img3=cv2.imread("image\ch03.jpg")
-        img4=cv2.imread("image\ch04.jpg")
-        img5=cv2.imread("image\ch05.jpg")
-        img6=cv2.imread("image\ch06.jpg")
-        img7=cv2.imread("image\ch07.jpg")
-        img8=cv2.imread("image\ch08.jpg")
-        #轉換影象通道
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-        img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)
-        img4 = cv2.cvtColor(img4, cv2.COLOR_BGR2RGB)
-        img5 = cv2.cvtColor(img5, cv2.COLOR_BGR2RGB)
-        img6 = cv2.cvtColor(img6, cv2.COLOR_BGR2RGB)
-        img7 = cv2.cvtColor(img7, cv2.COLOR_BGR2RGB)
-        img8 = cv2.cvtColor(img8, cv2.COLOR_BGR2RGB)
-        #獲取影象大小
-        x = img.shape[1]
-        y = img.shape[0]
-        x2 = img2.shape[1]
-        y2 = img2.shape[0]
-        x3 = img3.shape[1]
-        y3 = img3.shape[0]
-        x4 = img4.shape[1]
-        y4 = img4.shape[0]
-        x5 = img5.shape[1]
-        y5 = img5.shape[0]
-        x6 = img6.shape[1]
-        y6 = img6.shape[0]
-        x7 = img7.shape[1]
-        y7 = img7.shape[0]
-        x8 = img8.shape[1]
-        y8 = img8.shape[0]
-        #圖片放縮尺度
-        self.zoomscale=1
-        frame = QImage(img, x, y,x*3, QImage.Format_RGB888)
-        pix = QPixmap.fromImage(frame)
-        frame2 = QImage(img2, x2, y2,x2*3, QImage.Format_RGB888)
-        pix2 = QPixmap.fromImage(frame2)
-        frame3 = QImage(img3, x3, y3,x3*3, QImage.Format_RGB888)
-        pix3 = QPixmap.fromImage(frame3)
-        frame4 = QImage(img4, x4, y4,x4*3, QImage.Format_RGB888)
-        pix4 = QPixmap.fromImage(frame4)
-        frame5 = QImage(img5, x5, y5,x5*3, QImage.Format_RGB888)
-        pix5 = QPixmap.fromImage(frame5)
-        frame6 = QImage(img6, x6, y6,x6*3, QImage.Format_RGB888)
-        pix6 = QPixmap.fromImage(frame6)
-        frame7 = QImage(img7, x7, y7,x7*3, QImage.Format_RGB888)
-        pix7 = QPixmap.fromImage(frame7)
-        frame8 = QImage(img8, x8, y8,x8*3, QImage.Format_RGB888)
-        pix8 = QPixmap.fromImage(frame8)
-        #建立畫素圖元
-        self.item=QGraphicsPixmapItem(pix)
-        self.item2=QGraphicsPixmapItem(pix2)
-        self.item3=QGraphicsPixmapItem(pix3)
-        self.item4=QGraphicsPixmapItem(pix4)
-        self.item5=QGraphicsPixmapItem(pix5)
-        self.item6=QGraphicsPixmapItem(pix6)
-        self.item7=QGraphicsPixmapItem(pix7)
-        self.item8=QGraphicsPixmapItem(pix8)
-        #self.item.setScale(self.zoomscale)
-        #建立場景
-        self.scene=QGraphicsScene()
-        self.scene2=QGraphicsScene()
-        self.scene3=QGraphicsScene()
-        self.scene4=QGraphicsScene()
-        self.scene5=QGraphicsScene()
-        self.scene6=QGraphicsScene()
-        self.scene7=QGraphicsScene()
-        self.scene8=QGraphicsScene()
-        self.scene.addItem(self.item)
-        self.scene2.addItem(self.item2)
-        self.scene3.addItem(self.item3)
-        self.scene4.addItem(self.item4)
-        self.scene5.addItem(self.item5)
-        self.scene6.addItem(self.item6)
-        self.scene7.addItem(self.item7)
-        self.scene8.addItem(self.item8)
-         #將場景新增至檢視
-        self.ch1_qrcode.setScene(self.scene)
-        self.ch2_qrcode.setScene(self.scene2)
-        self.ch3_qrcode.setScene(self.scene3)
-        self.ch4_qrcode.setScene(self.scene4)
-        self.ch5_qrcode.setScene(self.scene5)
-        self.ch6_qrcode.setScene(self.scene6)
-        self.ch7_qrcode.setScene(self.scene7)
-        self.ch8_qrcode.setScene(self.scene8)
+        # self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
+        # #以下為顯示qrcode圖片
+        # #讀取影象
+        # img=cv2.imread("image\ch01.jpg")
+        # img2=cv2.imread("image\ch02.jpg")
+        # img3=cv2.imread("image\ch03.jpg")
+        # img4=cv2.imread("image\ch04.jpg")
+        # img5=cv2.imread("image\ch05.jpg")
+        # img6=cv2.imread("image\ch06.jpg")
+        # img7=cv2.imread("image\ch07.jpg")
+        # img8=cv2.imread("image\ch08.jpg")
+        # #轉換影象通道
+        # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        # img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+        # img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)
+        # img4 = cv2.cvtColor(img4, cv2.COLOR_BGR2RGB)
+        # img5 = cv2.cvtColor(img5, cv2.COLOR_BGR2RGB)
+        # img6 = cv2.cvtColor(img6, cv2.COLOR_BGR2RGB)
+        # img7 = cv2.cvtColor(img7, cv2.COLOR_BGR2RGB)
+        # img8 = cv2.cvtColor(img8, cv2.COLOR_BGR2RGB)
+        # #獲取影象大小
+        # x = img.shape[1]
+        # y = img.shape[0]
+        # x2 = img2.shape[1]
+        # y2 = img2.shape[0]
+        # x3 = img3.shape[1]
+        # y3 = img3.shape[0]
+        # x4 = img4.shape[1]
+        # y4 = img4.shape[0]
+        # x5 = img5.shape[1]
+        # y5 = img5.shape[0]
+        # x6 = img6.shape[1]
+        # y6 = img6.shape[0]
+        # x7 = img7.shape[1]
+        # y7 = img7.shape[0]
+        # x8 = img8.shape[1]
+        # y8 = img8.shape[0]
+        # #圖片放縮尺度
+        # self.zoomscale=1
+        # frame = QImage(img, x, y,x*3, QImage.Format_RGB888)
+        # pix = QPixmap.fromImage(frame)
+        # frame2 = QImage(img2, x2, y2,x2*3, QImage.Format_RGB888)
+        # pix2 = QPixmap.fromImage(frame2)
+        # frame3 = QImage(img3, x3, y3,x3*3, QImage.Format_RGB888)
+        # pix3 = QPixmap.fromImage(frame3)
+        # frame4 = QImage(img4, x4, y4,x4*3, QImage.Format_RGB888)
+        # pix4 = QPixmap.fromImage(frame4)
+        # frame5 = QImage(img5, x5, y5,x5*3, QImage.Format_RGB888)
+        # pix5 = QPixmap.fromImage(frame5)
+        # frame6 = QImage(img6, x6, y6,x6*3, QImage.Format_RGB888)
+        # pix6 = QPixmap.fromImage(frame6)
+        # frame7 = QImage(img7, x7, y7,x7*3, QImage.Format_RGB888)
+        # pix7 = QPixmap.fromImage(frame7)
+        # frame8 = QImage(img8, x8, y8,x8*3, QImage.Format_RGB888)
+        # pix8 = QPixmap.fromImage(frame8)
+        # #建立畫素圖元
+        # self.item=QGraphicsPixmapItem(pix)
+        # self.item2=QGraphicsPixmapItem(pix2)
+        # self.item3=QGraphicsPixmapItem(pix3)
+        # self.item4=QGraphicsPixmapItem(pix4)
+        # self.item5=QGraphicsPixmapItem(pix5)
+        # self.item6=QGraphicsPixmapItem(pix6)
+        # self.item7=QGraphicsPixmapItem(pix7)
+        # self.item8=QGraphicsPixmapItem(pix8)
+        # #self.item.setScale(self.zoomscale)
+        # #建立場景
+        # self.scene=QGraphicsScene()
+        # self.scene2=QGraphicsScene()
+        # self.scene3=QGraphicsScene()
+        # self.scene4=QGraphicsScene()
+        # self.scene5=QGraphicsScene()
+        # self.scene6=QGraphicsScene()
+        # self.scene7=QGraphicsScene()
+        # self.scene8=QGraphicsScene()
+        # self.scene.addItem(self.item)
+        # self.scene2.addItem(self.item2)
+        # self.scene3.addItem(self.item3)
+        # self.scene4.addItem(self.item4)
+        # self.scene5.addItem(self.item5)
+        # self.scene6.addItem(self.item6)
+        # self.scene7.addItem(self.item7)
+        # self.scene8.addItem(self.item8)
+        #  #將場景新增至檢視
+        # self.ch1_qrcode.setScene(self.scene)
+        # self.ch2_qrcode.setScene(self.scene2)
+        # self.ch3_qrcode.setScene(self.scene3)
+        # self.ch4_qrcode.setScene(self.scene4)
+        # self.ch5_qrcode.setScene(self.scene5)
+        # self.ch6_qrcode.setScene(self.scene6)
+        # self.ch7_qrcode.setScene(self.scene7)
+        # self.ch8_qrcode.setScene(self.scene8)
 
 
 
@@ -284,14 +284,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # self.save_excel["操作人員"]=[self.CH_data[0][0]]
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
 
-
-    def save_msg(self):
-        # QtWidgets.QMessageBox.warning(self, u"Warning", u"請檢測相機與電腦是否連線正確", buttons=QtWidgets.QMessageBox.Ok,
-        #                               defaultButton=QtWidgets.QMessageBox.Ok)
-        QtWidgets.QMessageBox.warning(self, u"a", u"請檢測相機與電腦是否連線正確", buttons=QtWidgets.QMessageBox.Ok,
-                                      defaultButton=QtWidgets.QMessageBox.Ok)
-
-
+    #清除介面上所有數據
     def clean_log(self):
         #T_On全關
         self.ch1_T_On.setText("")
@@ -454,42 +447,42 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.gridLayout_3 = QtWidgets.QGridLayout(self.layoutWidget_2)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.ch3_chart = QtWidgets.QWidget(self.layoutWidget_2)
+        self.ch3_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch3_chart.setStyleSheet("\n"
 "background-color: rgb(255, 255, 255);")
         self.ch3_chart.setObjectName("ch3_chart")
         self.gridLayout_3.addWidget(self.ch3_chart, 0, 2, 1, 1)
-        self.ch7_chart = QtWidgets.QWidget(self.layoutWidget_2)
+        self.ch7_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch7_chart.setStyleSheet("\n"
 "background-color: rgb(255, 255, 255);")
         self.ch7_chart.setObjectName("ch7_chart")
         self.gridLayout_3.addWidget(self.ch7_chart, 2, 2, 1, 1)
-        self.ch6_chart = QtWidgets.QWidget(self.layoutWidget_2)
+        self.ch6_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch6_chart.setStyleSheet("\n"
 "background-color: rgb(255, 255, 255);")
         self.ch6_chart.setObjectName("ch6_chart")
         self.gridLayout_3.addWidget(self.ch6_chart, 2, 1, 1, 1)
-        self.ch1_chart = QtWidgets.QWidget(self.layoutWidget_2)
+        self.ch1_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch1_chart.setStyleSheet("\n"
 "background-color: rgb(255, 255, 255);")
         self.ch1_chart.setObjectName("ch1_chart")
         self.gridLayout_3.addWidget(self.ch1_chart, 0, 0, 1, 1)
-        self.ch8_chart = QtWidgets.QWidget(self.layoutWidget_2)
+        self.ch8_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch8_chart.setStyleSheet("\n"
 "background-color: rgb(255, 255, 255);")
         self.ch8_chart.setObjectName("ch8_chart")
         self.gridLayout_3.addWidget(self.ch8_chart, 2, 3, 1, 1)
-        self.ch4_chart = QtWidgets.QWidget(self.layoutWidget_2)
+        self.ch4_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch4_chart.setStyleSheet("\n"
 "background-color: rgb(255, 255, 255);")
         self.ch4_chart.setObjectName("ch4_chart")
         self.gridLayout_3.addWidget(self.ch4_chart, 0, 3, 1, 1)
-        self.ch5_chart = QtWidgets.QWidget(self.layoutWidget_2)
+        self.ch5_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch5_chart.setStyleSheet("\n"
 "background-color: rgb(255, 255, 255);")
         self.ch5_chart.setObjectName("ch5_chart")
         self.gridLayout_3.addWidget(self.ch5_chart, 2, 0, 1, 1)
-        self.ch2_chart = QtWidgets.QWidget(self.layoutWidget_2)
+        self.ch2_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch2_chart.setStyleSheet("\n"
 "background-color: rgb(255, 255, 255);")
         self.ch2_chart.setObjectName("ch2_chart")
