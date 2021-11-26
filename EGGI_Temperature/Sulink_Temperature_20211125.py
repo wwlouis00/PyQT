@@ -56,8 +56,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.count = 0
         self.timer = QTimer()
 
-
-
     # browsefile開啟檔案功能
     def browsefile(self):
         self.CH1_data = []
@@ -70,8 +68,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH8_data = []
         self.CH_T_On = []
         self.CH_T_Off = []
-
-
 
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
@@ -86,33 +82,38 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 self.CH_data = [[self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))]]
             else:
                 self.CH_data.append([self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))])
-        print(self.CH_data[0][0])
         #存取每個Channel的值到陣列
-
         for i in range(0,8,1):
             self.T_On_array = []
             self.T_Off_array = []
+            #對一個Channel進行資料搜尋
             for ch in range(0,len(self.df.index)-1,1):
                 a = self.CH_data[i][ch+1] - self.CH_data[i][ch]
+                #達成T_On條件把資料存進self.T_On_array陣列
                 if a < 0 and self.CH_data[i][ch] > 109:
                     self.T_On_array.append(self.CH_data[i][ch])
+                #達成T_Off條件把資料存進self.T_Off_array陣列
                 elif a > 0 and 73 < self.CH_data[i][ch] < 74:
                     self.T_Off_array.append(self.CH_data[i][ch])
+            #溫度資料發生其他狀況
             if self.CH_data[i][0] == -204.8 or self.CH_data[i][2] == self.CH_data[i][3]:
+                #如果溫度未加熱保持恆溫
                 if self.CH_data[i][2] != -204.8:
                     for j in range(1,9,1):
                         self.T_On_array.append("恆溫")
                         self.T_Off_array.append("恆溫")
+                #如果沒有連接上
                 for k in range(1, 9, 1):
                     self.T_On_array.append("None")
                     self.T_Off_array.append("None")
             self.CH_T_On.append(self.T_On_array[0])
             self.CH_T_Off.append(self.T_Off_array[0])
+        #打印8個Channel的T_On
         print(self.CH_T_On)
+        #打印8個Channel的T_Off
         print(self.CH_T_Off)
 
-
-
+        #將On跟Off陣列存取的資料對應至各個位置上
         self.ch1_T_On.setText(str(self.CH_T_On[0]))
         self.ch1_T_Off.setText(str(self.CH_T_Off[0]))
         self.ch2_T_On.setText(str(self.CH_T_On[1]))
@@ -130,14 +131,17 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch8_T_On.setText(str(self.CH_T_On[7]))
         self.ch8_T_Off.setText(str(self.CH_T_Off[7]))
 
-        #每個channel結果Pass或Fail
-        T = "Pass"
+        #####每個channel結果Pass或Fail
+        #資料對應
+        P = "Pass"
         F = "Fail"
         N = "未連接"
         W = "未加熱"
+        #對應顏色
         T_color = "color: green;"
         F_color = "color: gray;"
         constant_color = "color: orange;"
+        #儲存結果
         self.TF_array = []
         #CH1PF
         if self.CH_T_On[0] == "None":
@@ -145,45 +149,45 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch1_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
         else:
-            self.ch1_PF.setText(T)
+            self.ch1_PF.setText(P)
             self.ch1_PF.setStyleSheet(T_color)
-            self.TF_array.append(T)
+            self.TF_array.append(P)
         #CH2PF
         if self.CH_T_On[1] == "None":
             self.ch2_PF.setText(N)
             self.ch2_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
         else:
-            self.ch2_PF.setText(T)
+            self.ch2_PF.setText(P)
             self.ch2_PF.setStyleSheet(T_color)
-            self.TF_array.append(T)
+            self.TF_array.append(P)
         #CH3PF
         if self.CH_T_On[2] == "None":
             self.ch3_PF.setText(N)
             self.ch3_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
         else:
-            self.ch3_PF.setText(T)
+            self.ch3_PF.setText(P)
             self.ch3_PF.setStyleSheet(T_color)
-            self.TF_array.append(T)
+            self.TF_array.append(P)
         #CH4PF
         if self.CH_T_On[3] == "None":
             self.ch4_PF.setText(N)
             self.ch4_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
         else:
-            self.ch4_PF.setText(T)
+            self.ch4_PF.setText(P)
             self.ch4_PF.setStyleSheet(T_color)
-            self.TF_array.append(T)
+            self.TF_array.append(P)
         #CH5PF
         if self.CH_T_On[4] == "None":
             self.ch5_PF.setText(N)
             self.ch5_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
         else:
-            self.ch5_PF.setText(T)
+            self.ch5_PF.setText(P)
             self.ch5_PF.setStyleSheet(T_color)
-            self.TF_array.append(T)
+            self.TF_array.append(P)
         #CH6PF
         if self.CH_T_On[5] == "None":
             self.ch6_PF.setText(N)
@@ -194,27 +198,27 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch6_PF.setStyleSheet(constant_color)
             self.TF_array.append(W)
         else:
-            self.ch6_PF.setText(T)
+            self.ch6_PF.setText(P)
             self.ch6_PF.setStyleSheet(T_color)
-            self.TF_array.append(T)
+            self.TF_array.append(P)
         #CH7PF
         if self.CH_T_On[6] == "None":
             self.ch7_PF.setText(N)
             self.ch7_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
         else:
-            self.ch7_PF.setText(T)
+            self.ch7_PF.setText(P)
             self.ch7_PF.setStyleSheet(T_color)
-            self.TF_array.append(T)
+            self.TF_array.append(P)
         #CH8PF
         if self.CH_T_On[7] == "None":
             self.ch8_PF.setText(N)
             self.ch8_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
         else:
-            self.ch8_PF.setText(T)
+            self.ch8_PF.setText(P)
             self.ch8_PF.setStyleSheet(T_color)
-            self.TF_array.append(T)
+            self.TF_array.append(P)
         print(self.TF_array)
     #儲存檔案消息
     def save_log(self):
@@ -225,7 +229,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                         "T_On":[self.CH_T_On[0], self.CH_T_On[1], self.CH_T_On[2], self.CH_T_On[3], self.CH_T_On[4], self.CH_T_On[5], self.CH_T_On[6], self.CH_T_On[7]],
                                         "T_Off": [self.CH_T_Off[0], self.CH_T_Off[1], self.CH_T_Off[2], self.CH_T_Off[3], self.CH_T_Off[4], self.CH_T_Off[5], self.CH_T_Off[6], self.CH_T_Off[7]],
                                         "檢測結果": [self.TF_array[0], self.TF_array[1], self.TF_array[2],self.TF_array[3],self.TF_array[4], self.TF_array[5], self.TF_array[6], self.TF_array[7]]
-                                       },index=['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8'])
+                                       },index=['Ch1', 'Ch2', 'Ch3', 'Ch4', 'Ch5', 'Ch6', 'Ch7', 'Ch8'])
+        # self.save_excel.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
 
     #清除介面上所有數據
