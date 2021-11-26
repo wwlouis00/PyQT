@@ -78,14 +78,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.df = pd.read_csv(self.fname[0],delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
         print(self.df)
-        print(len(self.df.index))
         # print(df)
         for ch in range(1, 9, 1):
             if ch == 1:
                 self.CH_data = [[self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))]]
             else:
                 self.CH_data.append([self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))])
-            print("Channel now is:" + str(ch))
         print(self.CH_data[0][0])
         #存取每個Channel的值到陣列
 
@@ -112,65 +110,84 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_T_Off.setText(str(self.CH_data[6][1]))
         self.ch8_T_On.setText(str(self.CH_data[7][1]))
         self.ch8_T_Off.setText(str(self.CH_data[7][1]))
-        # for pf in range(0,8,1):
-        #     if (self.CH_data[pf][0]) == -204.8:
 
-        T = "PASS"
-        F = "FAIL"
+        #每個channel結果Pass或Fail
+        T = "Pass"
+        F = "Fail"
+        T_color = "color: green;"
+        F_color = "color: red;"
         self.TF_array = []
         #CH1PF
         if self.CH_data[0][0] == -204.8:
             self.ch1_PF.setText(F)
+            self.ch1_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
         else:
             self.ch1_PF.setText(T)
+            self.ch1_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH2PF
         if self.CH_data[1][0] == -204.8:
             self.ch2_PF.setText(F)
+            self.ch2_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
         else:
             self.ch2_PF.setText(T)
+            self.ch2_PF.setStyleSheet(T_color)
+            self.TF_array.append(T)
         #CH3PF
         if self.CH_data[2][0] == -204.8:
             self.ch3_PF.setText(F)
+            self.ch3_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
         else:
             self.ch3_PF.setText(T)
+            self.ch3_PF.setStyleSheet(T_color)
+            self.TF_array.append(F)
         #CH4PF
         if self.CH_data[3][0] == -204.8:
             self.ch4_PF.setText(F)
+            self.ch4_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
         else:
             self.ch4_PF.setText(T)
+            self.ch4_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH5PF
         if self.CH_data[4][0] == -204.8:
             self.ch5_PF.setText(F)
+            self.ch5_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
         else:
             self.ch5_PF.setText(T)
+            self.ch5_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH6PF
         if self.CH_data[5][0] == -204.8:
             self.ch6_PF.setText(F)
+            self.ch6_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
         else:
             self.ch6_PF.setText(T)
+            self.ch6_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH7PF
         if self.CH_data[6][0] == -204.8:
             self.ch7_PF.setText(F)
+            self.ch7_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
         else:
             self.ch7_PF.setText(T)
+            self.ch7_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH8PF
         if self.CH_data[7][0] == -204.8:
             self.ch8_PF.setText(F)
+            self.ch8_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
         else:
             self.ch8_PF.setText(T)
+            self.ch8_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         print(self.TF_array)
 
