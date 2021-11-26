@@ -16,10 +16,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 from pandas.core.indexes.base import Index
 from pandas.core.series import Series
-from io import SEEK_CUR
-import numpy
-import os
-import csv
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 import os
@@ -28,11 +24,10 @@ import datetime
 from datetime import datetime, timedelta
 import statistics
 import numpy as np
-from openpyxl import load_workbook
 from heapq import nsmallest
 from pandas.core.indexes.base import Index
 from pandas.core.series import Series
-import cv2
+
 
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QGraphicsScene, QGraphicsPixmapItem
@@ -54,7 +49,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CAM_NUM = 0
         self.x = 0
         self.count = 0
-        self.timer = QTimer()
+        # self.timer = QTimer(self)
+        # self.timer.timout.connect(self.showtime)
 
     # browsefile開啟檔案功能
     def browsefile(self):
