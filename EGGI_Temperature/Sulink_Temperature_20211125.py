@@ -99,10 +99,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 elif a > 0 and 73 < self.CH_data[i][ch] < 74:
                     self.T_Off_array.append(self.CH_data[i][ch])
             if self.CH_data[i][0] == -204.8 or self.CH_data[i][2] == self.CH_data[i][3]:
-                for j in range(1, 9, 1):
-                    self.T_On_array.append(-204.8)
-                    self.T_Off_array.append(-204.8)
-            print("這是CH"+str(i+1))
+                if self.CH_data[i][2] != -204.8:
+                    for j in range(1,9,1):
+                        self.T_On_array.append("恆溫")
+                        self.T_Off_array.append("恆溫")
+                for k in range(1, 9, 1):
+                    self.T_On_array.append("None")
+                    self.T_Off_array.append("None")
             self.CH_T_On.append(self.T_On_array[0])
             self.CH_T_Off.append(self.T_Off_array[0])
         print(self.CH_T_On)
@@ -130,83 +133,90 @@ class Ui_MainWindow(QtWidgets.QWidget):
         #每個channel結果Pass或Fail
         T = "Pass"
         F = "Fail"
+        N = "未連接"
+        W = "未加熱"
         T_color = "color: green;"
-        F_color = "color: red;"
+        F_color = "color: gray;"
+        constant_color = "color: orange;"
         self.TF_array = []
         #CH1PF
-        if self.CH_T_On[0] == -204.8:
-            self.ch1_PF.setText(F)
+        if self.CH_T_On[0] == "None":
+            self.ch1_PF.setText(N)
             self.ch1_PF.setStyleSheet(F_color)
-            self.TF_array.append(F)
+            self.TF_array.append(N)
         else:
             self.ch1_PF.setText(T)
             self.ch1_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH2PF
-        if self.CH_T_On[1] == -204.8:
-            self.ch2_PF.setText(F)
+        if self.CH_T_On[1] == "None":
+            self.ch2_PF.setText(N)
             self.ch2_PF.setStyleSheet(F_color)
-            self.TF_array.append(F)
+            self.TF_array.append(N)
         else:
             self.ch2_PF.setText(T)
             self.ch2_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH3PF
-        if self.CH_T_On[2] == -204.8:
-            self.ch3_PF.setText(F)
+        if self.CH_T_On[2] == "None":
+            self.ch3_PF.setText(N)
             self.ch3_PF.setStyleSheet(F_color)
-            self.TF_array.append(F)
+            self.TF_array.append(N)
         else:
             self.ch3_PF.setText(T)
             self.ch3_PF.setStyleSheet(T_color)
-            self.TF_array.append(F)
+            self.TF_array.append(T)
         #CH4PF
-        if self.CH_T_On[3] == -204.8:
-            self.ch4_PF.setText(F)
+        if self.CH_T_On[3] == "None":
+            self.ch4_PF.setText(N)
             self.ch4_PF.setStyleSheet(F_color)
-            self.TF_array.append(F)
+            self.TF_array.append(N)
         else:
             self.ch4_PF.setText(T)
             self.ch4_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH5PF
-        if self.CH_T_On[4] == -204.8:
-            self.ch5_PF.setText(F)
+        if self.CH_T_On[4] == "None":
+            self.ch5_PF.setText(N)
             self.ch5_PF.setStyleSheet(F_color)
-            self.TF_array.append(F)
+            self.TF_array.append(N)
         else:
             self.ch5_PF.setText(T)
             self.ch5_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH6PF
-        if self.CH_T_On[5] == -204.8:
-            self.ch6_PF.setText(F)
+        if self.CH_T_On[5] == "None":
+            self.ch6_PF.setText(N)
             self.ch6_PF.setStyleSheet(F_color)
-            self.TF_array.append(F)
+            self.TF_array.append(N)
+        elif self.CH_T_On[5] == "恆溫":
+            self.ch6_PF.setText(W)
+            self.ch6_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
             self.ch6_PF.setText(T)
             self.ch6_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH7PF
-        if self.CH_T_On[6] == -204.8:
-            self.ch7_PF.setText(F)
+        if self.CH_T_On[6] == "None":
+            self.ch7_PF.setText(N)
             self.ch7_PF.setStyleSheet(F_color)
-            self.TF_array.append(F)
+            self.TF_array.append(N)
         else:
             self.ch7_PF.setText(T)
             self.ch7_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH8PF
-        if self.CH_T_On[7] == -204.8:
-            self.ch8_PF.setText(F)
+        if self.CH_T_On[7] == "None":
+            self.ch8_PF.setText(N)
             self.ch8_PF.setStyleSheet(F_color)
-            self.TF_array.append(F)
+            self.TF_array.append(N)
         else:
             self.ch8_PF.setText(T)
             self.ch8_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         print(self.TF_array)
-
+    #儲存檔案消息
     def save_log(self):
         QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
                                       defaultButton=QtWidgets.QMessageBox.Ok)
