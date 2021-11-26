@@ -68,6 +68,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH6_data = []
         self.CH7_data = []
         self.CH8_data = []
+        self.CH_T_On = []
+        self.CH_T_Off = []
 
 
 
@@ -87,29 +89,43 @@ class Ui_MainWindow(QtWidgets.QWidget):
         print(self.CH_data[0][0])
         #存取每個Channel的值到陣列
 
+        for i in range(0,8,1):
+            self.T_On_array = []
+            self.T_Off_array = []
+            for ch in range(0,len(self.df.index)-1,1):
+                a = self.CH_data[i][ch+1] - self.CH_data[i][ch]
+                if a < 0 and self.CH_data[i][ch] > 109:
+                    self.T_On_array.append(self.CH_data[i][ch])
+                elif a > 0 and 73 < self.CH_data[i][ch] < 74:
+                    self.T_Off_array.append(self.CH_data[i][ch])
+            if self.CH_data[i][0] == -204.8 or self.CH_data[i][2] == self.CH_data[i][3]:
+                for j in range(1, 9, 1):
+                    self.T_On_array.append(-204.8)
+                    self.T_Off_array.append(-204.8)
+            print("這是CH"+str(i+1))
+            self.CH_T_On.append(self.T_On_array[0])
+            self.CH_T_Off.append(self.T_Off_array[0])
+        print(self.CH_T_On)
+        print(self.CH_T_Off)
 
 
 
-
-
-
-
-        self.ch1_T_On.setText(str(self.CH_data[0][1]))
-        self.ch1_T_Off.setText(str(self.CH_data[0][1]))
-        self.ch2_T_On.setText(str(self.CH_data[1][1]))
-        self.ch2_T_Off.setText(str(self.CH_data[1][1]))
-        self.ch3_T_On.setText(str(self.CH_data[2][1]))
-        self.ch3_T_Off.setText(str(self.CH_data[2][1]))
-        self.ch4_T_On.setText(str(self.CH_data[3][1]))
-        self.ch4_T_Off.setText(str(self.CH_data[4][1]))
-        self.ch5_T_On.setText(str(self.CH_data[4][1]))
-        self.ch5_T_Off.setText(str(self.CH_data[4][1]))
-        self.ch6_T_On.setText(str(self.CH_data[5][1]))
-        self.ch6_T_Off.setText(str(self.CH_data[5][1]))
-        self.ch7_T_On.setText(str(self.CH_data[5][1]))
-        self.ch7_T_Off.setText(str(self.CH_data[6][1]))
-        self.ch8_T_On.setText(str(self.CH_data[7][1]))
-        self.ch8_T_Off.setText(str(self.CH_data[7][1]))
+        self.ch1_T_On.setText(str(self.CH_T_On[0]))
+        self.ch1_T_Off.setText(str(self.CH_T_Off[0]))
+        self.ch2_T_On.setText(str(self.CH_T_On[1]))
+        self.ch2_T_Off.setText(str(self.CH_T_Off[1]))
+        self.ch3_T_On.setText(str(self.CH_T_On[2]))
+        self.ch3_T_Off.setText(str(self.CH_T_Off[2]))
+        self.ch4_T_On.setText(str(self.CH_T_On[3]))
+        self.ch4_T_Off.setText(str(self.CH_T_Off[3]))
+        self.ch5_T_On.setText(str(self.CH_T_On[4]))
+        self.ch5_T_Off.setText(str(self.CH_T_Off[4]))
+        self.ch6_T_On.setText(str(self.CH_T_On[5]))
+        self.ch6_T_Off.setText(str(self.CH_T_Off[5]))
+        self.ch7_T_On.setText(str(self.CH_T_On[6]))
+        self.ch7_T_Off.setText(str(self.CH_T_Off[6]))
+        self.ch8_T_On.setText(str(self.CH_T_On[7]))
+        self.ch8_T_Off.setText(str(self.CH_T_Off[7]))
 
         #每個channel結果Pass或Fail
         T = "Pass"
@@ -118,7 +134,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         F_color = "color: red;"
         self.TF_array = []
         #CH1PF
-        if self.CH_data[0][0] == -204.8:
+        if self.CH_T_On[0] == -204.8:
             self.ch1_PF.setText(F)
             self.ch1_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
@@ -127,7 +143,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch1_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH2PF
-        if self.CH_data[1][0] == -204.8:
+        if self.CH_T_On[1] == -204.8:
             self.ch2_PF.setText(F)
             self.ch2_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
@@ -136,7 +152,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch2_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH3PF
-        if self.CH_data[2][0] == -204.8:
+        if self.CH_T_On[2] == -204.8:
             self.ch3_PF.setText(F)
             self.ch3_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
@@ -145,7 +161,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch3_PF.setStyleSheet(T_color)
             self.TF_array.append(F)
         #CH4PF
-        if self.CH_data[3][0] == -204.8:
+        if self.CH_T_On[3] == -204.8:
             self.ch4_PF.setText(F)
             self.ch4_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
@@ -154,7 +170,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch4_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH5PF
-        if self.CH_data[4][0] == -204.8:
+        if self.CH_T_On[4] == -204.8:
             self.ch5_PF.setText(F)
             self.ch5_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
@@ -163,7 +179,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch5_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH6PF
-        if self.CH_data[5][0] == -204.8:
+        if self.CH_T_On[5] == -204.8:
             self.ch6_PF.setText(F)
             self.ch6_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
@@ -172,7 +188,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch6_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH7PF
-        if self.CH_data[6][0] == -204.8:
+        if self.CH_T_On[6] == -204.8:
             self.ch7_PF.setText(F)
             self.ch7_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
@@ -181,7 +197,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch7_PF.setStyleSheet(T_color)
             self.TF_array.append(T)
         #CH8PF
-        if self.CH_data[7][0] == -204.8:
+        if self.CH_T_On[7] == -204.8:
             self.ch8_PF.setText(F)
             self.ch8_PF.setStyleSheet(F_color)
             self.TF_array.append(F)
@@ -196,8 +212,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                       defaultButton=QtWidgets.QMessageBox.Ok)
 
         self.save_excel = pd.DataFrame({"qrcode":["1","1","1","1","1","1","1","1"],
-                                        "T_On":[self.CH_data[0][0], "1", "1", "1", "1", "1", "1", "1"],
-                                        "T_Off": ["1", "1", "1", "1", "1", "1", "1", "1"],
+                                        "T_On":[self.CH_T_On[0], self.CH_T_On[1], self.CH_T_On[2], self.CH_T_On[3], self.CH_T_On[4], self.CH_T_On[5], self.CH_T_On[6], self.CH_T_On[7]],
+                                        "T_Off": [self.CH_T_Off[0], self.CH_T_Off[1], self.CH_T_Off[2], self.CH_T_Off[3], self.CH_T_Off[4], self.CH_T_Off[5], self.CH_T_Off[6], self.CH_T_Off[7]],
                                         "檢測結果": [self.TF_array[0], self.TF_array[1], self.TF_array[2],self.TF_array[3],self.TF_array[4], self.TF_array[5], self.TF_array[6], self.TF_array[7]]
                                        },index=['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8'])
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
