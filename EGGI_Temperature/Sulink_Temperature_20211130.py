@@ -50,7 +50,16 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.x = 0
         self.count = 0
         self.timer = QTimer()
-        self.qrcode_result =[]
+        self.qrcode_result1 = []
+        self.qrcode_result2 = []
+        self.qrcode_result3 = []
+        self.qrcode_result4 = []
+        self.qrcode_result5 = []
+        self.qrcode_result6 = []
+        self.qrcode_result7 = []
+        self.qrcode_result8 = []
+
+
 
 
     def qrcode1(self):
@@ -67,7 +76,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if text:
                 print(text)
                 self.ch1_qrcodelable.setText(text)
-                self.qrcode_result.append(text)
+                self.qrcode_result1.append(text)
                 break
             key = cv2.waitKey(10)
             if key == ord('q'):
@@ -87,7 +96,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if text:
                 print(text)
                 self.ch2_qrcodelable.setText(text)
-                self.qrcode_result.append(text)
+                self.qrcode_result2.append(text)
                 break
             key = cv2.waitKey(10)
             if key == ord('q'):
@@ -107,7 +116,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if text:
                 print(text)
                 self.ch3_qrcodelable.setText(text)
-                self.qrcode_result.append(text)
+                self.qrcode_result3.append(text)
                 break
             key = cv2.waitKey(10)
             if key == ord('q'):
@@ -127,7 +136,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if text:
                 print(text)
                 self.ch4_qrcodelable.setText(text)
-                self.qrcode_result.append(text)
+                self.qrcode_result4.append(text)
                 break
             key = cv2.waitKey(10)
             if key == ord('q'):
@@ -147,7 +156,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if text:
                 print(text)
                 self.ch5_qrcodelable.setText(text)
-                self.qrcode_result.append(text)
+                self.qrcode_result5.append(text)
                 break
             key = cv2.waitKey(10)
             if key == ord('q'):
@@ -167,7 +176,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if text:
                 print(text)
                 self.ch6_qrcodelable.setText(text)
-                self.qrcode_result.append(text)
+                self.qrcode_result6.append(text)
                 break
             key = cv2.waitKey(10)
             if key == ord('q'):
@@ -187,7 +196,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if text:
                 print(text)
                 self.ch7_qrcodelable.setText(text)
-                self.qrcode_result.append(text)
+                self.qrcode_result7.append(text)
                 break
             key = cv2.waitKey(10)
             if key == ord('q'):
@@ -207,7 +216,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if text:
                 print(text)
                 self.ch8_qrcodelable.setText(text)
-                self.qrcode_result.append(text)
+                self.qrcode_result8.append(text)
                 break
             key = cv2.waitKey(10)
             if key == ord('q'):
@@ -414,7 +423,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
                                       defaultButton=QtWidgets.QMessageBox.Ok)
 
-        self.save_excel = pd.DataFrame({"qrcode": [self.qrcode_result[0], self.qrcode_result[0], self.qrcode_result[0], self.qrcode_result[0], self.qrcode_result[0], self.qrcode_result[0], "1", "1"],
+        self.save_excel = pd.DataFrame({"qrcode": [self.qrcode_result1[0], self.qrcode_result2[0], self.qrcode_result3[0], self.qrcode_result4[0], self.qrcode_result5[0], self.qrcode_result6[0], self.qrcode_result7[0], self.qrcode_result8[0]],
                                         "T_On": [self.CH_T_On[0], self.CH_T_On[1], self.CH_T_On[2], self.CH_T_On[3],
                                                  self.CH_T_On[4], self.CH_T_On[5], self.CH_T_On[6], self.CH_T_On[7]],
                                         "T_Off": [self.CH_T_Off[0], self.CH_T_Off[1], self.CH_T_Off[2],
@@ -932,14 +941,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch4_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch4_qrcodelable.setObjectName("ch4_qrcodelable")
         self.gridLayout.addWidget(self.ch4_qrcodelable, 4, 2, 1, 1)
+        self.ch5_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch5_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch5_qrcodelable.setObjectName("ch5_qrcodelable")
+        self.gridLayout.addWidget(self.ch5_qrcodelable, 5, 2, 1, 1)
         self.ch6_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
         self.ch6_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch6_qrcodelable.setObjectName("ch6_qrcodelable")
-        self.gridLayout.addWidget(self.ch6_qrcodelable, 5, 2, 1, 1)
-        self.ch6_qrcodelable_2 = QtWidgets.QLineEdit(self.layoutWidget1)
-        self.ch6_qrcodelable_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.ch6_qrcodelable_2.setObjectName("ch6_qrcodelable_2")
-        self.gridLayout.addWidget(self.ch6_qrcodelable_2, 6, 2, 1, 1)
+        self.gridLayout.addWidget(self.ch6_qrcodelable, 6, 2, 1, 1)
         self.ch7_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
         self.ch7_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch7_qrcodelable.setObjectName("ch7_qrcodelable")
