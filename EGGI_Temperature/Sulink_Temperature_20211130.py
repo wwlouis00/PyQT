@@ -16,23 +16,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 from pandas.core.indexes.base import Index
 from pandas.core.series import Series
-from io import SEEK_CUR
-import numpy
-import os
-import csv
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
-import os
 import time
 import datetime
 from datetime import datetime, timedelta
 import statistics
 import numpy as np
-from openpyxl import load_workbook
 from heapq import nsmallest
 from pandas.core.indexes.base import Index
 from pandas.core.series import Series
 import cv2
+
 
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QGraphicsScene, QGraphicsPixmapItem
@@ -54,9 +49,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CAM_NUM = 0
         self.x = 0
         self.count = 0
-        self.timer = QTimer()
-
-
+        # self.timer = QTimer(self)
+        # self.timer.timout.connect(self.showtime)
 
     # browsefile開啟檔案功能
     def browsefile(self):
@@ -68,8 +62,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH6_data = []
         self.CH7_data = []
         self.CH8_data = []
-
-
+        self.CH_T_On = []
+        self.CH_T_Off = []
 
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
@@ -78,210 +72,178 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.df = pd.read_csv(self.fname[0],delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
         print(self.df)
-        print(len(self.df.index))
         # print(df)
         for ch in range(1, 9, 1):
             if ch == 1:
                 self.CH_data = [[self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))]]
             else:
                 self.CH_data.append([self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))])
-            print("Channel now is:" + str(ch))
-        print(self.CH_data[0][0])
         #存取每個Channel的值到陣列
+        for i in range(0,8,1):
+            self.T_On_array = []
+            self.T_Off_array = []
+            #對一個Channel進行資料搜尋
+            for ch in range(0,len(self.df.index)-1,1):
+                a = self.CH_data[i][ch+1] - self.CH_data[i][ch]
+                #達成T_On條件把資料存進self.T_On_array陣列
+                if a < 0 and self.CH_data[i][ch] > 109:
+                    self.T_On_array.append(self.CH_data[i][ch])
+                #達成T_Off條件把資料存進self.T_Off_array陣列
+                elif a > 0 and 73 < self.CH_data[i][ch] < 74:
+                    self.T_Off_array.append(self.CH_data[i][ch])
+            #溫度資料發生其他狀況
+            if self.CH_data[i][0] == -204.8 or self.CH_data[i][2] == self.CH_data[i][3]:
+                #如果溫度未加熱保持恆溫
+                if self.CH_data[i][2] != -204.8:
+                    for j in range(1,9,1):
+                        self.T_On_array.append("恆溫")
+                        self.T_Off_array.append("恆溫")
+                #如果沒有連接上
+                for k in range(1, 9, 1):
+                    self.T_On_array.append("None")
+                    self.T_Off_array.append("None")
+            self.CH_T_On.append(self.T_On_array[0])
+            self.CH_T_Off.append(self.T_Off_array[0])
+        #打印8個Channel的T_On
+        print(self.CH_T_On)
+        #打印8個Channel的T_Off
+        print(self.CH_T_Off)
 
+        #將On跟Off陣列存取的資料對應至各個位置上
+        self.ch1_T_On.setText(str(self.CH_T_On[0]))
+        self.ch1_T_Off.setText(str(self.CH_T_Off[0]))
+        self.ch2_T_On.setText(str(self.CH_T_On[1]))
+        self.ch2_T_Off.setText(str(self.CH_T_Off[1]))
+        self.ch3_T_On.setText(str(self.CH_T_On[2]))
+        self.ch3_T_Off.setText(str(self.CH_T_Off[2]))
+        self.ch4_T_On.setText(str(self.CH_T_On[3]))
+        self.ch4_T_Off.setText(str(self.CH_T_Off[3]))
+        self.ch5_T_On.setText(str(self.CH_T_On[4]))
+        self.ch5_T_Off.setText(str(self.CH_T_Off[4]))
+        self.ch6_T_On.setText(str(self.CH_T_On[5]))
+        self.ch6_T_Off.setText(str(self.CH_T_Off[5]))
+        self.ch7_T_On.setText(str(self.CH_T_On[6]))
+        self.ch7_T_Off.setText(str(self.CH_T_Off[6]))
+        self.ch8_T_On.setText(str(self.CH_T_On[7]))
+        self.ch8_T_Off.setText(str(self.CH_T_Off[7]))
 
-
-
-
-
-
-
-        self.ch1_T_On.setText(str(self.CH_data[0][1]))
-        self.ch1_T_Off.setText(str(self.CH_data[0][1]))
-        self.ch2_T_On.setText(str(self.CH_data[1][1]))
-        self.ch2_T_Off.setText(str(self.CH_data[1][1]))
-        self.ch3_T_On.setText(str(self.CH_data[2][1]))
-        self.ch3_T_Off.setText(str(self.CH_data[2][1]))
-        self.ch4_T_On.setText(str(self.CH_data[3][1]))
-        self.ch4_T_Off.setText(str(self.CH_data[4][1]))
-        self.ch5_T_On.setText(str(self.CH_data[4][1]))
-        self.ch5_T_Off.setText(str(self.CH_data[4][1]))
-        self.ch6_T_On.setText(str(self.CH_data[5][1]))
-        self.ch6_T_Off.setText(str(self.CH_data[5][1]))
-        self.ch7_T_On.setText(str(self.CH_data[5][1]))
-        self.ch7_T_Off.setText(str(self.CH_data[6][1]))
-        self.ch8_T_On.setText(str(self.CH_data[7][1]))
-        self.ch8_T_Off.setText(str(self.CH_data[7][1]))
-        # for pf in range(0,8,1):
-        #     if (self.CH_data[pf][0]) == -204.8:
-
-        T = "PASS"
-        F = "FAIL"
+        #####每個channel結果Pass或Fail
+        #資料對應
+        P = "Pass"
+        F = "Fail"
+        N = "未連接"
+        W = "未加熱"
+        #對應顏色
+        T_color = "color: green;"
+        F_color = "color: gray;"
+        constant_color = "color: orange;"
+        #儲存結果
         self.TF_array = []
         #CH1PF
-        if self.CH_data[0][0] == -204.8:
-            self.ch1_PF.setText(F)
-            self.TF_array.append(F)
+        if self.CH_T_On[0] == "None":
+            self.ch1_PF.setText(N)
+            self.ch1_PF.setStyleSheet(F_color)
+            self.TF_array.append(N)
         else:
-            self.ch1_PF.setText(T)
-            self.TF_array.append(T)
+            self.ch1_PF.setText(P)
+            self.ch1_PF.setStyleSheet(T_color)
+            self.TF_array.append(P)
         #CH2PF
-        if self.CH_data[1][0] == -204.8:
-            self.ch2_PF.setText(F)
-            self.TF_array.append(F)
+        if self.CH_T_On[1] == "None":
+            self.ch2_PF.setText(N)
+            self.ch2_PF.setStyleSheet(F_color)
+            self.TF_array.append(N)
         else:
-            self.ch2_PF.setText(T)
+            self.ch2_PF.setText(P)
+            self.ch2_PF.setStyleSheet(T_color)
+            self.TF_array.append(P)
         #CH3PF
-        if self.CH_data[2][0] == -204.8:
-            self.ch3_PF.setText(F)
-            self.TF_array.append(F)
+        if self.CH_T_On[2] == "None":
+            self.ch3_PF.setText(N)
+            self.ch3_PF.setStyleSheet(F_color)
+            self.TF_array.append(N)
         else:
-            self.ch3_PF.setText(T)
+            self.ch3_PF.setText(P)
+            self.ch3_PF.setStyleSheet(T_color)
+            self.TF_array.append(P)
         #CH4PF
-        if self.CH_data[3][0] == -204.8:
-            self.ch4_PF.setText(F)
-            self.TF_array.append(F)
+        if self.CH_T_On[3] == "None":
+            self.ch4_PF.setText(N)
+            self.ch4_PF.setStyleSheet(F_color)
+            self.TF_array.append(N)
         else:
-            self.ch4_PF.setText(T)
-            self.TF_array.append(T)
+            self.ch4_PF.setText(P)
+            self.ch4_PF.setStyleSheet(T_color)
+            self.TF_array.append(P)
         #CH5PF
-        if self.CH_data[4][0] == -204.8:
-            self.ch5_PF.setText(F)
-            self.TF_array.append(F)
+        if self.CH_T_On[4] == "None":
+            self.ch5_PF.setText(N)
+            self.ch5_PF.setStyleSheet(F_color)
+            self.TF_array.append(N)
         else:
-            self.ch5_PF.setText(T)
-            self.TF_array.append(T)
+            self.ch5_PF.setText(P)
+            self.ch5_PF.setStyleSheet(T_color)
+            self.TF_array.append(P)
         #CH6PF
-        if self.CH_data[5][0] == -204.8:
-            self.ch6_PF.setText(F)
-            self.TF_array.append(F)
+        if self.CH_T_On[5] == "None":
+            self.ch6_PF.setText(N)
+            self.ch6_PF.setStyleSheet(F_color)
+            self.TF_array.append(N)
+        elif self.CH_T_On[5] == "恆溫":
+            self.ch6_PF.setText(W)
+            self.ch6_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
-            self.ch6_PF.setText(T)
-            self.TF_array.append(T)
+            self.ch6_PF.setText(P)
+            self.ch6_PF.setStyleSheet(T_color)
+            self.TF_array.append(P)
         #CH7PF
-        if self.CH_data[6][0] == -204.8:
-            self.ch7_PF.setText(F)
-            self.TF_array.append(F)
+        if self.CH_T_On[6] == "None":
+            self.ch7_PF.setText(N)
+            self.ch7_PF.setStyleSheet(F_color)
+            self.TF_array.append(N)
         else:
-            self.ch7_PF.setText(T)
-            self.TF_array.append(T)
+            self.ch7_PF.setText(P)
+            self.ch7_PF.setStyleSheet(T_color)
+            self.TF_array.append(P)
         #CH8PF
-        if self.CH_data[7][0] == -204.8:
-            self.ch8_PF.setText(F)
-            self.TF_array.append(F)
+        if self.CH_T_On[7] == "None":
+            self.ch8_PF.setText(N)
+            self.ch8_PF.setStyleSheet(F_color)
+            self.TF_array.append(N)
         else:
-            self.ch8_PF.setText(T)
-            self.TF_array.append(T)
+            self.ch8_PF.setText(P)
+            self.ch8_PF.setStyleSheet(T_color)
+            self.TF_array.append(P)
         print(self.TF_array)
 
+        img = cv2.imread("image\ch01.jpg")
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        x = img.shape[1]
+        y = img.shape[0]
+        frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
+        pix = QPixmap.fromImage(frame)
+        self.item = QGraphicsPixmapItem(pix)
+        self.scene = QGraphicsScene()
+        self.scene.addItem(self.item)
+        self.ch1_chart.setScene(self.scene)
 
-        # self.df.to_excel('./'+ now_output_time,encoding="utf_8_sg")
-        # #以下為顯示qrcode圖片
-        # #讀取影象
-        # img=cv2.imread("image\ch01.jpg")
-        # img2=cv2.imread("image\ch02.jpg")
-        # img3=cv2.imread("image\ch03.jpg")
-        # img4=cv2.imread("image\ch04.jpg")
-        # img5=cv2.imread("image\ch05.jpg")
-        # img6=cv2.imread("image\ch06.jpg")
-        # img7=cv2.imread("image\ch07.jpg")
-        # img8=cv2.imread("image\ch08.jpg")
-        # #轉換影象通道
-        # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        # img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-        # img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)
-        # img4 = cv2.cvtColor(img4, cv2.COLOR_BGR2RGB)
-        # img5 = cv2.cvtColor(img5, cv2.COLOR_BGR2RGB)
-        # img6 = cv2.cvtColor(img6, cv2.COLOR_BGR2RGB)
-        # img7 = cv2.cvtColor(img7, cv2.COLOR_BGR2RGB)
-        # img8 = cv2.cvtColor(img8, cv2.COLOR_BGR2RGB)
-        # #獲取影象大小
-        # x = img.shape[1]
-        # y = img.shape[0]
-        # x2 = img2.shape[1]
-        # y2 = img2.shape[0]
-        # x3 = img3.shape[1]
-        # y3 = img3.shape[0]
-        # x4 = img4.shape[1]
-        # y4 = img4.shape[0]
-        # x5 = img5.shape[1]
-        # y5 = img5.shape[0]
-        # x6 = img6.shape[1]
-        # y6 = img6.shape[0]
-        # x7 = img7.shape[1]
-        # y7 = img7.shape[0]
-        # x8 = img8.shape[1]
-        # y8 = img8.shape[0]
-        # #圖片放縮尺度
-        # self.zoomscale=1
-        # frame = QImage(img, x, y,x*3, QImage.Format_RGB888)
-        # pix = QPixmap.fromImage(frame)
-        # frame2 = QImage(img2, x2, y2,x2*3, QImage.Format_RGB888)
-        # pix2 = QPixmap.fromImage(frame2)
-        # frame3 = QImage(img3, x3, y3,x3*3, QImage.Format_RGB888)
-        # pix3 = QPixmap.fromImage(frame3)
-        # frame4 = QImage(img4, x4, y4,x4*3, QImage.Format_RGB888)
-        # pix4 = QPixmap.fromImage(frame4)
-        # frame5 = QImage(img5, x5, y5,x5*3, QImage.Format_RGB888)
-        # pix5 = QPixmap.fromImage(frame5)
-        # frame6 = QImage(img6, x6, y6,x6*3, QImage.Format_RGB888)
-        # pix6 = QPixmap.fromImage(frame6)
-        # frame7 = QImage(img7, x7, y7,x7*3, QImage.Format_RGB888)
-        # pix7 = QPixmap.fromImage(frame7)
-        # frame8 = QImage(img8, x8, y8,x8*3, QImage.Format_RGB888)
-        # pix8 = QPixmap.fromImage(frame8)
-        # #建立畫素圖元
-        # self.item=QGraphicsPixmapItem(pix)
-        # self.item2=QGraphicsPixmapItem(pix2)
-        # self.item3=QGraphicsPixmapItem(pix3)
-        # self.item4=QGraphicsPixmapItem(pix4)
-        # self.item5=QGraphicsPixmapItem(pix5)
-        # self.item6=QGraphicsPixmapItem(pix6)
-        # self.item7=QGraphicsPixmapItem(pix7)
-        # self.item8=QGraphicsPixmapItem(pix8)
-        # #self.item.setScale(self.zoomscale)
-        # #建立場景
-        # self.scene=QGraphicsScene()
-        # self.scene2=QGraphicsScene()
-        # self.scene3=QGraphicsScene()
-        # self.scene4=QGraphicsScene()
-        # self.scene5=QGraphicsScene()
-        # self.scene6=QGraphicsScene()
-        # self.scene7=QGraphicsScene()
-        # self.scene8=QGraphicsScene()
-        # self.scene.addItem(self.item)
-        # self.scene2.addItem(self.item2)
-        # self.scene3.addItem(self.item3)
-        # self.scene4.addItem(self.item4)
-        # self.scene5.addItem(self.item5)
-        # self.scene6.addItem(self.item6)
-        # self.scene7.addItem(self.item7)
-        # self.scene8.addItem(self.item8)
-        #  #將場景新增至檢視
-        # self.ch1_qrcode.setScene(self.scene)
-        # self.ch2_qrcode.setScene(self.scene2)
-        # self.ch3_qrcode.setScene(self.scene3)
-        # self.ch4_qrcode.setScene(self.scene4)
-        # self.ch5_qrcode.setScene(self.scene5)
-        # self.ch6_qrcode.setScene(self.scene6)
-        # self.ch7_qrcode.setScene(self.scene7)
-        # self.ch8_qrcode.setScene(self.scene8)
+        # def take_picture(self):
+    #     self.
 
 
 
-
+    #儲存檔案消息
     def save_log(self):
-
-
         QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
                                       defaultButton=QtWidgets.QMessageBox.Ok)
 
         self.save_excel = pd.DataFrame({"qrcode":["1","1","1","1","1","1","1","1"],
-                                        "T_On":[self.CH_data[0][0], "1", "1", "1", "1", "1", "1", "1"],
-                                        "T_Off": ["1", "1", "1", "1", "1", "1", "1", "1"],
+                                        "T_On":[self.CH_T_On[0], self.CH_T_On[1], self.CH_T_On[2], self.CH_T_On[3], self.CH_T_On[4], self.CH_T_On[5], self.CH_T_On[6], self.CH_T_On[7]],
+                                        "T_Off": [self.CH_T_Off[0], self.CH_T_Off[1], self.CH_T_Off[2], self.CH_T_Off[3], self.CH_T_Off[4], self.CH_T_Off[5], self.CH_T_Off[6], self.CH_T_Off[7]],
                                         "檢測結果": [self.TF_array[0], self.TF_array[1], self.TF_array[2],self.TF_array[3],self.TF_array[4], self.TF_array[5], self.TF_array[6], self.TF_array[7]]
-                                       },index=['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8'])
-        # self.save_excel["操作人員"]=[self.CH_data[0][0]]
+                                       },index=['Ch1', 'Ch2', 'Ch3', 'Ch4', 'Ch5', 'Ch6', 'Ch7', 'Ch8'])
+        # self.save_excel.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
         self.save_excel.to_excel('./'+'history'+now_output_time,encoding="utf_8_sig")
 
     #清除介面上所有數據
@@ -317,7 +279,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.input_file.setText("")
         self.input_name.setText("")
 
-
     # 顯示現在時間
     def showtime(self):
         self.time = QDateTime.currentDateTime()
@@ -325,7 +286,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.time.setText(timedisplay)
 
     def setupUi(self, MainWindow):
-
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1372, 824)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
