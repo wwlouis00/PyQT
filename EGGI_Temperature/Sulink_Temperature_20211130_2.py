@@ -408,8 +408,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # plt.plot(len(self.df.index), self.CH_data[5][1], 'o-', color='m', label="CH6_data")  # 靛
         # plt.plot(len(self.df.index), self.CH_data[6][1], 'o-', color='purple', label="CH7_data")  # 紫
         # plt.plot(len(self.df.index), self.CH_data[7][1], 'o-', color='k', label="CH8_data")  # 黑
-
-
         # 設定圖範圍
         plt.xlim(0, len(self.df.index))
         plt.ylim(0, 130)
