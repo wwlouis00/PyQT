@@ -59,9 +59,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.qrcode_result7 = []
         self.qrcode_result8 = []
 
-
-
-
     def qrcode1(self):
         cap = cv2.VideoCapture(0)
         while True:
@@ -81,6 +78,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             key = cv2.waitKey(10)
             if key == ord('q'):
                 break
+        self.qrcode_result1.append("None")
         cv2.destroyAllWindows()
     def qrcode2(self):
         cap = cv2.VideoCapture(0)
@@ -101,6 +99,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             key = cv2.waitKey(10)
             if key == ord('q'):
                 break
+        self.qrcode_result2.append("None")
         cv2.destroyAllWindows()
     def qrcode3(self):
         cap = cv2.VideoCapture(0)
@@ -121,6 +120,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             key = cv2.waitKey(10)
             if key == ord('q'):
                 break
+        self.qrcode_result3.append("None")
         cv2.destroyAllWindows()
     def qrcode4(self):
         cap = cv2.VideoCapture(0)
@@ -141,6 +141,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             key = cv2.waitKey(10)
             if key == ord('q'):
                 break
+        self.qrcode_result4.append("None")
         cv2.destroyAllWindows()
     def qrcode5(self):
         cap = cv2.VideoCapture(0)
@@ -161,6 +162,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             key = cv2.waitKey(10)
             if key == ord('q'):
                 break
+        self.qrcode_result5.append("None")
         cv2.destroyAllWindows()
     def qrcode6(self):
         cap = cv2.VideoCapture(0)
@@ -181,6 +183,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             key = cv2.waitKey(10)
             if key == ord('q'):
                 break
+        self.qrcode_result6.append("None")
         cv2.destroyAllWindows()
     def qrcode7(self):
         cap = cv2.VideoCapture(0)
@@ -201,6 +204,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             key = cv2.waitKey(10)
             if key == ord('q'):
                 break
+        self.qrcode_result7.append("None")
         cv2.destroyAllWindows()
     def qrcode8(self):
         cap = cv2.VideoCapture(0)
@@ -221,6 +225,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             key = cv2.waitKey(10)
             if key == ord('q'):
                 break
+        self.qrcode_result8.append("None")
         cv2.destroyAllWindows()
 
     def browsefile(self):
@@ -234,14 +239,17 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH8_data = []
         self.CH_T_On = []
         self.CH_T_Off = []
-
-
+        # self.CH_total = [i for i in range(1,self.df.index, 1)]
 
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
         self.df = pd.read_csv(self.fname[0],delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']#在開啟檔案上面新增一行
+        print(self.fname[0])
+
+        for i in range(1,len(self.df.index)-1,1):
+            self.CH1_data.append(90)
 
         for ch in range(1, 9, 1):
             if ch == 1:
@@ -311,6 +319,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch1_PF.setText(N)
             self.ch1_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
+        elif self.CH_T_On[0] == "恆溫":
+            self.ch1_PF.setText(W)
+            self.ch1_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
             self.ch1_PF.setText(P)
             self.ch1_PF.setStyleSheet(T_color)
@@ -320,6 +332,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch2_PF.setText(N)
             self.ch2_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
+        elif self.CH_T_On[1] == "恆溫":
+            self.ch2_PF.setText(W)
+            self.ch2_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
             self.ch2_PF.setText(P)
             self.ch2_PF.setStyleSheet(T_color)
@@ -329,6 +345,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch3_PF.setText(N)
             self.ch3_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
+        elif self.CH_T_On[2] == "恆溫":
+            self.ch3_PF.setText(W)
+            self.ch3_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
             self.ch3_PF.setText(P)
             self.ch3_PF.setStyleSheet(T_color)
@@ -338,6 +358,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch4_PF.setText(N)
             self.ch4_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
+        elif self.CH_T_On[3] == "恆溫":
+            self.ch4_PF.setText(W)
+            self.ch4_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
             self.ch4_PF.setText(P)
             self.ch4_PF.setStyleSheet(T_color)
@@ -347,6 +371,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch5_PF.setText(N)
             self.ch5_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
+        elif self.CH_T_On[4] == "恆溫":
+            self.ch5_PF.setText(W)
+            self.ch5_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
             self.ch5_PF.setText(P)
             self.ch5_PF.setStyleSheet(T_color)
@@ -369,6 +397,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch7_PF.setText(N)
             self.ch7_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
+        elif self.CH_T_On[6] == "恆溫":
+            self.ch7_PF.setText(W)
+            self.ch7_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
             self.ch7_PF.setText(P)
             self.ch7_PF.setStyleSheet(T_color)
@@ -378,6 +410,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch8_PF.setText(N)
             self.ch8_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
+        elif self.CH_T_On[7] == "恆溫":
+            self.ch8_PF.setText(W)
+            self.ch8_PF.setStyleSheet(constant_color)
+            self.TF_array.append(W)
         else:
             self.ch8_PF.setText(P)
             self.ch8_PF.setStyleSheet(T_color)
@@ -403,8 +439,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch8_chart.setScene(self.scene)
 
     def take_picture(self):
-        plt.figure(figsize=(4, 4), dpi=30, linewidth=0)
-        plt.plot(len(self.df.index), self.CH_data[0][0], 'o-', color='red', label="CH1_data")  # 紅
+        plt.figure(figsize=(5, 5), dpi=30, linewidth=0)
+        plt.plot(self.CH1_data, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         # plt.plot(len(self.df.index), self.CH_data[1][1], 'o-', color='orange', label="CH2_data")  # 澄
         # plt.plot(len(self.df.index), self.CH_data[2][1], 'o-', color='yellow', label="CH3_data")  # 黃
         # plt.plot(len(self.df.index), self.CH_data[3][1], 'o-', color='green', label="CH4_data")  # 綠
@@ -420,6 +456,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     #儲存結果
     def save_log(self):
+        # if self.fname[0] == "":
+        #     QtWidgets.QMessageBox.warning(self, u"存取消息", u"存取消息失敗", buttons=QtWidgets.QMessageBox.Ok,
+        #                                   defaultButton=QtWidgets.QMessageBox.Ok)
         QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
                                       defaultButton=QtWidgets.QMessageBox.Ok)
 
@@ -465,7 +504,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.input_file.setText("")
         self.input_name.setText("")
         # #Chart
-        # self.ch1_chart.setScene("")
+        # self.ch1_chart.setScene()
         # self.ch2_chart.setScene("")
         # self.ch3_chart.setScene("")
         # self.ch4_chart.setScene("")
@@ -1066,18 +1105,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_qrcode.setText(_translate("MainWindow", "檢測CH6"))
         self.ch7_qrcode.setText(_translate("MainWindow", "檢測CH7"))
         self.ch8_qrcode.setText(_translate("MainWindow", "檢測CH8"))
-
-
-
-
         self.label_qrcode_2.setText(_translate("MainWindow", "READ"))
-
-
-
-
-
-
-
         self.label_qrcode.setText(_translate("MainWindow", "QRCODE"))
 
 
