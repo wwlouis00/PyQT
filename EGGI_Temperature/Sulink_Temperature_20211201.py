@@ -245,19 +245,23 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH8_data = []
         self.CH_T_On = []
         self.CH_T_Off = []
-        # print(self.CH_total)
-        # print(self.CH_total)
+        self.CH_total = []
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
         self.df = pd.read_csv(self.fname[0], delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
-        print(self.fname[0])
-        for i in range(0, len(self.df.index) - 1, 1):
+
+
+        for i in range(0,len(self.df.index), 1):
+            self.CH_total.append(i)
+        for i in range(0, len(self.df.index), 1):
             self.CH1_data.append(self.df.loc[i, 'CH1'])
         print(self.CH1_data)
-        # for i in range([self.df.loc[i, 'CH' + str(ch)], len(self.df.index) - 1, 1):
-        #     self.CH1_data.append([self.df.loc[i, 'CH1' + str(ch)] for i in range(len(self.df.index))])
+        for i in range(0, len(self.df.index), 1):
+            self.CH2_data.append(self.df.loc[i, 'CH2'])
+        print(self.CH2_data)
+
 
         for ch in range(1, 9, 1):
             if ch == 1:
@@ -427,18 +431,33 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch8_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         self.take_picture()
+        # 轉換影象通道
         img = cv2.imread("good.jpg")
+        img2 = cv2.imread("good2.jpg")
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        x = img.shape[0]
+        img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+        # 獲取影象大小
+        x = img.shape[1]
         y = img.shape[0]
+        x2 = img2.shape[1]
+        y2 = img2.shape[0]
+        # 圖片放縮尺度
+        self.zoomscale = 1
         frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
         pix = QPixmap.fromImage(frame)
-
+        frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
+        pix2 = QPixmap.fromImage(frame2)
+        # 建立畫素圖元
         self.item = QGraphicsPixmapItem(pix)
+        self.item2 = QGraphicsPixmapItem(pix2)
+        # 建立場景
         self.scene = QGraphicsScene()
+        self.scene2 = QGraphicsScene()
         self.scene.addItem(self.item)
+        self.scene2.addItem(self.item2)
+        # 將場景新增至檢視
         self.ch1_chart.setScene(self.scene)
-        self.ch2_chart.setScene(self.scene)
+        self.ch2_chart.setScene(self.scene2)
         self.ch3_chart.setScene(self.scene)
         self.ch4_chart.setScene(self.scene)
         self.ch5_chart.setScene(self.scene)
@@ -447,13 +466,21 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch8_chart.setScene(self.scene)
 
     def take_picture(self):
+        #CH1
         plt.figure(figsize=(5, 5), dpi=30, linewidth=0)
-        plt.plot(self.CH1_data, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
+        plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         # 設定圖範圍
         plt.xlim(0, len(self.df.index))
         plt.ylim(0, 130)
-        plt.grid(True)
+        # plt.grid(True) 有網格
         plt.savefig('good.jpg')
+        # CH2
+        plt.plot(self.CH2_data, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
+        # 設定圖範圍
+        plt.xlim(0, len(self.df.index))
+        plt.ylim(0, 130)
+        # plt.grid(True) 有網格
+        plt.savefig('good2.jpg')
         # plt.plot(len(self.df.index), self.CH_data[1][1], 'o-', color='orange', label="CH2_data")  # 澄
         # plt.plot(len(self.df.index), self.CH_data[2][1], 'o-', color='yellow', label="CH3_data")  # 黃
         # plt.plot(len(self.df.index), self.CH_data[3][1], 'o-', color='green', label="CH4_data")  # 綠
@@ -1052,7 +1079,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "溫度監控程式"))
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
         self.btn_opentxt.setText(_translate("MainWindow", "打開"))
         self.btn_save.setText(_translate("MainWindow", "儲存"))
