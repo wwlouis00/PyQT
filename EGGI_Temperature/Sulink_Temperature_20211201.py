@@ -258,9 +258,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
         for i in range(0, len(self.df.index), 1):
             self.CH1_data.append(self.df.loc[i, 'CH1'])
         print(self.CH1_data)
+
         for i in range(0, len(self.df.index), 1):
             self.CH2_data.append(self.df.loc[i, 'CH2'])
-        print(self.CH2_data)
+
+        for i in range(0, len(self.df.index), 1):
+            self.CH6_data.append(self.df.loc[i, 'CH6'])
+        print(self.CH6_data)
 
 
         for ch in range(1, 9, 1):
@@ -431,9 +435,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch8_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         self.take_picture()
-        # 轉換影象通道
+
         img = cv2.imread("good.jpg")
         img2 = cv2.imread("good2.jpg")
+        # 轉換影象通道
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
         # 獲取影象大小
@@ -442,14 +447,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
         x2 = img2.shape[1]
         y2 = img2.shape[0]
         # 圖片放縮尺度
-        self.zoomscale = 1
+        # self.zoomscale = 1
         frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
-        pix = QPixmap.fromImage(frame)
+        self.pix = QPixmap.fromImage(frame)
         frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
-        pix2 = QPixmap.fromImage(frame2)
+        self.pix2 = QPixmap.fromImage(frame2)
         # 建立畫素圖元
-        self.item = QGraphicsPixmapItem(pix)
-        self.item2 = QGraphicsPixmapItem(pix2)
+        self.item = QGraphicsPixmapItem(self.pix)
+        self.item2 = QGraphicsPixmapItem(self.pix2)
         # 建立場景
         self.scene = QGraphicsScene()
         self.scene2 = QGraphicsScene()
@@ -467,7 +472,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def take_picture(self):
         #CH1
-        plt.figure(figsize=(5, 5), dpi=30, linewidth=0)
+        plt.figure(figsize=(6, 5), dpi=30, linewidth=0)
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         # 設定圖範圍
         plt.xlim(0, len(self.df.index))
@@ -475,7 +480,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # plt.grid(True) 有網格
         plt.savefig('good.jpg')
         # CH2
-        plt.plot(self.CH2_data, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
+        plt.plot(self.CH_total, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
         # 設定圖範圍
         plt.xlim(0, len(self.df.index))
         plt.ylim(0, 130)
@@ -510,7 +515,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                         "檢測結果": [self.TF_array[0], self.TF_array[1], self.TF_array[2],
                                                  self.TF_array[3],
                                                  self.TF_array[4], self.TF_array[5], self.TF_array[6],
-                                                 self.TF_array[7]]
+                                                 self.TF_array[7]],
+                                        "操作人員":[self.fname[0],"","","","","","",""]
                                         }, index=['Ch1', 'Ch2', 'Ch3', 'Ch4', 'Ch5', 'Ch6', 'Ch7', 'Ch8'])
         self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
 
@@ -751,7 +757,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch5_chart.setObjectName("ch5_chart")
         self.gridLayout_3.addWidget(self.ch5_chart, 2, 0, 1, 1)
         self.ch2_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
-        self.ch2_chart.setObjectName("ch2_char")
+        self.ch2_chart.setObjectName("ch2_chart")
         self.gridLayout_3.addWidget(self.ch2_chart, 0, 1, 1, 1)
         self.ch5_display = QtWidgets.QPushButton(self.layoutWidget_2)
         self.ch5_display.setObjectName("ch5_display")
