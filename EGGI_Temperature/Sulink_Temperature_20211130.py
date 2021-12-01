@@ -59,6 +59,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.qrcode_result7 = []
         self.qrcode_result8 = []
 
+
     def qrcode1(self):
         cap = cv2.VideoCapture(0)
         while True:
@@ -239,8 +240,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH8_data = []
         self.CH_T_On = []
         self.CH_T_Off = []
-        # self.CH_total = [i for i in range(1,self.df.index, 1)]
-
+        # print(self.CH_total)
+        # print(self.CH_total)
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
         # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
@@ -441,6 +442,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
     def take_picture(self):
         plt.figure(figsize=(5, 5), dpi=30, linewidth=0)
         plt.plot(self.CH1_data, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
+        # 設定圖範圍
+        plt.xlim(0, len(self.df.index))
+        plt.ylim(0, 130)
+        plt.grid(True)
+        plt.savefig('good.jpg')
         # plt.plot(len(self.df.index), self.CH_data[1][1], 'o-', color='orange', label="CH2_data")  # 澄
         # plt.plot(len(self.df.index), self.CH_data[2][1], 'o-', color='yellow', label="CH3_data")  # 黃
         # plt.plot(len(self.df.index), self.CH_data[3][1], 'o-', color='green', label="CH4_data")  # 綠
@@ -448,11 +454,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # plt.plot(len(self.df.index), self.CH_data[5][1], 'o-', color='m', label="CH6_data")  # 靛
         # plt.plot(len(self.df.index), self.CH_data[6][1], 'o-', color='purple', label="CH7_data")  # 紫
         # plt.plot(len(self.df.index), self.CH_data[7][1], 'o-', color='k', label="CH8_data")  # 黑
-        # 設定圖範圍
-        plt.xlim(0, len(self.df.index))
-        plt.ylim(0, 130)
-        plt.grid(True)
-        plt.savefig('good.jpg')
 
     #儲存結果
     def save_log(self):
@@ -519,7 +520,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.time = QDateTime.currentDateTime()
         timedisplay = time.toString("yyyy-MM-dd hh:mm:ss dddd")  # 格式化一下時間
         self.time.setText(timedisplay)
-
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
