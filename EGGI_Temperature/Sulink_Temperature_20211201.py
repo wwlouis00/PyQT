@@ -58,6 +58,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.qrcode_result7 = []
         self.qrcode_result8 = []
 
+    def display1(self):
+        img  = cv2.imread("CH1.jpg")
+        img.shape
+        cv2.imshow("CH1",img)
+
     def qrcode1(self):
         cap = cv2.VideoCapture(0)
         while True:
@@ -472,20 +477,20 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def take_picture(self):
         #CH1
-        plt.figure(figsize=(6, 5), dpi=30, linewidth=0)
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         # 設定圖範圍
         plt.xlim(0, len(self.df.index))
         plt.ylim(0, 130)
-        # plt.grid(True) 有網格
-        plt.savefig('good.jpg')
+        plt.grid(True) #有網格
+        plt.savefig('CH1.jpg')
         # CH2
         plt.plot(self.CH_total, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
         # 設定圖範圍
         plt.xlim(0, len(self.df.index))
         plt.ylim(0, 130)
         # plt.grid(True) 有網格
-        plt.savefig('good2.jpg')
+        plt.savefig('CH2.jpg')
         # plt.plot(len(self.df.index), self.CH_data[1][1], 'o-', color='orange', label="CH2_data")  # 澄
         # plt.plot(len(self.df.index), self.CH_data[2][1], 'o-', color='yellow', label="CH3_data")  # 黃
         # plt.plot(len(self.df.index), self.CH_data[3][1], 'o-', color='green', label="CH4_data")  # 綠
@@ -1077,6 +1082,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_qrcode.clicked.connect(self.qrcode6)
         self.ch7_qrcode.clicked.connect(self.qrcode7)
         self.ch8_qrcode.clicked.connect(self.qrcode8)
+        self.ch1_display.clicked.connect(self.display1)
 
 
 
