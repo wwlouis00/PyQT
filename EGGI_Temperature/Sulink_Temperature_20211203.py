@@ -279,8 +279,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH_T_On = []
         self.CH_T_Off = []
         self.CH_total = []
-        self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)')
-        # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
+        self.slot_high = []
+        self.slot_low = []
+        self.CH_slot = []
+        self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
         self.df = pd.read_csv(self.fname[0], delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
@@ -315,28 +317,36 @@ class Ui_MainWindow(QtWidgets.QWidget):
         for i in range(0, 8, 1):
             self.T_On_array = []
             self.T_Off_array = []
+            print("這是CH"+str(i+1))
             # 對一個Channel進行資料搜尋
             for ch in range(0, len(self.df.index) - 1, 1):
                 a = self.CH_data[i][ch + 1] - self.CH_data[i][ch]
+                b = self.CH_data[i][ch] - self.CH_data[i][ch-1]
                 # 達成T_On條件把資料存進self.T_On_array陣列
-                if a < 0 and self.CH_data[i][ch] > 109:
+                if a < 0 and self.CH_data[i][ch] > 109 and b > 0:
                     self.T_On_array.append(self.CH_data[i][ch])
+                    self.slot_high.append(ch)
                 # 達成T_Off條件把資料存進self.T_Off_array陣列
-                elif a > 0 and 73 < self.CH_data[i][ch] < 74:
+                if a > 0 and 73 < self.CH_data[i][ch] < 74 and b < 0:
                     self.T_Off_array.append(self.CH_data[i][ch])
+                    self.slot_low.append(ch)
             # 溫度資料發生其他狀況
             if self.CH_data[i][0] == -204.8 or self.CH_data[i][2] == self.CH_data[i][3]:
                 # 如果溫度未加熱保持恆溫
                 if self.CH_data[i][2] != -204.8:
                     for j in range(1, 9, 1):
-                        self.T_On_array.append("恆溫")
-                        self.T_Off_array.append("恆溫")
+                        self.T_On_array.append(self.CH_data[i][2]) #"恆溫"
+                        self.T_Off_array.append(self.CH_data[i][2])
                 # 如果沒有連接上
                 for k in range(1, 9, 1):
-                    self.T_On_array.append("None")
-                    self.T_Off_array.append("None")
+                    self.T_On_array.append(0)
+                    self.T_Off_array.append(0)
             self.CH_T_On.append(self.T_On_array[0])
             self.CH_T_Off.append(self.T_Off_array[0])
+            value_gap = self.T_On_array[0] - self.T_Off_array[0]
+            time_gap = self.slot_high[0] - self.slot_low[0]
+            self.CH_slot.append(float(value_gap/time_gap))
+            print(self.CH_slot)
 
         print(self.CH_T_On)
         print(self.CH_T_Off)
@@ -357,7 +367,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_T_Off.setText(str(self.CH_T_Off[6]))
         self.ch8_T_On.setText(str(self.CH_T_On[7]))
         self.ch8_T_Off.setText(str(self.CH_T_Off[7]))
-
+        #####每個Channel的斜率
+        self.ch1_slope.setText(str(self.CH_slot[0]))
+        self.ch2_slope.setText(str(self.CH_slot[1]))
+        self.ch3_slope.setText(str(self.CH_slot[2]))
+        self.ch4_slope.setText(str(self.CH_slot[3]))
+        self.ch5_slope.setText(str(self.CH_slot[4]))
+        self.ch6_slope.setText(str(self.CH_slot[5]))
+        self.ch7_slope.setText(str(self.CH_slot[6]))
+        self.ch8_slope.setText(str(self.CH_slot[7]))
         #####每個channel結果Pass或Fail
         # 資料對應
         P = "Pass"
@@ -371,7 +389,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # 儲存結果
         self.TF_array = []
         # CH1PF
-        if self.CH_T_On[0] == "None":
+        if self.CH_slot[0] == 0:
             self.ch1_PF.setText(N)
             self.ch1_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
@@ -384,7 +402,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch1_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH2PF
-        if self.CH_T_On[1] == "None":
+        if self.CH_slot[1] == 0:
             self.ch2_PF.setText(N)
             self.ch2_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
@@ -397,7 +415,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch2_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH3PF
-        if self.CH_T_On[2] == "None":
+        if self.CH_slot[2] == 0:
             self.ch3_PF.setText(N)
             self.ch3_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
@@ -410,7 +428,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch3_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH4PF
-        if self.CH_T_On[3] == "None":
+        if self.CH_slot[3] == 0:
             self.ch4_PF.setText(N)
             self.ch4_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
@@ -423,7 +441,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch4_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH5PF
-        if self.CH_T_On[4] == "None":
+        if self.CH_slot[4] == 0:
             self.ch5_PF.setText(N)
             self.ch5_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
@@ -436,7 +454,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch5_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH6PF
-        if self.CH_T_On[5] == "None":
+        if self.CH_slot[5] == 0:
             self.ch6_PF.setText(N)
             self.ch6_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
@@ -449,7 +467,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch6_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH7PF
-        if self.CH_T_On[6] == "None":
+        if self.CH_slot[6] == 0:
             self.ch7_PF.setText(N)
             self.ch7_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
@@ -462,7 +480,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch7_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH8PF
-        if self.CH_T_On[7] == "None":
+        if self.CH_slot[7] == 0:
             self.ch8_PF.setText(N)
             self.ch8_PF.setStyleSheet(F_color)
             self.TF_array.append(N)
@@ -480,13 +498,19 @@ class Ui_MainWindow(QtWidgets.QWidget):
         img2 = cv2.imread("CH2.jpg")
         img3 = cv2.imread("CH3.jpg")
         img4 = cv2.imread("CH4.jpg")
+        img5 = cv2.imread("CH5.jpg")
         img6 = cv2.imread("CH6.jpg")
+        img7 = cv2.imread("CH7.jpg")
+        img8 = cv2.imread("CH8.jpg")
         # 轉換影象通道
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
         img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)
         img4 = cv2.cvtColor(img4, cv2.COLOR_BGR2RGB)
+        img5 = cv2.cvtColor(img5, cv2.COLOR_BGR2RGB)
         img6 = cv2.cvtColor(img6, cv2.COLOR_BGR2RGB)
+        img7 = cv2.cvtColor(img7, cv2.COLOR_BGR2RGB)
+        img8 = cv2.cvtColor(img8, cv2.COLOR_BGR2RGB)
         # 獲取影象大小
         x = img.shape[1]
         y = img.shape[0]
@@ -496,8 +520,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
         y3 = img3.shape[0]
         x4 = img4.shape[1]
         y4 = img4.shape[0]
-        x6 = img4.shape[1]
-        y6 = img4.shape[0]
+        x5 = img5.shape[1]
+        y5 = img5.shape[0]
+        x6 = img6.shape[1]
+        y6 = img6.shape[0]
+        x7 = img7.shape[1]
+        y7 = img7.shape[0]
+        x8 = img8.shape[1]
+        y8 = img8.shape[0]
         # 圖片放縮尺度
         # self.zoomscale = 1
         frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
@@ -508,38 +538,53 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.pix3 = QPixmap.fromImage(frame3)
         frame4 = QImage(img4, x4, y4, x4 * 3, QImage.Format_RGB888)
         self.pix4 = QPixmap.fromImage(frame4)
+        frame5 = QImage(img5, x5, y5, x5 * 3, QImage.Format_RGB888)
+        self.pix5 = QPixmap.fromImage(frame5)
         frame6 = QImage(img6, x6, y6, x6 * 3, QImage.Format_RGB888)
         self.pix6 = QPixmap.fromImage(frame6)
+        frame7 = QImage(img7, x7, y7, x7 * 3, QImage.Format_RGB888)
+        self.pix7 = QPixmap.fromImage(frame7)
+        frame8 = QImage(img8, x8, y8, x8 * 3, QImage.Format_RGB888)
+        self.pix8 = QPixmap.fromImage(frame8)
         # 建立畫素圖元
         self.item = QGraphicsPixmapItem(self.pix)
         self.item2 = QGraphicsPixmapItem(self.pix2)
         self.item3 = QGraphicsPixmapItem(self.pix3)
         self.item4 = QGraphicsPixmapItem(self.pix4)
+        self.item5 = QGraphicsPixmapItem(self.pix5)
         self.item6 = QGraphicsPixmapItem(self.pix6)
+        self.item7 = QGraphicsPixmapItem(self.pix7)
+        self.item8 = QGraphicsPixmapItem(self.pix8)
         # 建立場景
         self.scene = QGraphicsScene()
         self.scene2 = QGraphicsScene()
         self.scene3 = QGraphicsScene()
         self.scene4 = QGraphicsScene()
+        self.scene5 = QGraphicsScene()
         self.scene6 = QGraphicsScene()
+        self.scene7 = QGraphicsScene()
+        self.scene8 = QGraphicsScene()
         self.scene.addItem(self.item)
         self.scene2.addItem(self.item2)
         self.scene3.addItem(self.item3)
         self.scene4.addItem(self.item4)
+        self.scene5.addItem(self.item5)
         self.scene6.addItem(self.item6)
+        self.scene7.addItem(self.item7)
+        self.scene8.addItem(self.item8)
         # 將場景新增至檢視
         self.ch1_chart.setScene(self.scene)
         self.ch2_chart.setScene(self.scene2)
         self.ch3_chart.setScene(self.scene3)
         self.ch4_chart.setScene(self.scene4)
-        self.ch5_chart.setScene(self.scene)
+        self.ch5_chart.setScene(self.scene5)
         self.ch6_chart.setScene(self.scene6)
-        self.ch7_chart.setScene(self.scene)
-        self.ch8_chart.setScene(self.scene)
+        self.ch7_chart.setScene(self.scene7)
+        self.ch8_chart.setScene(self.scene8)
 
     def take_picture(self):
         # ---------------CH1---------------------
-        plt.figure(figsize=(6, 5), dpi=30, linewidth=0)
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
@@ -566,6 +611,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.ylim(0, 130)  # 設定圖範圍
         plt.grid(True)  # 有網格
         plt.savefig('CH4.jpg')
+        # ---------------CH5---------------------
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH5_data, 'o-', color='green', label="CH5_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
+        plt.savefig('CH5.jpg')
         # ---------------CH6---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH6_data, 'o-', color='m', label="CH6_data")  # 紅
@@ -573,6 +625,20 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.ylim(0, 130)  # 設定圖範圍
         plt.grid(True)  # 有網格
         plt.savefig('CH6.jpg')
+        # ---------------CH7---------------------
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH7_data, 'o-', color='green', label="CH7_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
+        plt.savefig('CH7.jpg')
+        # ---------------CH8---------------------
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH8_data, 'o-', color='m', label="CH8_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
+        plt.savefig('CH8.jpg')
         # plt.plot(len(self.df.index), self.CH_data[1][1], 'o-', color='orange', label="CH2_data")  # 澄
         # plt.plot(len(self.df.index), self.CH_data[2][1], 'o-', color='yellow', label="CH3_data")  # 黃
         # plt.plot(len(self.df.index), self.CH_data[3][1], 'o-', color='green', label="CH4_data")  # 綠
@@ -599,15 +665,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                         "T_Off": [self.CH_T_Off[0], self.CH_T_Off[1], self.CH_T_Off[2],
                                                   self.CH_T_Off[3], self.CH_T_Off[4], self.CH_T_Off[5],
                                                   self.CH_T_Off[6], self.CH_T_Off[7]],
-                                        "Slope" :["", "", "",
-                                                  "", "", "",
-                                                  "", ""],
+                                        "Slope" :[self.CH_slot[0], self.CH_slot[1], self.CH_slot[2],
+                                                  self.CH_slot[3],self.CH_slot[4], self.CH_slot[5],
+                                                  self.CH_slot[6], self.CH_slot[7]],
                                         "檢測結果": [self.TF_array[0], self.TF_array[1], self.TF_array[2],
                                                  self.TF_array[3],
                                                  self.TF_array[4], self.TF_array[5], self.TF_array[6],
                                                  self.TF_array[7]],
-                                        "操作人員": ["test", "", "", "", "", "", "", ""],
-                                        "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
+                                        # "操作人員": ["test", "", "", "", "", "", "", ""],
+                                        # "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
                                         }, index=['Ch1', 'Ch2', 'Ch3', 'Ch4', 'Ch5', 'Ch6', 'Ch7', 'Ch8'])
         self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
 
