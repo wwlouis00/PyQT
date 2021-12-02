@@ -59,9 +59,30 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.qrcode_result8 = []
 
     def display1(self):
-        img  = cv2.imread("CH1.jpg")
-        img.shape
+        img = cv2.imread("CH1.jpg")
+        img = cv2.resize(img, (1000, 1000))
         cv2.imshow("CH1",img)
+    def display2(self):
+        img = cv2.imread("CH2.jpg")
+        cv2.imshow("CH2",img)
+    def display3(self):
+        img = cv2.imread("CH3.jpg")
+        cv2.imshow("CH3",img)
+    def display4(self):
+        img = cv2.imread("CH4.jpg")
+        cv2.imshow("CH4",img)
+    def display5(self):
+        img = cv2.imread("CH5.jpg")
+        cv2.imshow("CH5",img)
+    def display6(self):
+        img = cv2.imread("CH6.jpg")
+        cv2.imshow("CH6",img)
+    def display7(self):
+        img = cv2.imread("CH7.jpg")
+        cv2.imshow("CH7",img)
+    def display8(self):
+        img = cv2.imread("CH8.jpg")
+        cv2.imshow("CH8",img)
 
     def qrcode1(self):
         cap = cv2.VideoCapture(0)
@@ -257,27 +278,32 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.df = pd.read_csv(self.fname[0], delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
 
-
+        #X軸
         for i in range(0,len(self.df.index), 1):
             self.CH_total.append(i)
+        #Y軸
         for i in range(0, len(self.df.index), 1):
             self.CH1_data.append(self.df.loc[i, 'CH1'])
-        print(self.CH1_data)
-
         for i in range(0, len(self.df.index), 1):
             self.CH2_data.append(self.df.loc[i, 'CH2'])
-
+        for i in range(0, len(self.df.index), 1):
+            self.CH3_data.append(self.df.loc[i, 'CH3'])
+        for i in range(0, len(self.df.index), 1):
+            self.CH4_data.append(self.df.loc[i, 'CH4'])
+        for i in range(0, len(self.df.index), 1):
+            self.CH5_data.append(self.df.loc[i, 'CH5'])
         for i in range(0, len(self.df.index), 1):
             self.CH6_data.append(self.df.loc[i, 'CH6'])
-        print(self.CH6_data)
-
+        for i in range(0, len(self.df.index), 1):
+            self.CH7_data.append(self.df.loc[i, 'CH7'])
+        for i in range(0, len(self.df.index), 1):
+            self.CH8_data.append(self.df.loc[i, 'CH8'])
 
         for ch in range(1, 9, 1):
             if ch == 1:
                 self.CH_data = [[self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))]]
             else:
                 self.CH_data.append([self.df.loc[i, 'CH' + str(ch)] for i in range(len(self.df.index))])
-
         # 存取每個Channel的值到陣列
         for i in range(0, 8, 1):
             self.T_On_array = []
@@ -322,7 +348,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_T_Off.setText(str(self.CH_T_Off[6]))
         self.ch8_T_On.setText(str(self.CH_T_On[7]))
         self.ch8_T_Off.setText(str(self.CH_T_Off[7]))
-        #
         #####每個channel結果Pass或Fail
         # 資料對應
         P = "Pass"
@@ -440,57 +465,104 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.ch8_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         self.take_picture()
-
-        img = cv2.imread("good.jpg")
-        img2 = cv2.imread("good2.jpg")
+        #-----------------------------------------------------------------------
+        img = cv2.imread("CH1.jpg")
+        img2 = cv2.imread("CH2.jpg")
+        img3 = cv2.imread("CH3.jpg")
+        img4 = cv2.imread("CH4.jpg")
+        img6 = cv2.imread("CH6.jpg")
         # 轉換影象通道
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+        img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)
+        img4 = cv2.cvtColor(img4, cv2.COLOR_BGR2RGB)
+        img6 = cv2.cvtColor(img6, cv2.COLOR_BGR2RGB)
         # 獲取影象大小
         x = img.shape[1]
         y = img.shape[0]
         x2 = img2.shape[1]
         y2 = img2.shape[0]
+        x3 = img3.shape[1]
+        y3 = img3.shape[0]
+        x4 = img4.shape[1]
+        y4 = img4.shape[0]
+        x6 = img4.shape[1]
+        y6 = img4.shape[0]
         # 圖片放縮尺度
         # self.zoomscale = 1
         frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
         self.pix = QPixmap.fromImage(frame)
         frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
         self.pix2 = QPixmap.fromImage(frame2)
+        frame3 = QImage(img3, x3, y3, x3 * 3, QImage.Format_RGB888)
+        self.pix3 = QPixmap.fromImage(frame3)
+        frame4 = QImage(img4, x4, y4, x4 * 3, QImage.Format_RGB888)
+        self.pix4 = QPixmap.fromImage(frame4)
+        frame6 = QImage(img6, x6, y6, x6 * 3, QImage.Format_RGB888)
+        self.pix6 = QPixmap.fromImage(frame6)
         # 建立畫素圖元
         self.item = QGraphicsPixmapItem(self.pix)
         self.item2 = QGraphicsPixmapItem(self.pix2)
+        self.item3 = QGraphicsPixmapItem(self.pix3)
+        self.item4 = QGraphicsPixmapItem(self.pix4)
+        self.item6 = QGraphicsPixmapItem(self.pix6)
         # 建立場景
         self.scene = QGraphicsScene()
         self.scene2 = QGraphicsScene()
+        self.scene3 = QGraphicsScene()
+        self.scene4 = QGraphicsScene()
+        self.scene6 = QGraphicsScene()
         self.scene.addItem(self.item)
         self.scene2.addItem(self.item2)
+        self.scene3.addItem(self.item3)
+        self.scene4.addItem(self.item4)
+        self.scene6.addItem(self.item6)
         # 將場景新增至檢視
         self.ch1_chart.setScene(self.scene)
         self.ch2_chart.setScene(self.scene2)
-        self.ch3_chart.setScene(self.scene)
-        self.ch4_chart.setScene(self.scene)
+        self.ch3_chart.setScene(self.scene3)
+        self.ch4_chart.setScene(self.scene4)
         self.ch5_chart.setScene(self.scene)
-        self.ch6_chart.setScene(self.scene)
+        self.ch6_chart.setScene(self.scene6)
         self.ch7_chart.setScene(self.scene)
         self.ch8_chart.setScene(self.scene)
 
     def take_picture(self):
-        #CH1
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        #---------------CH1---------------------
+        plt.figure(figsize=(6, 5), dpi=30, linewidth=0)
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
-        # 設定圖範圍
-        plt.xlim(0, len(self.df.index))
-        plt.ylim(0, 130)
-        plt.grid(True) #有網格
+        plt.xlim(0, len(self.df.index)) # 設定圖範圍
+        plt.ylim(0, 130) # 設定圖範圍
+        # plt.grid(True) #有網格
         plt.savefig('CH1.jpg')
-        # CH2
+        #---------------CH2---------------------
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
-        # 設定圖範圍
-        plt.xlim(0, len(self.df.index))
-        plt.ylim(0, 130)
-        # plt.grid(True) 有網格
+        plt.xlim(0, len(self.df.index)) # 設定圖範圍
+        plt.ylim(0, 130)    # 設定圖範圍
+        plt.grid(True) #有網格
         plt.savefig('CH2.jpg')
+        # ---------------CH3---------------------
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH3_data, 'o-', color='yellow', label="CH3_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
+        plt.savefig('CH3.jpg')
+        # ---------------CH4---------------------
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH4_data, 'o-', color='green', label="CH4_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
+        plt.savefig('CH4.jpg')
+        # ---------------CH6---------------------
+        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH6_data, 'o-', color='m', label="CH6_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
+        plt.savefig('CH6.jpg')
         # plt.plot(len(self.df.index), self.CH_data[1][1], 'o-', color='orange', label="CH2_data")  # 澄
         # plt.plot(len(self.df.index), self.CH_data[2][1], 'o-', color='yellow', label="CH3_data")  # 黃
         # plt.plot(len(self.df.index), self.CH_data[3][1], 'o-', color='green', label="CH4_data")  # 綠
@@ -499,7 +571,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # plt.plot(len(self.df.index), self.CH_data[6][1], 'o-', color='purple', label="CH7_data")  # 紫
         # plt.plot(len(self.df.index), self.CH_data[7][1], 'o-', color='k', label="CH8_data")  # 黑
 
-        # 儲存結果
+    # 儲存結果
     def save_log(self):
         # if self.fname[0] == "":
         #     QtWidgets.QMessageBox.warning(self, u"存取消息", u"存取消息失敗", buttons=QtWidgets.QMessageBox.Ok,
@@ -521,7 +593,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                                  self.TF_array[3],
                                                  self.TF_array[4], self.TF_array[5], self.TF_array[6],
                                                  self.TF_array[7]],
-                                        "操作人員":[self.fname[0],"","","","","","",""]
+                                        "操作人員":["test","","","","","","",""],
+                                        "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
                                         }, index=['Ch1', 'Ch2', 'Ch3', 'Ch4', 'Ch5', 'Ch6', 'Ch7', 'Ch8'])
         self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
 
@@ -1083,7 +1156,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_qrcode.clicked.connect(self.qrcode7)
         self.ch8_qrcode.clicked.connect(self.qrcode8)
         self.ch1_display.clicked.connect(self.display1)
-
+        self.ch2_display.clicked.connect(self.display2)
+        self.ch3_display.clicked.connect(self.display3)
+        self.ch4_display.clicked.connect(self.display4)
+        self.ch5_display.clicked.connect(self.display5)
+        self.ch6_display.clicked.connect(self.display6)
+        self.ch7_display.clicked.connect(self.display7)
+        self.ch8_display.clicked.connect(self.display8)
 
 
 
