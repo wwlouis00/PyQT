@@ -35,6 +35,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.timer_camera = QtCore.QTimer()
         self.CAM_NUM = 0
         self.count = 0
+
         self.timer = QTimer()
         self.qrcode_result1 = []
         self.qrcode_result2 = []
