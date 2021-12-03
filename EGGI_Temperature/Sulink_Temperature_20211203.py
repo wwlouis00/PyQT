@@ -22,7 +22,6 @@ import os
 import time
 import datetime
 from datetime import datetime, timedelta
-import statistics
 import numpy as np
 from heapq import nsmallest
 from pandas.core.indexes.base import Index
@@ -708,6 +707,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # 欄位
         self.input_file.setText("")
         self.input_name.setText("")
+        # Slope
+        self.ch1_slope.setText("")
+        self.ch2_slope.setText("")
+        self.ch3_slope.setText("")
+        self.ch4_slope.setText("")
+        self.ch5_slope.setText("")
+        self.ch6_slope.setText("")
+        self.ch7_slope.setText("")
+        self.ch8_slope.setText("")
         # #Chart
         # self.ch1_chart.setScene()
         # self.ch2_chart.setScene("")
