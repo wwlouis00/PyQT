@@ -1283,6 +1283,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowIcon(QtGui.QIcon('image/electrical-heater.jpg'))
         MainWindow.setWindowTitle(_translate("MainWindow", "溫度監控程式"))
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
         self.btn_opentxt.setText(_translate("MainWindow", "打開"))
