@@ -656,7 +656,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                                  self.TF_array[3],
                                                  self.TF_array[4], self.TF_array[5], self.TF_array[6],
                                                  self.TF_array[7]],
-                                        # "操作人員": ["test", "", "", "", "", "", "", ""],
+                                        "操作人員": [self.input_name.text(), "", "", "", "", "", "", ""],
                                         # "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
                                         }, index=['Ch1', 'Ch2', 'Ch3', 'Ch4', 'Ch5', 'Ch6', 'Ch7', 'Ch8'])
         self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
@@ -1280,6 +1280,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_display.clicked.connect(self.display6)
         self.ch7_display.clicked.connect(self.display7)
         self.ch8_display.clicked.connect(self.display8)
+        self.input_name.text()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
