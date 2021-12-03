@@ -1280,7 +1280,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_display.clicked.connect(self.display6)
         self.ch7_display.clicked.connect(self.display7)
         self.ch8_display.clicked.connect(self.display8)
-        self.input_name.text()
+        self.input_name.text() #輸入操作人員
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
