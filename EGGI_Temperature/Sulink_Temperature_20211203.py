@@ -10,7 +10,6 @@ from PyQt5.QtCore import *
 import time
 from datetime import datetime
 import os
-import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
