@@ -7,24 +7,14 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog
 from PyQt5.QtCore import *
-import time
-from datetime import datetime
-import os
-from matplotlib.font_manager import FontProperties
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 from pandas.core.indexes.base import Index
 from pandas.core.series import Series
 import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
-import os
 import time
 import datetime
 from datetime import datetime, timedelta
-import numpy as np
-from heapq import nsmallest
-from pandas.core.indexes.base import Index
-from pandas.core.series import Series
 from pyzbar import pyzbar
 import cv2
 from PyQt5.QtGui import QImage, QPixmap
@@ -44,7 +34,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # self.face_recong = face.Recognition()
         self.timer_camera = QtCore.QTimer()
         self.CAM_NUM = 0
-        self.x = 0
         self.count = 0
         self.timer = QTimer()
         self.qrcode_result1 = []
@@ -343,7 +332,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.CH_T_Off.append(self.T_Off_array[0])
             value_gap = self.T_On_array[0] - self.T_Off_array[0]
             time_gap = self.slot_high[0] - self.slot_low[0]
-            self.CH_slot.append(float(value_gap/time_gap))
+            self.CH_slot.append(round(float(value_gap/time_gap),2))
             print(self.CH_slot)
 
         print(self.CH_T_On)
@@ -586,21 +575,18 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        # plt.grid(True) #有網格
         plt.savefig('CH1.jpg')
         # ---------------CH2---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH2.jpg')
         # ---------------CH3---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH3_data, 'o-', color='yellow', label="CH3_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH3.jpg')
         # ---------------CH4---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
