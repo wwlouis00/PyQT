@@ -3,7 +3,6 @@
 #     T_On 開始運作  溫度下降
 #     T_Off 關閉運作 溫度上升
 #___________________________________
-import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog
 from PyQt5.QtCore import *
@@ -585,67 +584,54 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def take_picture(self):
         # ---------------CH1---------------------
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH1.jpg')
         # ---------------CH2---------------------
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH2.jpg')
         # ---------------CH3---------------------
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH3_data, 'o-', color='yellow', label="CH3_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH3.jpg')
         # ---------------CH4---------------------
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH4_data, 'o-', color='green', label="CH4_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH4.jpg')
         # ---------------CH5---------------------
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH5_data, 'o-', color='#6F00FF', label="CH5_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH5.jpg')
         # ---------------CH6---------------------
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH6_data, 'o-', color='m', label="CH6_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH6.jpg')
         # ---------------CH7---------------------
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH7_data, 'o-', color='purple', label="CH7_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH7.jpg')
         # ---------------CH8---------------------
-        plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH8_data, 'o-', color='k', label="CH8_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.grid(True)  # 有網格
         plt.savefig('CH8.jpg')
-        # plt.plot(len(self.df.index), self.CH_data[1][1], 'o-', color='orange', label="CH2_data")  # 澄
-        # plt.plot(len(self.df.index), self.CH_data[2][1], 'o-', color='yellow', label="CH3_data")  # 黃
-        # plt.plot(len(self.df.index), self.CH_data[3][1], 'o-', color='green', label="CH4_data")  # 綠
-        # plt.plot(len(self.df.index), self.CH_data[4][1], 'o-', color='#6F00FF', label="CH5_data")  # 藍
-        # plt.plot(len(self.df.index), self.CH_data[5][1], 'o-', color='m', label="CH6_data")  # 靛
-        # plt.plot(len(self.df.index), self.CH_data[6][1], 'o-', color='purple', label="CH7_data")  # 紫
+
 
     # 儲存結果
     def save_log(self):
