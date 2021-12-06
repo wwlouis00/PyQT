@@ -638,7 +638,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # if self.fname[0] == "":
         #     QtWidgets.QMessageBox.warning(self, u"存取消息", u"存取消息失敗", buttons=QtWidgets.QMessageBox.Ok,
         #                                   defaultButton=QtWidgets.QMessageBox.Ok)
-        QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
+        QtWidgets.QMessageBox.Information(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
                                       defaultButton=QtWidgets.QMessageBox.Ok)
 
         self.save_excel = pd.DataFrame({"qrcode": [self.qrcode_result1[0], self.qrcode_result2[0],
