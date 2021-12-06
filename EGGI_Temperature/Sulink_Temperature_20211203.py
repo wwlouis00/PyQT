@@ -453,7 +453,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.TF_array.append(P)
         # CH6PF
         if self.CH_slot[5] == 0 or self.CH_T_On[5] == self.CH_T_Off[5]:
-            if self.CH_T_On[5] == self.CH_T_Off[5]:
+            if self.CH_T_On[5] == self.CH_T_Off[5] != 0:
                 self.ch6_PF.setText(W)
                 self.ch6_PF.setStyleSheet(constant_color)
                 self.TF_array.append(W)
