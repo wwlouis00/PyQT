@@ -31,7 +31,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
 
-        # self.face_recong = face.Recognition()
         self.timer_camera = QtCore.QTimer()
         self.CAM_NUM = 0
         self.count = 0
@@ -48,35 +47,42 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def display1(self):
         img = cv2.imread("CH1.jpg")
-        img = cv2.resize(img, (1000, 1000))
+        img = cv2.resize(img, (500, 500))
         cv2.imshow("CH1", img)
 
     def display2(self):
         img = cv2.imread("CH2.jpg")
+        img = cv2.resize(img, (500, 500))
         cv2.imshow("CH2", img)
 
     def display3(self):
         img = cv2.imread("CH3.jpg")
+        img = cv2.resize(img, (500, 500))
         cv2.imshow("CH3", img)
 
     def display4(self):
         img = cv2.imread("CH4.jpg")
+        img = cv2.resize(img, (500, 500))
         cv2.imshow("CH4", img)
 
     def display5(self):
         img = cv2.imread("CH5.jpg")
+        img = cv2.resize(img, (500, 500))
         cv2.imshow("CH5", img)
 
     def display6(self):
         img = cv2.imread("CH6.jpg")
+        img = cv2.resize(img, (500, 500))
         cv2.imshow("CH6", img)
 
     def display7(self):
         img = cv2.imread("CH7.jpg")
+        img = cv2.resize(img, (500, 500))
         cv2.imshow("CH7", img)
 
     def display8(self):
         img = cv2.imread("CH8.jpg")
+        img = cv2.resize(img, (500, 500))
         cv2.imshow("CH8", img)
 
     def qrcode1(self):
@@ -272,6 +278,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.CH_slot = []
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
+        # self.input_file.text(self.fname[0])
         self.df = pd.read_csv(self.fname[0], delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
 
@@ -576,18 +583,21 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
         plt.savefig('CH1.jpg')
         # ---------------CH2---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
         plt.savefig('CH2.jpg')
         # ---------------CH3---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH3_data, 'o-', color='yellow', label="CH3_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
+        plt.grid(True)  # 有網格
         plt.savefig('CH3.jpg')
         # ---------------CH4---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
@@ -598,7 +608,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.savefig('CH4.jpg')
         # ---------------CH5---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
-        plt.plot(self.CH_total, self.CH5_data, 'o-', color='green', label="CH5_data")  # 紅
+        plt.plot(self.CH_total, self.CH5_data, 'o-', color='#6F00FF', label="CH5_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
         plt.grid(True)  # 有網格
@@ -612,14 +622,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.savefig('CH6.jpg')
         # ---------------CH7---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
-        plt.plot(self.CH_total, self.CH7_data, 'o-', color='green', label="CH7_data")  # 紅
+        plt.plot(self.CH_total, self.CH7_data, 'o-', color='purple', label="CH7_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
         plt.grid(True)  # 有網格
         plt.savefig('CH7.jpg')
         # ---------------CH8---------------------
         plt.figure(figsize=(6, 5), dpi=60, linewidth=0)
-        plt.plot(self.CH_total, self.CH8_data, 'o-', color='m', label="CH8_data")  # 紅
+        plt.plot(self.CH_total, self.CH8_data, 'o-', color='k', label="CH8_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
         plt.grid(True)  # 有網格
@@ -630,7 +640,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         # plt.plot(len(self.df.index), self.CH_data[4][1], 'o-', color='#6F00FF', label="CH5_data")  # 藍
         # plt.plot(len(self.df.index), self.CH_data[5][1], 'o-', color='m', label="CH6_data")  # 靛
         # plt.plot(len(self.df.index), self.CH_data[6][1], 'o-', color='purple', label="CH7_data")  # 紫
-        # plt.plot(len(self.df.index), self.CH_data[7][1], 'o-', color='k', label="CH8_data")  # 黑
 
     # 儲存結果
     def save_log(self):
@@ -659,7 +668,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                                  self.TF_array[7]],
                                         "操作人員": [self.input_name.text(), "", "", "", "", "", "", ""],
                                         # "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
-                                        }, index=['Ch1', 'Ch2', 'Ch3', 'Ch4', 'Ch5', 'Ch6', 'Ch7', 'Ch8'])
+                                        }, index=['CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'])
         self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
 
     def clean_log(self):
@@ -1287,6 +1296,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowIcon(QtGui.QIcon('image/electrical-heater.jpg'))
         MainWindow.setWindowTitle(_translate("MainWindow", "溫度監控程式"))
+        MainWindow.setFixedSize(1450,800)
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
         self.btn_opentxt.setText(_translate("MainWindow", "打開"))
         self.btn_save.setText(_translate("MainWindow", "儲存"))
