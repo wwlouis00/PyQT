@@ -276,6 +276,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.slot_high = []
         self.slot_low = []
         self.CH_slot = []
+        self.TF_array = []
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
         # self.input_file.text(self.fname[0])
@@ -312,7 +313,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         for i in range(0, 8, 1):
             self.T_On_array = []
             self.T_Off_array = []
-            print("這是CH"+str(i+1))
             # 對一個Channel進行資料搜尋
             for ch in range(0, len(self.df.index) - 1, 1):
                 a = self.CH_data[i][ch + 1] - self.CH_data[i][ch]
@@ -341,8 +341,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
             value_gap = self.T_On_array[0] - self.T_Off_array[0]
             time_gap = self.slot_high[0] - self.slot_low[0]
             self.CH_slot.append(round(float(value_gap/time_gap),2))
-            print(self.CH_slot)
-
         print(self.CH_T_On)
         print(self.CH_T_Off)
         # 將On跟Off陣列存取的資料對應至各個位置上
@@ -382,107 +380,115 @@ class Ui_MainWindow(QtWidgets.QWidget):
         F_color = "color: gray;"
         constant_color = "color: orange;"
         # 儲存結果
-        self.TF_array = []
+
         # CH1PF
-        if self.CH_slot[0] == 0:
-            self.ch1_PF.setText(N)
-            self.ch1_PF.setStyleSheet(F_color)
-            self.TF_array.append(N)
-        elif self.CH_T_On[0] == "恆溫":
-            self.ch1_PF.setText(W)
-            self.ch1_PF.setStyleSheet(constant_color)
-            self.TF_array.append(W)
+        if self.CH_slot[0] == 0 or self.CH_T_On[0] == self.CH_T_Off[0]:
+            if self.CH_T_On[0] == self.CH_T_Off[0] != 0:
+                self.ch1_PF.setText(str(W))
+                self.ch1_PF.setStyleSheet(constant_color)
+                self.TF_array.append(str(W))
+            else:
+                self.ch1_PF.setText(str(N))
+                self.ch1_PF.setStyleSheet(F_color)
+                self.TF_array.append(str(N))
         else:
-            self.ch1_PF.setText(P)
+            self.ch1_PF.setText(str(P))
             self.ch1_PF.setStyleSheet(T_color)
-            self.TF_array.append(P)
+            self.TF_array.append(str(P))
         # CH2PF
-        if self.CH_slot[1] == 0:
-            self.ch2_PF.setText(N)
-            self.ch2_PF.setStyleSheet(F_color)
-            self.TF_array.append(N)
-        elif self.CH_T_On[1] == "恆溫":
-            self.ch2_PF.setText(W)
-            self.ch2_PF.setStyleSheet(constant_color)
-            self.TF_array.append(W)
+        if self.CH_slot[1] == 0 or self.CH_T_On[1] == self.CH_T_Off[1]:
+            if self.CH_T_On[1] == self.CH_T_Off[1] != 0:
+                self.ch2_PF.setText(W)
+                self.ch2_PF.setStyleSheet(constant_color)
+                self.TF_array.append(W)
+            else:
+                self.ch2_PF.setText(N)
+                self.ch2_PF.setStyleSheet(F_color)
+                self.TF_array.append(N)
         else:
             self.ch2_PF.setText(P)
             self.ch2_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH3PF
-        if self.CH_slot[2] == 0:
-            self.ch3_PF.setText(N)
-            self.ch3_PF.setStyleSheet(F_color)
-            self.TF_array.append(N)
-        elif self.CH_T_On[2] == "恆溫":
-            self.ch3_PF.setText(W)
-            self.ch3_PF.setStyleSheet(constant_color)
-            self.TF_array.append(W)
+        if self.CH_slot[2] == 0 or self.CH_T_On[2] == self.CH_T_Off[2]:
+            if self.CH_T_On[2] == self.CH_T_Off[2] != 0:
+                self.ch3_PF.setText(W)
+                self.ch3_PF.setStyleSheet(constant_color)
+                self.TF_array.append(W)
+            else:
+                self.ch3_PF.setText(N)
+                self.ch3_PF.setStyleSheet(F_color)
+                self.TF_array.append(N)
         else:
             self.ch3_PF.setText(P)
             self.ch3_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH4PF
-        if self.CH_slot[3] == 0:
-            self.ch4_PF.setText(N)
-            self.ch4_PF.setStyleSheet(F_color)
-            self.TF_array.append(N)
-        elif self.CH_T_On[3] == "恆溫":
-            self.ch4_PF.setText(W)
-            self.ch4_PF.setStyleSheet(constant_color)
-            self.TF_array.append(W)
+        if self.CH_slot[3] == 0 or self.CH_T_On[3] == self.CH_T_Off[3]:
+            if self.CH_T_On[3] == self.CH_T_Off[3] != 0:
+                self.ch4_PF.setText(W)
+                self.ch4_PF.setStyleSheet(constant_color)
+                self.TF_array.append(W)
+            else:
+                self.ch4_PF.setText(N)
+                self.ch4_PF.setStyleSheet(F_color)
+                self.TF_array.append(N)
         else:
             self.ch4_PF.setText(P)
             self.ch4_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH5PF
-        if self.CH_slot[4] == 0:
-            self.ch5_PF.setText(N)
-            self.ch5_PF.setStyleSheet(F_color)
-            self.TF_array.append(N)
-        elif self.CH_T_On[4] == "恆溫":
-            self.ch5_PF.setText(W)
-            self.ch5_PF.setStyleSheet(constant_color)
-            self.TF_array.append(W)
+        if self.CH_slot[4] == 0 or self.CH_T_On[4] == self.CH_T_Off[4]:
+            if self.CH_T_On[4] == self.CH_T_Off[4] != 0:
+                self.ch5_PF.setText(W)
+                self.ch5_PF.setStyleSheet(constant_color)
+                self.TF_array.append(W)
+            else:
+                self.ch5_PF.setText(N)
+                self.ch5_PF.setStyleSheet(F_color)
+                self.TF_array.append(N)
         else:
             self.ch5_PF.setText(P)
             self.ch5_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH6PF
-        if self.CH_slot[5] == 0:
-            self.ch6_PF.setText(N)
-            self.ch6_PF.setStyleSheet(F_color)
-            self.TF_array.append(N)
-        elif self.CH_T_On[5] == "恆溫":
-            self.ch6_PF.setText(W)
-            self.ch6_PF.setStyleSheet(constant_color)
-            self.TF_array.append(W)
+        if self.CH_slot[5] == 0 or self.CH_T_On[5] == self.CH_T_Off[5]:
+            if self.CH_T_On[5] == self.CH_T_Off[5]:
+                self.ch6_PF.setText(W)
+                self.ch6_PF.setStyleSheet(constant_color)
+                self.TF_array.append(W)
+            else:
+                self.ch6_PF.setText(N)
+                self.ch6_PF.setStyleSheet(F_color)
+                self.TF_array.append(N)
         else:
             self.ch6_PF.setText(P)
             self.ch6_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH7PF
-        if self.CH_slot[6] == 0:
-            self.ch7_PF.setText(N)
-            self.ch7_PF.setStyleSheet(F_color)
-            self.TF_array.append(N)
-        elif self.CH_T_On[6] == "恆溫":
-            self.ch7_PF.setText(W)
-            self.ch7_PF.setStyleSheet(constant_color)
-            self.TF_array.append(W)
+        if self.CH_slot[6] == 0 or self.CH_T_On[6] == self.CH_T_Off[6]:
+            if self.CH_T_On[6] == self.CH_T_Off[6] != 0:
+                self.ch7_PF.setText(W)
+                self.ch7_PF.setStyleSheet(constant_color)
+                self.TF_array.append(W)
+            else:
+                self.ch7_PF.setText(N)
+                self.ch7_PF.setStyleSheet(F_color)
+                self.TF_array.append(N)
         else:
             self.ch7_PF.setText(P)
             self.ch7_PF.setStyleSheet(T_color)
             self.TF_array.append(P)
         # CH8PF
-        if self.CH_slot[7] == 0:
-            self.ch8_PF.setText(N)
-            self.ch8_PF.setStyleSheet(F_color)
-            self.TF_array.append(N)
-        elif self.CH_T_On[7] == "恆溫":
-            self.ch8_PF.setText(W)
-            self.ch8_PF.setStyleSheet(constant_color)
-            self.TF_array.append(W)
+        if self.CH_slot[7] == 0 or self.CH_T_On[7] == self.CH_T_Off[7]:
+            if self.CH_T_On[7] == self.CH_T_Off[7] != 0:
+                self.ch8_PF.setText(W)
+                self.ch8_PF.setStyleSheet(constant_color)
+                self.TF_array.append(W)
+            else:
+                self.ch8_PF.setText(N)
+                self.ch8_PF.setStyleSheet(F_color)
+                self.TF_array.append(N)
         else:
             self.ch8_PF.setText(P)
             self.ch8_PF.setStyleSheet(T_color)
