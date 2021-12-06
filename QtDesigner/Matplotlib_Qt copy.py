@@ -16,7 +16,7 @@ from heapq import nsmallest
 #------------------------------------------------------
 #Excel設定
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))+"output.xlsx" #另存新檔的檔名為現在時間
-wb = openpyxl.load_workbook('2021年10月27日.xlsx') #開啟2021年10月27日.xlsx資料
+wb = openpyxl.load_workbook('../EGGI_Temperature/2021年10月27日.xlsx') #開啟2021年10月27日.xlsx資料
 
 sh = wb['2021年10月27日']
 ws = wb.active
