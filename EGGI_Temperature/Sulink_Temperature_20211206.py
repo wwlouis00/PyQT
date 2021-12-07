@@ -635,33 +635,38 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     # 儲存結果
     def save_log(self):
-        # if self.fname[0] == "":
-        #     QtWidgets.QMessageBox.warning(self, u"存取消息", u"存取消息失敗", buttons=QtWidgets.QMessageBox.Ok,
-        #                                   defaultButton=QtWidgets.QMessageBox.Ok)
-        QtWidgets.QMessageBox.Information(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
-                                      defaultButton=QtWidgets.QMessageBox.Ok)
+        if self.input_name.text() == "":
+            QtWidgets.QMessageBox.warning(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
+                                          defaultButton=QtWidgets.QMessageBox.Ok)
+        elif self.input_file.text() == "":
+            QtWidgets.QMessageBox.warning(self, u"存取失敗", u"未開啟檔案", buttons=QtWidgets.QMessageBox.Ok,
+                                          defaultButton=QtWidgets.QMessageBox.Ok)
 
-        self.save_excel = pd.DataFrame({"qrcode": [self.qrcode_result1[0], self.qrcode_result2[0],
-                                                   self.qrcode_result3[0], self.qrcode_result4[0],
-                                                   self.qrcode_result5[0], self.qrcode_result6[0],
-                                                   self.qrcode_result7[0], self.qrcode_result8[0]],
-                                        "T_On": [self.CH_T_On[0], self.CH_T_On[1], self.CH_T_On[2], self.CH_T_On[3],
-                                                 self.CH_T_On[4], self.CH_T_On[5], self.CH_T_On[6],
-                                                 self.CH_T_On[7]],
-                                        "T_Off": [self.CH_T_Off[0], self.CH_T_Off[1], self.CH_T_Off[2],
-                                                  self.CH_T_Off[3], self.CH_T_Off[4], self.CH_T_Off[5],
-                                                  self.CH_T_Off[6], self.CH_T_Off[7]],
-                                        "Slope" :[self.CH_slot[0], self.CH_slot[1], self.CH_slot[2],
-                                                  self.CH_slot[3],self.CH_slot[4], self.CH_slot[5],
-                                                  self.CH_slot[6], self.CH_slot[7]],
-                                        "檢測結果": [self.TF_array[0], self.TF_array[1], self.TF_array[2],
-                                                 self.TF_array[3],
-                                                 self.TF_array[4], self.TF_array[5], self.TF_array[6],
-                                                 self.TF_array[7]],
-                                        "操作人員": [self.input_name.text(), "", "", "", "", "", "", ""],
-                                        # "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
-                                        }, index=['CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'])
-        self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
+        else:
+            QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
+                                          defaultButton=QtWidgets.QMessageBox.Ok)
+
+            self.save_excel = pd.DataFrame({"qrcode": [self.qrcode_result1[0], self.qrcode_result2[0],
+                                                       self.qrcode_result3[0], self.qrcode_result4[0],
+                                                       self.qrcode_result5[0], self.qrcode_result6[0],
+                                                       self.qrcode_result7[0], self.qrcode_result8[0]],
+                                            "T_On": [self.CH_T_On[0], self.CH_T_On[1], self.CH_T_On[2], self.CH_T_On[3],
+                                                     self.CH_T_On[4], self.CH_T_On[5], self.CH_T_On[6],
+                                                     self.CH_T_On[7]],
+                                            "T_Off": [self.CH_T_Off[0], self.CH_T_Off[1], self.CH_T_Off[2],
+                                                      self.CH_T_Off[3], self.CH_T_Off[4], self.CH_T_Off[5],
+                                                      self.CH_T_Off[6], self.CH_T_Off[7]],
+                                            "Slope" :[self.CH_slot[0], self.CH_slot[1], self.CH_slot[2],
+                                                      self.CH_slot[3],self.CH_slot[4], self.CH_slot[5],
+                                                      self.CH_slot[6], self.CH_slot[7]],
+                                            "檢測結果": [self.TF_array[0], self.TF_array[1], self.TF_array[2],
+                                                     self.TF_array[3],
+                                                     self.TF_array[4], self.TF_array[5], self.TF_array[6],
+                                                     self.TF_array[7]],
+                                            "操作人員": [self.input_name.text(), "", "", "", "", "", "", ""],
+                                            # "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
+                                            }, index=['CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'])
+            self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
 
     def clean_log(self):
         # T_On全關
