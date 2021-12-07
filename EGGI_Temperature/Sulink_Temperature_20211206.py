@@ -275,7 +275,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.TF_array = []
         self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
         self.input_file.setText(self.fname[0])
-        # self.input_file.text(self.fname[0])
         self.df = pd.read_csv(self.fname[0], delimiter='\t')
         self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
 
@@ -639,9 +638,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
             QtWidgets.QMessageBox.warning(self, u"存取失敗", u"未開啟檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
         elif self.qrcode_result1[0] =="":
-            QtWidgets.QMessageBox.warning(self, u"存取失敗", u"沒有存取Qrcode", buttons=QtWidgets.QMessageBox.Ok,
+            QtWidgets.QMessageBox.warning(self, u"存取失敗", u"Qrcode未掃", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
-
         else:
             QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
