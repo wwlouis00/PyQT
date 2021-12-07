@@ -8,8 +8,6 @@ from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
-from pandas.core.indexes.base import Index
-from pandas.core.series import Series
 import matplotlib.pyplot as plt
 import time
 import datetime
@@ -24,7 +22,6 @@ now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))+"output.xlsx
 def scan_qrcode(qrcode):
     data = pyzbar.decode(qrcode)
     return data[0].data.decode('utf-8')
-
 
 class Ui_MainWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
@@ -641,9 +638,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
         elif self.input_file.text() == "":
             QtWidgets.QMessageBox.warning(self, u"存取失敗", u"未開啟檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
+        elif self.qrcode_result1[0] =="":
+            QtWidgets.QMessageBox.warning(self, u"存取失敗", u"沒有存取Qrcode", buttons=QtWidgets.QMessageBox.Ok,
+                                          defaultButton=QtWidgets.QMessageBox.Ok)
 
         else:
-            QtWidgets.QMessageBox.warning(self, u"存取消息", u"成功存取消息", buttons=QtWidgets.QMessageBox.Ok,
+            QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
 
             self.save_excel = pd.DataFrame({"qrcode": [self.qrcode_result1[0], self.qrcode_result2[0],
