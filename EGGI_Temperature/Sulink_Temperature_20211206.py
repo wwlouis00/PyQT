@@ -637,7 +637,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         elif self.input_file.text() == "":
             QtWidgets.QMessageBox.warning(self, u"存取失敗", u"未開啟檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
-        elif self.qrcode_result1[0] =="":
+        elif self.ch1_qrcodelable.text() == "" or self.ch2_qrcodelable.text() == "" or self.ch3_qrcodelable.text() == "" or self.ch4_qrcodelable.text() == "" or self.ch5_qrcodelable.text() == "" or self.ch6_qrcodelable.text() == "" or self.ch7_qrcodelable.text() == "" or self.ch8_qrcodelable.text() == "":
             QtWidgets.QMessageBox.warning(self, u"存取失敗", u"Qrcode未掃", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
         else:
@@ -662,7 +662,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                                      self.TF_array[4], self.TF_array[5], self.TF_array[6],
                                                      self.TF_array[7]],
                                             "操作人員": [self.input_name.text(), "", "", "", "", "", "", ""],
-                                            # "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
+                                            "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
                                             }, index=['CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'])
             self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
 
