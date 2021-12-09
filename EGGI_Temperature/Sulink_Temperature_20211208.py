@@ -723,9 +723,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         timedisplay = time.toString("yyyy-MM-dd hh:mm:ss dddd")  # 格式化一下時間
         self.time.setText(timedisplay)
 
-
-
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1466, 780)
@@ -1299,7 +1296,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_name.setText(_translate("MainWindow", "操作人員"))
         self.label_datetime.setText(_translate("MainWindow", "日期"))
         self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))
-        self.EGGI_Title.setText(_translate("MainWindow", "EGGI 產測"))
+        self.EGGI_Title.setText(_translate("MainWindow", "溫度數據監控"))
         self.Chart_box.setTitle(_translate("MainWindow", "Chart"))
         self.ch6_display.setText(_translate("MainWindow", "顯示CH6"))
         self.ch7_display.setText(_translate("MainWindow", "顯示CH7"))
