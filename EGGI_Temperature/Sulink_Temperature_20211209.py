@@ -108,7 +108,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         cap = cv2.VideoCapture(0)
         while True:
             ret, frame = cap.read()
-            cv2.imshow('scan qrcode2', frame)
+            cv2.imshow('scan qcode2', frame)
             # 解析二維條碼
             text = None
             try:
