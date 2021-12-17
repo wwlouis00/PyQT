@@ -490,14 +490,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.TF_array.append(P)
         self.take_picture()
         # -----------------------------------------------------------------------
-        img = cv2.imread("CH1.jpg")
-        img2 = cv2.imread("CH2.jpg")
-        img3 = cv2.imread("CH3.jpg")
-        img4 = cv2.imread("CH4.jpg")
-        img5 = cv2.imread("CH5.jpg")
-        img6 = cv2.imread("CH6.jpg")
-        img7 = cv2.imread("CH7.jpg")
-        img8 = cv2.imread("CH8.jpg")
+        img = cv2.imread("image/CH1.jpg")
+        img2 = cv2.imread("image/CH2.jpg")
+        img3 = cv2.imread("image/CH3.jpg")
+        img4 = cv2.imread("image/CH4.jpg")
+        img5 = cv2.imread("image/CH5.jpg")
+        img6 = cv2.imread("image/CH6.jpg")
+        img7 = cv2.imread("image/CH7.jpg")
+        img8 = cv2.imread("image/CH8.jpg")
         # 轉換影象通道
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
@@ -584,49 +584,49 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.savefig('CH1.jpg')
+        plt.savefig('image/CH1.jpg')
         # ---------------CH2---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.savefig('CH2.jpg')
+        plt.savefig('image/CH2.jpg')
         # ---------------CH3---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH3_data, 'o-', color='yellow', label="CH3_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.savefig('CH3.jpg')
+        plt.savefig('image/CH3.jpg')
         # ---------------CH4---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH4_data, 'o-', color='green', label="CH4_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.savefig('CH4.jpg')
+        plt.savefig('image/CH4.jpg')
         # ---------------CH5---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH5_data, 'o-', color='#6F00FF', label="CH5_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.savefig('CH5.jpg')
+        plt.savefig('image/CH5.jpg')
         # ---------------CH6---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH6_data, 'o-', color='m', label="CH6_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.savefig('CH6.jpg')
+        plt.savefig('image/CH6.jpg')
         # ---------------CH7---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH7_data, 'o-', color='purple', label="CH7_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.savefig('CH7.jpg')
+        plt.savefig('image/CH7.jpg')
         # ---------------CH8---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH8_data, 'o-', color='k', label="CH8_data")  # 紅
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
-        plt.savefig('CH8.jpg')
+        plt.savefig('image/CH8.jpg')
 
 
     # 儲存結果
