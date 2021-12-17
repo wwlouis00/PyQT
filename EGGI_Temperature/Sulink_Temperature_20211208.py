@@ -17,7 +17,7 @@ import cv2
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QGraphicsScene, QGraphicsPixmapItem
 
-now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))+"output.xlsx"
+now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
 
 def scan_qrcode(qrcode):
     data = pyzbar.decode(qrcode)
@@ -664,7 +664,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                             "操作人員": [self.input_name.text(), "", "", "", "", "", "", ""],
                                             "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
                                             }, index=['CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'])
-            self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
+            self.save_excel.to_excel('./result/history' + now_output_time+"output.xlsx", encoding="utf_8_sig")
 
     def clean_log(self):
         # T_On全關

@@ -10,7 +10,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
-import sys
 import datetime
 from datetime import datetime, timedelta
 from pyzbar import pyzbar
@@ -18,7 +17,7 @@ import cv2
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QGraphicsScene, QGraphicsPixmapItem
 
-now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))+"output.xlsx"
+now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
 
 def scan_qrcode(qrcode):
     data = pyzbar.decode(qrcode)
@@ -108,7 +107,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         cap = cv2.VideoCapture(0)
         while True:
             ret, frame = cap.read()
-            cv2.imshow('scan qcode2', frame)
+            cv2.imshow('scan qrcode2', frame)
             # 解析二維條碼
             text = None
             try:
@@ -383,7 +382,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 self.ch1_PF.setText(str(W))
                 self.ch1_PF.setStyleSheet(constant_color)
                 self.TF_array.append(str(W))
-
             else:
                 self.ch1_PF.setText(str(N))
                 self.ch1_PF.setStyleSheet(F_color)
@@ -666,7 +664,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                             "操作人員": [self.input_name.text(), "", "", "", "", "", "", ""],
                                             "檔案來源": [self.fname[0], "", "", "", "", "", "", ""]
                                             }, index=['CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'])
-            self.save_excel.to_excel('./' + 'history' + now_output_time, encoding="utf_8_sig")
+            self.save_excel.to_excel('./result/history' + now_output_time+"output.xlsx", encoding="utf_8_sig")
 
     def clean_log(self):
         # T_On全關
@@ -724,9 +722,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.time = QDateTime.currentDateTime()
         timedisplay = time.toString("yyyy-MM-dd hh:mm:ss dddd")  # 格式化一下時間
         self.time.setText(timedisplay)
-
-
-
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -1301,7 +1296,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_name.setText(_translate("MainWindow", "操作人員"))
         self.label_datetime.setText(_translate("MainWindow", "日期"))
         self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))
-        self.EGGI_Title.setText(_translate("MainWindow", "EGGI 產測"))
+        self.EGGI_Title.setText(_translate("MainWindow", "溫度數據監控"))
         self.Chart_box.setTitle(_translate("MainWindow", "Chart"))
         self.ch6_display.setText(_translate("MainWindow", "顯示CH6"))
         self.ch7_display.setText(_translate("MainWindow", "顯示CH7"))
@@ -1340,11 +1335,3 @@ class Ui_MainWindow(QtWidgets.QWidget):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; font-weight:600; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-
-    mainWindows = QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(mainWindows)
-    mainWindows.show()
-    sys.exit(app.exec_())
