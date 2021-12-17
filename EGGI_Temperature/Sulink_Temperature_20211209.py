@@ -383,6 +383,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 self.ch1_PF.setText(str(W))
                 self.ch1_PF.setStyleSheet(constant_color)
                 self.TF_array.append(str(W))
+
             else:
                 self.ch1_PF.setText(str(N))
                 self.ch1_PF.setStyleSheet(F_color)
