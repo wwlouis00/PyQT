@@ -45,6 +45,28 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.lineEdit_well_14.setText(str(self.Ct_value[13]))
         self.lineEdit_well_15.setText(str(self.Ct_value[14]))
         self.lineEdit_well_16.setText(str(self.Ct_value[15]))
+        print(len(self.df_raw.index))
+        self.well_1_data = []
+
+        for i in range(1, len(self.df_raw.index), 1):
+            self.well_1_data.append(self.df.loc[i, 'well_1'])
+        print(self.well_1_data)
+        # for i in range(0, len(self.df.index), 1):
+        #     self.CH2_data.append(self.df.loc[i, 'CH2'])
+        # for i in range(0, len(self.df.index), 1):
+        #     self.CH3_data.append(self.df.loc[i, 'CH3'])
+        # for i in range(0, len(self.df.index), 1):
+        #     self.CH4_data.append(self.df.loc[i, 'CH4'])
+        # for i in range(0, len(self.df.index), 1):
+        #     self.CH5_data.append(self.df.loc[i, 'CH5'])
+        # for i in range(0, len(self.df.index), 1):
+        #     self.CH6_data.append(self.df.loc[i, 'CH6'])
+        # for i in range(0, len(self.df.index), 1):
+        #     self.CH7_data.append(self.df.loc[i, 'CH7'])
+        # for i in range(0, len(self.df.index), 1):
+        #     self.CH8_data.append(self.df.loc[i, 'CH8'])
+
+
 
         # self.save_excel = pd.DataFrame({"well_1": [Ct_value[0]], "well_2": [Ct_value[1]], "well_3": [Ct_value[2]],
         #                            "well_4": [Ct_value[3]],
