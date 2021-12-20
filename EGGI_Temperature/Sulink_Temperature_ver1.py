@@ -42,42 +42,42 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.qrcode_result8 = []
 
     def display1(self):
-        img = cv2.imread("CH1.jpg")
+        img = cv2.imread("image/CH1.jpg")
         img = cv2.resize(img, (500, 500))
         cv2.imshow("CH1", img)
 
     def display2(self):
-        img = cv2.imread("CH2.jpg")
+        img = cv2.imread("image/CH2.jpg")
         img = cv2.resize(img, (500, 500))
         cv2.imshow("CH2", img)
 
     def display3(self):
-        img = cv2.imread("CH3.jpg")
+        img = cv2.imread("image/CH3.jpg")
         img = cv2.resize(img, (500, 500))
         cv2.imshow("CH3", img)
 
     def display4(self):
-        img = cv2.imread("CH4.jpg")
+        img = cv2.imread("image/CH4.jpg")
         img = cv2.resize(img, (500, 500))
         cv2.imshow("CH4", img)
 
     def display5(self):
-        img = cv2.imread("CH5.jpg")
+        img = cv2.imread("image/CH5.jpg")
         img = cv2.resize(img, (500, 500))
         cv2.imshow("CH5", img)
 
     def display6(self):
-        img = cv2.imread("CH6.jpg")
+        img = cv2.imread("image/CH6.jpg")
         img = cv2.resize(img, (500, 500))
         cv2.imshow("CH6", img)
 
     def display7(self):
-        img = cv2.imread("CH7.jpg")
+        img = cv2.imread("image/CH7.jpg")
         img = cv2.resize(img, (500, 500))
         cv2.imshow("CH7", img)
 
     def display8(self):
-        img = cv2.imread("CH8.jpg")
+        img = cv2.imread("image/CH8.jpg")
         img = cv2.resize(img, (500, 500))
         cv2.imshow("CH8", img)
 
