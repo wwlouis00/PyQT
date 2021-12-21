@@ -1,21 +1,22 @@
-from PyQt5.QtWidgets import QFileDialog ,QApplication #QDialog
-# from PyQt5.QtCore import *
-# from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog
+from PyQt5.QtCore import *
+from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 import matplotlib.pyplot as plt
+import time
 import datetime
-from datetime import datetime#, timedelta
-# from PyQt5.QtGui import QImage, QPixmap
+from datetime import datetime, timedelta
+from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QGraphicsScene, QGraphicsPixmapItem
-# from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-colorTab_More4 = ['#333c41', '#eb0973', '#39a6dd', '#91be3e',
-                       '#96cbb3', '#0081b4', '#e990ab', '#e5352b',
-                       '#ffd616', '#29245c', '#85b7e2', '#00af3e',
-                       '#ef9020', '#9f1f5c', '#f47b7b', '#949483']
+colorTab_More4 = ['#e8a5eb', '#facc9e', '#e8e948', '#1bb763',
+                       '#25f2f3', '#1db3ea', '#d1aef8', '#c8c92c',
+                       '#f32020', '#fd9b09', '#406386', '#24a1a1',
+                       '#1515f8', '#959697', '#744a20', '#7b45a5']
 
 class Ui_MainWindow(QtWidgets.QWidget):
     def browsefile(self):
@@ -136,8 +137,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.plot(self.time_array,self.well_14_data, '-', color= colorTab_More4[13], label="well_14")  # 靛
         plt.plot(self.time_array,self.well_15_data, '-', color= colorTab_More4[14], label="well_15")  # 紫
         plt.plot(self.time_array,self.well_16_data, '-', color= colorTab_More4[15], label="well_16")  # 黑
-        plt.ylim(0, 250)
-        plt.title("All Well")
+        plt.ylim(0, 200)
+        plt.title("Amplification curve")
         plt.xlabel('Time (min)')  # x軸說明文字
         plt.ylabel('Fluorescence signal intensity(a.u.)')  # y軸說明文字
         plt.legend(loc="best", fontsize=7.5)
@@ -186,6 +187,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
         for i in range(0, 16):
             df_current_well = self.df_normalization[f'well_{i + 1}']
             df_accumulation = self.df_normalization['accumulation']
+            # print("\n")
+            # print(df_current_well)
+            # print(f"Threshold value: {threshold_value[i]}")
             try:
                 for j, row in enumerate(df_current_well):
                     if row >= threshold_value[i]:
@@ -204,7 +208,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                         x = (x2 - x1) * (y - y1) / (y2 - y1) + x1
 
                         Ct_value.append(round(x, 2))
-                        # print(f"Ct of well_{i + 1} is {round(x, 2)}")
+                        print(f"Ct of well_{i + 1} is {round(x, 2)}")
                         break
 
                     # if there is no Ct_value availible
@@ -224,6 +228,23 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def clean_log(self):
         self.Input_file.setText("")
+        self.lineEdit_well_1.setText("")
+        self.lineEdit_well_2.setText("")
+        self.lineEdit_well_3.setText("")
+        self.lineEdit_well_4.setText("")
+        self.lineEdit_well_5.setText("")
+        self.lineEdit_well_6.setText("")
+        self.lineEdit_well_7.setText("")
+        self.lineEdit_well_8.setText("")
+        self.lineEdit_well_9.setText("")
+        self.lineEdit_well_10.setText("")
+        self.lineEdit_well_11.setText("")
+        self.lineEdit_well_12.setText("")
+        self.lineEdit_well_13.setText("")
+        self.lineEdit_well_14.setText("")
+        self.lineEdit_well_15.setText("")
+        self.lineEdit_well_16.setText("")
+
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")

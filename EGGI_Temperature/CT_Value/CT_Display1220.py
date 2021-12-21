@@ -228,6 +228,23 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def clean_log(self):
         self.Input_file.setText("")
+        self.lineEdit_well_1.setText("")
+        self.lineEdit_well_2.setText("")
+        self.lineEdit_well_3.setText("")
+        self.lineEdit_well_4.setText("")
+        self.lineEdit_well_5.setText("")
+        self.lineEdit_well_6.setText("")
+        self.lineEdit_well_7.setText("")
+        self.lineEdit_well_8.setText("")
+        self.lineEdit_well_9.setText("")
+        self.lineEdit_well_10.setText("")
+        self.lineEdit_well_11.setText("")
+        self.lineEdit_well_12.setText("")
+        self.lineEdit_well_13.setText("")
+        self.lineEdit_well_14.setText("")
+        self.lineEdit_well_15.setText("")
+        self.lineEdit_well_16.setText("")
+
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
