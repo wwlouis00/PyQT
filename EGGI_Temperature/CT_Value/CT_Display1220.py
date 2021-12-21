@@ -13,17 +13,20 @@ now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+colorTab_More4 = ['#333c41', '#eb0973', '#39a6dd', '#91be3e',
+                       '#96cbb3', '#0081b4', '#e990ab', '#e5352b',
+                       '#ffd616', '#29245c', '#85b7e2', '#00af3e',
+                       '#ef9020', '#9f1f5c', '#f47b7b', '#949483']
 
 class Ui_MainWindow(QtWidgets.QWidget):
-    if os.path.isdir("CT_image"):
-        print("資料夾存在。")
-    else:
-        print("資料夾不存在。")
-        os.mkdirs("CT_image")
     def browsefile(self):
+        if os.path.isdir("CT_image"):
+            print("資料夾存在。")
+        else:
+            print("資料夾不存在。")
+            os.mkdir("CT_image")
         self.fname = QFileDialog.getOpenFileName(self, '開啟csv檔案', 'C:\python\PyQT\EGGI_Temperature\CT_Value', 'csv files (*.csv)')
         self.Input_file.setText(self.fname[0])
-        # global self.df_raw, df_ifc, df_normalization
         self.df_raw = pd.read_csv(self.fname[0])
         self.df_ifc = pd.read_csv("../cali_factor.csv")
         self.df_normalization = self.df_raw.copy()
@@ -68,111 +71,79 @@ class Ui_MainWindow(QtWidgets.QWidget):
         #well1
         for i in range(0, len(self.df_raw.index), 1):
             self.well_1_data.append(self.df_raw.loc[i, 'well_1'])
-        print(self.well_1_data)
         #well2
         for i in range(0, len(self.df_raw.index), 1):
             self.well_2_data.append(self.df_raw.loc[i, 'well_2'])
-        print(self.well_2_data)
         #well3
         for i in range(0, len(self.df_raw.index), 1):
             self.well_3_data.append(self.df_raw.loc[i, 'well_3'])
-        print(self.well_3_data)
         #well4
         for i in range(0, len(self.df_raw.index), 1):
             self.well_4_data.append(self.df_raw.loc[i, 'well_4'])
-        print(self.well_4_data)
         #well5
         for i in range(0, len(self.df_raw.index), 1):
             self.well_5_data.append(self.df_raw.loc[i, 'well_5'])
-        print(self.well_5_data)
         # well6
         for i in range(0, len(self.df_raw.index), 1):
             self.well_6_data.append(self.df_raw.loc[i, 'well_6'])
-        print(self.well_6_data)
         # well7
         for i in range(0, len(self.df_raw.index), 1):
             self.well_7_data.append(self.df_raw.loc[i, 'well_7'])
-        print(self.well_7_data)
         # well8
         for i in range(0, len(self.df_raw.index), 1):
             self.well_8_data.append(self.df_raw.loc[i, 'well_8'])
-        print(self.well_8_data)
-
-        # well1
+        # well9
         for i in range(0, len(self.df_raw.index), 1):
             self.well_9_data.append(self.df_raw.loc[i, 'well_9'])
-        print(self.well_9_data)
-        # well2
+        # well10
         for i in range(0, len(self.df_raw.index), 1):
             self.well_10_data.append(self.df_raw.loc[i, 'well_10'])
-        print(self.well_10_data)
-        # # well3
+        # # well11
         for i in range(0, len(self.df_raw.index), 1):
             self.well_11_data.append(self.df_raw.loc[i, 'well_11'])
-        print(self.well_11_data)
-        # # well4
+        # # well12
         for i in range(0, len(self.df_raw.index), 1):
             self.well_12_data.append(self.df_raw.loc[i, 'well_12'])
-        print(self.well_12_data)
-        # # well5
+        # # well13
         for i in range(0, len(self.df_raw.index), 1):
             self.well_13_data.append(self.df_raw.loc[i, 'well_13'])
-        print(self.well_13_data)
-        # well6
+        # well4
         for i in range(0, len(self.df_raw.index), 1):
             self.well_14_data.append(self.df_raw.loc[i, 'well_14'])
-
-        # well7
+        # well15
         for i in range(0, len(self.df_raw.index), 1):
             self.well_15_data.append(self.df_raw.loc[i, 'well_15'])
-        print(self.well_15_data)
-        # well8
+        # wel16
         for i in range(0, len(self.df_raw.index), 1):
             self.well_16_data.append(self.df_raw.loc[i, 'well_16'])
-        print(self.well_16_data)
 
         for j in range(0, len(self.df_raw.index),1):
             self.time_array.append(j/2)
-        print(self.time_array)
 
         plt.figure(figsize=(10,5),dpi=150,linewidth = 3)
-        plt.plot(self.time_array,self.well_1_data,'-',color = '#eb0973', label="well_1")    #紅
-        plt.plot(self.time_array,self.well_2_data,'-',color = '#eb0973', label="well_2") #澄
-        plt.plot(self.time_array,self.well_3_data,'-',color = 'yellow', label="well_3") #黃
-        plt.plot(self.time_array,self.well_4_data,'-',color = 'green', label="well_4")  #綠
-        plt.plot(self.time_array,self.well_5_data,'-',color = '#6F00FF', label="well_5")#藍
-        plt.plot(self.time_array,self.well_6_data,'-',color = 'm', label="well_6")      #靛
-        plt.plot(self.time_array,self.well_7_data,'-',color = 'purple', label="well_7") #紫
-        plt.plot(self.time_array,self.well_8_data,'-',color = 'k', label="well_8")      #黑
-        plt.plot(self.time_array,self.well_9_data, '-', color='red', label="well_9")  # 紅
-        plt.plot(self.time_array,self.well_10_data, '-', color='orange', label="well_10")  # 澄
-        plt.plot(self.time_array,self.well_11_data, '-', color='yellow', label="well_11")  # 黃
-        plt.plot(self.time_array,self.well_12_data, '-', color='green', label="well_12")  # 綠
-        plt.plot(self.time_array,self.well_13_data, '-', color='#6F00FF', label="well_13")  # 藍
-        plt.plot(self.time_array,self.well_14_data, '-', color='m', label="well_14")  # 靛
-        plt.plot(self.time_array,self.well_15_data, '-', color='purple', label="well_15")  # 紫
-        plt.plot(self.time_array,self.well_16_data, '-', color='k', label="well_16")  # 黑
+        plt.plot(self.time_array,self.well_1_data,'-',color = colorTab_More4[0], label="well_1")    #紅
+        plt.plot(self.time_array,self.well_2_data,'-',color = colorTab_More4[1], label="well_2") #澄
+        plt.plot(self.time_array,self.well_3_data,'-',color = colorTab_More4[2], label="well_3") #黃
+        plt.plot(self.time_array,self.well_4_data,'-',color = colorTab_More4[3], label="well_4")  #綠
+        plt.plot(self.time_array,self.well_5_data,'-',color = colorTab_More4[4], label="well_5")#藍
+        plt.plot(self.time_array,self.well_6_data,'-',color = colorTab_More4[5], label="well_6")      #靛
+        plt.plot(self.time_array,self.well_7_data,'-',color = colorTab_More4[6], label="well_7") #紫
+        plt.plot(self.time_array,self.well_8_data,'-',color = colorTab_More4[7], label="well_8")      #黑
+        plt.plot(self.time_array,self.well_9_data, '-', color= colorTab_More4[8], label="well_9")  # 紅
+        plt.plot(self.time_array,self.well_10_data, '-', color= colorTab_More4[9], label="well_10")  # 澄
+        plt.plot(self.time_array,self.well_11_data, '-', color= colorTab_More4[10], label="well_11")  # 黃
+        plt.plot(self.time_array,self.well_12_data, '-', color= colorTab_More4[11], label="well_12")  # 綠
+        plt.plot(self.time_array,self.well_13_data, '-', color= colorTab_More4[12], label="well_13")  # 藍
+        plt.plot(self.time_array,self.well_14_data, '-', color= colorTab_More4[13], label="well_14")  # 靛
+        plt.plot(self.time_array,self.well_15_data, '-', color= colorTab_More4[14], label="well_15")  # 紫
+        plt.plot(self.time_array,self.well_16_data, '-', color= colorTab_More4[15], label="well_16")  # 黑
         plt.ylim(0, 250)
         plt.title("All Well")
         plt.xlabel('CT')  # x軸說明文字
         plt.ylabel('Threshold')  # y軸說明文字
         plt.legend(loc="best", fontsize=7.5)
-        # plt.savefig('img/Sulink顯示全部曲線.jpg')
+        plt.savefig('CT_image/CT.jpg')
         plt.show()
-
-
-
-
-        # self.save_excel = pd.DataFrame({"well_1": [Ct_value[0]], "well_2": [Ct_value[1]], "well_3": [Ct_value[2]],
-        #                            "well_4": [Ct_value[3]],
-        #                            "well_5": [Ct_value[4]], "well_6": [Ct_value[5]], "well_7": [Ct_value[6]],
-        #                            "well_8": [Ct_value[7]],
-        #                            "well_9": [Ct_value[8]], "well_10": [Ct_value[9]], "well_11": [Ct_value[10]],
-        #                            "well_4": [Ct_value[11]],
-        #                            "well_13": [Ct_value[12]], "well_14": [Ct_value[13]], "well_15": [Ct_value[14]],
-        #                            "well_16": [Ct_value[15]]}
-
-    # def  takepicture(self):
 
     def get_accumulation_time(self):
         df_time = self.df_normalization['time']
