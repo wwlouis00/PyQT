@@ -70,52 +70,52 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.time_array = []
         #well1
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_1_data.append(self.df_raw.loc[i, 'well_1'])
+            self.well_1_data.append(self.df_raw.loc[i, 'well_1'] - self.well_baseline[0])
         #well2
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_2_data.append(self.df_raw.loc[i, 'well_2'])
+            self.well_2_data.append(self.df_raw.loc[i, 'well_2'] - self.well_baseline[1])
         #well3
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_3_data.append(self.df_raw.loc[i, 'well_3'])
+            self.well_3_data.append(self.df_raw.loc[i, 'well_3'] - self.well_baseline[2])
         #well4
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_4_data.append(self.df_raw.loc[i, 'well_4'])
+            self.well_4_data.append(self.df_raw.loc[i, 'well_4'] - self.well_baseline[3])
         #well5
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_5_data.append(self.df_raw.loc[i, 'well_5'])
+            self.well_5_data.append(self.df_raw.loc[i, 'well_5'] - self.well_baseline[4])
         # well6
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_6_data.append(self.df_raw.loc[i, 'well_6'])
+            self.well_6_data.append(self.df_raw.loc[i, 'well_6'] - self.well_baseline[5])
         # well7
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_7_data.append(self.df_raw.loc[i, 'well_7'])
+            self.well_7_data.append(self.df_raw.loc[i, 'well_7'] - self.well_baseline[6])
         # well8
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_8_data.append(self.df_raw.loc[i, 'well_8'])
+            self.well_8_data.append(self.df_raw.loc[i, 'well_8'] - self.well_baseline[7])
         # well9
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_9_data.append(self.df_raw.loc[i, 'well_9'])
+            self.well_9_data.append(self.df_raw.loc[i, 'well_9'] - self.well_baseline[8])
         # well10
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_10_data.append(self.df_raw.loc[i, 'well_10'])
+            self.well_10_data.append(self.df_raw.loc[i, 'well_10'] - self.well_baseline[9])
         # # well11
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_11_data.append(self.df_raw.loc[i, 'well_11'])
+            self.well_11_data.append(self.df_raw.loc[i, 'well_11'] - self.well_baseline[10])
         # # well12
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_12_data.append(self.df_raw.loc[i, 'well_12'])
+            self.well_12_data.append(self.df_raw.loc[i, 'well_12'] - self.well_baseline[11])
         # # well13
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_13_data.append(self.df_raw.loc[i, 'well_13'])
-        # well4
+            self.well_13_data.append(self.df_raw.loc[i, 'well_13'] - self.well_baseline[12])
+        # well14
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_14_data.append(self.df_raw.loc[i, 'well_14'])
+            self.well_14_data.append(self.df_raw.loc[i, 'well_14'] - self.well_baseline[13])
         # well15
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_15_data.append(self.df_raw.loc[i, 'well_15'])
+            self.well_15_data.append(self.df_raw.loc[i, 'well_15'] - self.well_baseline[14])
         # wel16
         for i in range(0, len(self.df_raw.index), 1):
-            self.well_16_data.append(self.df_raw.loc[i, 'well_16'])
+            self.well_16_data.append(self.df_raw.loc[i, 'well_16'] - self.well_baseline[15])
 
         for j in range(0, len(self.df_raw.index),1):
             self.time_array.append(j/2)
@@ -139,8 +139,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.plot(self.time_array,self.well_16_data, '-', color= colorTab_More4[15], label="well_16")  # 黑
         plt.ylim(0, 250)
         plt.title("All Well")
-        plt.xlabel('CT')  # x軸說明文字
-        plt.ylabel('Threshold')  # y軸說明文字
+        plt.xlabel('Time (min)')  # x軸說明文字
+        plt.ylabel('Fluorescence signal intensity(a.u.)')  # y軸說明文字
         plt.legend(loc="best", fontsize=7.5)
         plt.savefig('CT_image/CT.jpg')
         plt.show()
@@ -164,11 +164,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
         return StdDev, Avg
 
     def normalize(self):
+        self.well_baseline =[]
         for i in range(0, 16):
             df_current_well = self.df_raw[f'well_{i + 1}']
             df_current_ifc = self.df_ifc[f'well{i + 1}']
-            baseline = df_current_well[8:30].mean()
-            self.df_normalization[f'well{i + 1}'] = (self.df_raw[f'well_{i + 1}'] - baseline) / df_current_ifc[0]  # normalized = (IF(t)-IF(b))/IFc
+            self.baseline = df_current_well[8:30].mean()
+            self.df_normalization[f'well{i + 1}'] = (self.df_raw[f'well_{i + 1}'] - self.baseline) / self.baseline  # normalized = (IF(t)-IF(b))/IFc
+            print(self.baseline)
+            self.well_baseline.append(self.baseline)
 
 
     def get_ct_threshold(self):
@@ -176,7 +179,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         StdDev, Avg = self.get_StdDev_and_Avg()
         for i in range(0, 16):
             threshold_value.append(10 * StdDev[i] + Avg[i])
-            print(f"Well {i + 1}: StdDev is {StdDev[i]}, Avg is {Avg[i]}")
+            # print(f"Well {i + 1}: StdDev is {StdDev[i]}, Avg is {Avg[i]}")
         return threshold_value
 
     def get_ct_value(self,threshold_value):
@@ -184,9 +187,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
         for i in range(0, 16):
             df_current_well = self.df_normalization[f'well_{i + 1}']
             df_accumulation = self.df_normalization['accumulation']
-            print("\n")
-            print(df_current_well)
-            print(f"Threshold value: {threshold_value[i]}")
+            # print("\n")
+            # print(df_current_well)
+            # print(f"Threshold value: {threshold_value[i]}")
             try:
                 for j, row in enumerate(df_current_well):
                     if row >= threshold_value[i]:
@@ -222,6 +225,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
     def save_file(self):
         print("good")
         self.df_raw.to_excel('./result/CT_Chart' + now_output_time+"output.xlsx", encoding="utf_8_sig")
+
+    def clean_log(self):
+        self.Input_file.setText("")
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1011, 571)
@@ -640,6 +647,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.btn_openfile.clicked.connect(self.browsefile)
         self.btn_savefile.clicked.connect(self.save_file)
+        self.btn_clean.clicked.connect(self.clean_log)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
