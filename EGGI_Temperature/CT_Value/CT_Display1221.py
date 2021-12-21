@@ -3,6 +3,7 @@ from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 import matplotlib.pyplot as plt
+import cv2 as cv
 import time
 import datetime
 from datetime import datetime, timedelta
@@ -120,7 +121,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         for j in range(0, len(self.df_raw.index),1):
             self.time_array.append(j/2)
 
-        plt.figure(figsize=(10,5),dpi=150,linewidth = 3)
+        plt.figure(figsize=(6,4.5),dpi=100,linewidth = 3)
         plt.plot(self.time_array,self.well_1_data,'-',color = colorTab_More4[0], label="well_1")    #紅
         plt.plot(self.time_array,self.well_2_data,'-',color = colorTab_More4[1], label="well_2") #澄
         plt.plot(self.time_array,self.well_3_data,'-',color = colorTab_More4[2], label="well_3") #黃
@@ -143,7 +144,20 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.ylabel('Fluorescence signal intensity(a.u.)')  # y軸說明文字
         plt.legend(loc="best", fontsize=7.5)
         plt.savefig('CT_image/CT.jpg')
-        plt.show()
+        # plt.show()
+        self.displayphoto()
+
+    def displayphoto(self):
+        self.img = cv.imread('CT_image/CT.jpg')
+        self.img = cv.cvtColor(self.img, cv.COLOR_BGR2RGB)
+        x = self.img.shape[1]
+        y = self.img.shape[0]
+        frame = QImage(self.img, x, y, x * 3, QImage.Format_RGB888)
+        self.pix = QPixmap.fromImage(frame)
+        self.item = QGraphicsPixmapItem(self.pix)
+        self.scene = QGraphicsScene()
+        self.scene.addItem(self.item)
+        self.CT_chart.setScene(self.scene)
 
     def get_accumulation_time(self):
         df_time = self.df_normalization['time']
@@ -669,10 +683,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_Timeofbackground.setText(_translate("MainWindow", "Time of background"))
+        self.label_Timeofbackground.setText(_translate("MainWindow", "Time of background (min)"))
         self.label_7.setText(_translate("MainWindow", "~"))
         self.label_N.setText(_translate("MainWindow", "N :"))
-        self.label_Threshold.setText(_translate("MainWindow", "Threshold: N  * Std"))
+        self.label_Threshold.setText(_translate("MainWindow", "Threshold= N  * Std"))
         self.btn_openfile.setText(_translate("MainWindow", "開啟檔案"))
         self.btn_savefile.setText(_translate("MainWindow", "儲存檔案"))
         self.btn_clean.setText(_translate("MainWindow", "清除"))
