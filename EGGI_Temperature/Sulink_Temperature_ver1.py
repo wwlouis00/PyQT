@@ -631,6 +631,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     # 儲存結果
     def save_log(self):
+        
         if self.input_name.text() == "":
             QtWidgets.QMessageBox.critical(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
