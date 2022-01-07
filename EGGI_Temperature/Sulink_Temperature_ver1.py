@@ -627,8 +627,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
         plt.savefig('image/CH8.jpg')
-
-
     # 儲存結果
     def save_log(self):
         
