@@ -257,7 +257,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         
     
     def button_sql_click(self):
-        fn = '2021-10-15.xls'
+        fn = '2021-10-15.xlsx'
         wb = xlrd.open_workbook(fn)
         sh = wb.sheets()[0]
         rows = sh.nrows

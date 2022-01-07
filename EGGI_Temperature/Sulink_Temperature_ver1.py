@@ -708,14 +708,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_slope.setText("")
         self.ch8_slope.setText("")
         # #Chart
-        # self.ch1_chart.setScene()
-        # self.ch2_chart.setScene("")
-        # self.ch3_chart.setScene("")
-        # self.ch4_chart.setScene("")
-        # self.ch5_chart.setScene("")
-        # self.ch6_chart.setScene("")
-        # self.ch7_chart.setScene("")
-        # self.ch8_chart.setScene("")
+        self.ch1_chart.setScene(None)
+        self.ch2_chart.setScene(None)
+        self.ch3_chart.setScene(None)
+        self.ch4_chart.setScene(None)
+        self.ch5_chart.setScene(None)
+        self.ch6_chart.setScene(None)
+        self.ch7_chart.setScene(None)
+        self.ch8_chart.setScene(None)
 
         # 顯示現在時間
 
