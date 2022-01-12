@@ -163,7 +163,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         fm =int(fm)
         self.number.display(fm)
         global fm1
-        if(fm>100):
+        if(fm>100 and fm<200):
+            self.button_test.setText(u'焦距檢測:自動儲存')
+            self.button_test.setStyleSheet("QPushButton{color:green}")
+            fm1 = "AutoSave"
+        elif(fm>200):
             self.button_test.setText(u'焦距檢測:對焦成功')
             self.button_test.setStyleSheet("QPushButton{color:green}")
             fm1 = "Pass"
@@ -277,8 +281,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
             print(qrcode)
     
         
-
-
 if __name__ == "__main__":
     App = QApplication(sys.argv)
     ex = Ui_MainWindow()
