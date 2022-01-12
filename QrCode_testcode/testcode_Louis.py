@@ -154,16 +154,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
         #     pass
         global show
         show = cv2.resize(self.image, (640, 480))
-        x = 100
-        y = 100
-        w = 250
-        h = 150
-        crop = show[y:y+h, x:x+w]
-        
-        crop = cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)
+        show = cv2.cvtColor(show, cv2.COLOR_BGR2RGB)
         
         
-        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(show, cv2.COLOR_BGR2GRAY)
         global fm
         fm = cv2 . Laplacian ( gray , cv2.CV_64F ) . var ( )
         fm =int(fm)
@@ -223,8 +217,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
     
     
     def button_sql1_click(self):
-        global number1
+
         
+        global number1
         
         xtime=time.localtime()
         time1 = str(xtime[0]) +"/" + str(xtime[1]) +"/"+ str(xtime[2]) + "-" + str(xtime[3]) + ":" + str(xtime[4]) 
@@ -260,8 +255,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
             number1 = number1+1
             wt.save(fn)
         
-        
-    
     def button_sql_click(self):
         fn = '2021-10-15.xls'
         wb = xlrd.open_workbook(fn)
