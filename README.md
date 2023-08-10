@@ -1,7 +1,3 @@
-當然！以下是一個關於如何使用 Qt Designer 結合 Python 的簡單介紹，以 Markdown 格式呈現：
-
----
-
 ## 使用 Qt Designer 結合 Python
 
 Qt Designer 是一個用於設計 Qt 圖形界面（GUI）的工具，並且可以通過將它的設計轉換成 Python 代碼來實現交互性。下面是一個簡單的步驟指南。
