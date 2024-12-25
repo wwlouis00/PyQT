@@ -1,35 +1,19 @@
-## 使用 Qt Designer 結合 Python
+## Using Qt Designer with Python
 
-Qt Designer 是一個用於設計 Qt 圖形界面（GUI）的工具，並且可以通過將它的設計轉換成 Python 代碼來實現交互性。下面是一個簡單的步驟指南。
+Qt Designer is a tool for designing Qt graphical user interfaces (GUIs). You can integrate it with Python by converting its designs into Python code for interactivity. Below is a simple step-by-step guide.
 
-### 1. 安裝 Qt Designer
+### 1. Install Qt Designer
 
-如果尚未安裝，可以在 Qt 官方網站下載 Qt Designer。確保它與您的 Python 版本兼容。
+If you haven’t installed it yet, you can download Qt Designer from the official Qt website. Ensure it is compatible with your Python version.
 
-### 2. 設計 GUI
+### 2. Design the GUI
 
-使用 Qt Designer 創建 GUI。拖放部件，調整佈局，並添加所需的元素。
+Use Qt Designer to create your GUI. Drag and drop widgets, adjust layouts, and add necessary elements.
 
-### 3. 導出設計
+### 3. Export the Design
 
-導出您的設計為 `.ui` 文件，這是一種 XML 文件，其中包含您在 Qt Designer 中設計的佈局和元素。
+Export your design as a `.ui` file, which is an XML file containing the layout and elements designed in Qt Designer.
 
-### 4. 使用 `pyuic` 轉換 `.ui` 文件
+### 4. Convert `.ui` File Using `pyuic`
 
-在終端中，使用 `pyuic` 命令將 `.ui` 文件轉換為 Python 代碼。例如：
-
-```
-pyuic5 your_design.ui -o ui_your_design.py
-```
-
-### 5. 在 Python 中使用生成的代碼
-
-將生成的 Python 代碼（例如 `ui_your_design.py`）包括在您的 Python 項目中。您可以在該文件中導入該模塊，然後通過實例化它來訪問您在 Qt Designer 中設計的 GUI。
-
-### 6. 添加交互性
-
-使用 Python 代碼可以在界面元素之間添加交互性。您可以設置按鈕點擊事件、文本框輸入事件等。
-
-### 7. 運行程序
-
-運行您的 Python 腳本，即可顯示和操作 Qt Designer 中設計的 GUI。
+In the terminal, use the `pyuic` command to convert the `.ui` file into Python code. For example:
